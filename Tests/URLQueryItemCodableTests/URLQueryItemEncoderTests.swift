@@ -38,31 +38,52 @@ extension URLQueryItemEncoderTests {
         }
     }
     
-    func test_complexType_oneProperty() throws {
+    func test_complexType_oneProperty_notNil() throws {
         try assert(
             URLQueryItemEncoder(),
             encodes: TestTypes.SingleProperty(one: "value")
         ) {
             [
-                URLQueryItem(name: "one", value: String($0.one)),
+                URLQueryItem(name: "one", value: String($0.one!)),
             ]
         }
     }
     
-    func test_complexType_multipleProperties() throws {
+    func test_complexType_oneProperty_nil() throws {
+        try assert(
+            URLQueryItemEncoder(),
+            encodes: TestTypes.SingleProperty(one: nil)
+        ) { _ in
+            []
+        }
+    }
+    
+    func test_complexType_multipleProperties_withoutNil() throws {
         try assert(
             URLQueryItemEncoder(),
             encodes: TestTypes.MultipleProperties(one: "value", two: 123, three: true)
         ) {
             [
-                URLQueryItem(name: "one", value: String($0.one)),
+                URLQueryItem(name: "one", value: String($0.one!)),
                 URLQueryItem(name: "three", value: String($0.three)),
                 URLQueryItem(name: "two", value: String($0.two)),
             ]
         }
     }
     
-    func test_complexType_nestedProperties() throws {
+    func test_complexType_multipleProperties_withNil() throws {
+        try assert(
+            URLQueryItemEncoder(),
+            encodes: TestTypes.MultipleProperties(one: nil, two: 123, three: true)
+        ) {
+            [
+                URLQueryItem(name: "three", value: String($0.three)),
+                URLQueryItem(name: "two", value: String($0.two)),
+            ]
+        }
+    }
+    
+    func test_complexType_nestedProperties_withoutNil() throws {
         try assert(
             URLQueryItemEncoder(),
             encodes: TestTypes.NestedProperties(
@@ -71,8 +92,23 @@ extension URLQueryItemEncoderTests {
             )
         ) {
             [
-                URLQueryItem(name: "one.one", value: String($0.one.one)),
-                URLQueryItem(name: "two.one", value: String($0.two.one)),
+                URLQueryItem(name: "one.one", value: String($0.one.one!)),
+                URLQueryItem(name: "two.one", value: String($0.two.one!)),
+                URLQueryItem(name: "two.three", value: String($0.two.three)),
+                URLQueryItem(name: "two.two", value: String($0.two.two)),
+            ]
+        }
+    }
+    
+    func test_complexType_nestedProperties_withNil() throws {
+        try assert(
+            URLQueryItemEncoder(),
+            encodes: TestTypes.NestedProperties(
+                one: TestTypes.SingleProperty(one: nil),
+                two: TestTypes.MultipleProperties(one: nil, two: 123, three: true)
+            )
+        ) {
+            [
                 URLQueryItem(name: "two.three", value: String($0.two.three)),
                 URLQueryItem(name: "two.two", value: String($0.two.two)),
             ]
@@ -104,7 +140,7 @@ private enum TestTypes {
 
 extension TestTypes {
     struct MultipleProperties: Encodable {
-        let one: String
+        let one: String?
         let two: Int
         let three: Bool
     }
@@ -123,6 +159,6 @@ extension TestTypes {
 
 extension TestTypes {
     struct SingleProperty: Encodable {
-        let one: String
+        let one: String?
     }
 }
