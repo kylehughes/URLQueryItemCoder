@@ -5,6 +5,7 @@
 //  Created by Kyle Hughes on 12/27/22.
 //
 
+import Combine
 import XCTest
 
 @testable import URLQueryItemCodable
@@ -24,63 +25,70 @@ final class URLQueryItemEncoderTests: XCTestCase {
 // MARK: - Tests
 
 extension URLQueryItemEncoderTests {
-    // MARK: Public Instance Interface
+    // MARK: Internal Instance Interface
     
-    public func test_rawValue() throws {
-        let target = 1
-        
-        let instance = URLQueryItemEncoder()
-        let queryItems = try instance.encode(target)
-        
-        XCTAssertEqual(queryItems.count, 1)
-        XCTAssertEqual(queryItems[0].name, String())
-        XCTAssertEqual(queryItems[0].value, String(target))
+    func test_rawValue() throws {
+        try assert(
+            URLQueryItemEncoder(),
+            encodes: 1
+        ) {
+            [
+                URLQueryItem(name: String(), value: String($0)),
+            ]
+        }
     }
     
-    public func test_complexType_oneProperty() throws {
-        let target = TestTypes.SingleProperty(one: "value")
-
-        let instance = URLQueryItemEncoder()
-        let queryItems = try instance.encode(target)
-        
-        XCTAssertEqual(queryItems.count, 1)
-        XCTAssertEqual(queryItems[0].name, "one")
-        XCTAssertEqual(queryItems[0].value, String(target.one))
+    func test_complexType_oneProperty() throws {
+        try assert(
+            URLQueryItemEncoder(),
+            encodes: TestTypes.SingleProperty(one: "value")
+        ) {
+            [
+                URLQueryItem(name: "one", value: String($0.one)),
+            ]
+        }
     }
     
-    public func test_complexType_multipleProperties() throws {
-        let target = TestTypes.MultipleProperties(one: "value", two: 123, three: true)
-
-        let instance = URLQueryItemEncoder()
-        let queryItems = try instance.encode(target)
-        
-        XCTAssertEqual(queryItems.count, 3)
-        XCTAssertEqual(queryItems[0].name, "one")
-        XCTAssertEqual(queryItems[0].value, String(target.one))
-        XCTAssertEqual(queryItems[1].name, "three")
-        XCTAssertEqual(queryItems[1].value, String(target.three))
-        XCTAssertEqual(queryItems[2].name, "two")
-        XCTAssertEqual(queryItems[2].value, String(target.two))
+    func test_complexType_multipleProperties() throws {
+        try assert(
+            URLQueryItemEncoder(),
+            encodes: TestTypes.MultipleProperties(one: "value", two: 123, three: true)
+        ) {
+            [
+                URLQueryItem(name: "one", value: String($0.one)),
+                URLQueryItem(name: "three", value: String($0.three)),
+                URLQueryItem(name: "two", value: String($0.two)),
+            ]
+        }
     }
     
-    public func test_complexType_nestedProperties() throws {
-        let target = TestTypes.NestedProperties(
-            one: TestTypes.SingleProperty(one: "value"),
-            two: TestTypes.MultipleProperties(one: "value", two: 123, three: true)
-        )
-
-        let instance = URLQueryItemEncoder()
-        let queryItems = try instance.encode(target)
+    func test_complexType_nestedProperties() throws {
+        try assert(
+            URLQueryItemEncoder(),
+            encodes: TestTypes.NestedProperties(
+                one: TestTypes.SingleProperty(one: "value"),
+                two: TestTypes.MultipleProperties(one: "value", two: 123, three: true)
+            )
+        ) {
+            [
+                URLQueryItem(name: "one.one", value: String($0.one.one)),
+                URLQueryItem(name: "two.one", value: String($0.two.one)),
+                URLQueryItem(name: "two.three", value: String($0.two.three)),
+                URLQueryItem(name: "two.two", value: String($0.two.two)),
+            ]
+        }
+    }
+    
+    // MARK: Private Instance Interface
+    
+    private func assert<Encoder, Input>(
+        _ encoder: Encoder,
+        encodes value: Input,
+        as expectation: (Input) -> Encoder.Output
+    ) throws where Encoder: TopLevelEncoder, Encoder.Output: Equatable, Input: Encodable {
+        let encodedValue = try encoder.encode(value)
         
-        XCTAssertEqual(queryItems.count, 4)
-        XCTAssertEqual(queryItems[0].name, "one.one")
-        XCTAssertEqual(queryItems[0].value, String(target.one.one))
-        XCTAssertEqual(queryItems[1].name, "two.one")
-        XCTAssertEqual(queryItems[1].value, String(target.two.one))
-        XCTAssertEqual(queryItems[2].name, "two.three")
-        XCTAssertEqual(queryItems[2].value, String(target.two.three))
-        XCTAssertEqual(queryItems[3].name, "two.two")
-        XCTAssertEqual(queryItems[3].value, String(target.two.two))
+        XCTAssertEqual(encodedValue, expectation(value))
     }
 }
 
