@@ -19,18 +19,18 @@ extension URLQueryItemEncoder {
         
         // MARK: Internal Instance Interface
         
-        internal func encode(_ codingPath: [any CodingKey], losslesslyAs value: (some LosslessStringConvertible)?) {
+        internal func encode(_ codingPath: [any CodingKey], as value: String?) {
+            let key = codingPath.map(\.stringValue).joined(separator: ".")
+            storage[key] = value
+        }
+        
+        internal func encodeLosslessly(_ codingPath: [any CodingKey], as value: (some LosslessStringConvertible)?) {
             guard let value else {
                 encode(codingPath, as: nil)
                 return
             }
             
             encode(codingPath, as: String(value))
-        }
-        
-        internal func encode(_ codingPath: [any CodingKey], as value: String?) {
-            let key = codingPath.map(\.stringValue).joined(separator: ".")
-            storage[key] = value
         }
         
         internal func finalize() -> [URLQueryItem] {

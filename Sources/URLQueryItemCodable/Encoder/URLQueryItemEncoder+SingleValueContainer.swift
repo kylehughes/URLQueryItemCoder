@@ -28,7 +28,7 @@ extension URLQueryItemEncoder.SingleValueContainer: SingleValueEncodingContainer
     // MARK: Public Instance Interface
     
     mutating public func encode(_ value: Bool) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: String) throws {
@@ -36,51 +36,51 @@ extension URLQueryItemEncoder.SingleValueContainer: SingleValueEncodingContainer
     }
     
     mutating public func encode(_ value: Double) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: Float) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: Int) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: Int8) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: Int16) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: Int32) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: Int64) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: UInt) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: UInt8) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: UInt16) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: UInt32) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode(_ value: UInt64) throws {
-        partial.encode(codingPath, losslesslyAs: value)
+        partial.encodeLosslessly(codingPath, as: value)
     }
     
     mutating public func encode<T>(_ value: T) throws where T: Encodable {

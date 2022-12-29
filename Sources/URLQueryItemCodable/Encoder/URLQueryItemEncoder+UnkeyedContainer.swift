@@ -44,7 +44,7 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: String) throws {
@@ -58,83 +58,83 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Float) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int8) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int16) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int32) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int64) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt8) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt16) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt32) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt64) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
 
-        partial.encode(nextCodingPath, losslesslyAs: value)
+        partial.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode<T>(_ value: T) throws where T : Encodable {
