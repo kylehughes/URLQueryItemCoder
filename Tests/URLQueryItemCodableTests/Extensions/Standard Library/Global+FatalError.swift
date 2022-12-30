@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Unconditionally prints a given message and stops execution.
+/// Unconditionally prints a predefined message and stops execution.
 ///
 /// - Parameters:
 ///   - message: The string to print. The default is an empty string.
