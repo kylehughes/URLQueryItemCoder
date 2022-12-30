@@ -9,6 +9,36 @@ public enum CodableTestTypes {
     // NO-OP
 }
 
+// MARK: - CodableTestTypes.KeyedValueProperties Definition
+
+extension CodableTestTypes {
+    public struct KeyedValueProperties: Codable {
+        public let one: SingleValueProperties?
+        public let two: SingleValueProperties?
+        public let three: SingleValueProperties?
+        
+        // MARK: Predefined Constants
+        
+        public static let maximumValues = KeyedValueProperties(
+            one: .maximumValues,
+            two: .maximumValues,
+            three: .maximumValues
+        )
+        
+        public static let minimumValues = KeyedValueProperties(
+            one: .minimumValues,
+            two: .minimumValues,
+            three: .minimumValues
+        )
+        
+        public static let `nil` = KeyedValueProperties(
+            one: .nil,
+            two: .nil,
+            three: .nil
+        )
+    }
+}
+
 // MARK: - CodableTestTypes.SingleValueProperties Definition
 
 extension CodableTestTypes {
