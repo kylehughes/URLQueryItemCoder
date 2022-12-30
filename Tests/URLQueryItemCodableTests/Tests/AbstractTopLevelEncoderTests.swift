@@ -253,12 +253,32 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     
     // MARK: Keyed Values Tests
     
+    public func test_keyedValue_singleValueProperties_maximumValues() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertEncoder(
+            target,
+            encodes: CodableTestTypes.SingleValueProperties.maximumValues,
+            as: expectedOutputForKeyedSingleValueProperties
+        )
+    }
+    
     public func test_keyedValue_singleValueProperties_minimumValues() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
             encodes: CodableTestTypes.SingleValueProperties.minimumValues,
+            as: expectedOutputForKeyedSingleValueProperties
+        )
+    }
+    
+    public func test_keyedValue_singleValueProperties_nil() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertEncoder(
+            target,
+            encodes: CodableTestTypes.SingleValueProperties.nil,
             as: expectedOutputForKeyedSingleValueProperties
         )
     }
