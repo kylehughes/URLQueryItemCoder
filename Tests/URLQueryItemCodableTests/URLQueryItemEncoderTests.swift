@@ -22,21 +22,48 @@ final class URLQueryItemEncoderTests: XCTestCase {
     }
 }
 
-// MARK: - Tests
+// MARK: - Single Value Tests
 
 extension URLQueryItemEncoderTests {
     // MARK: Internal Instance Interface
     
-    func test_rawValue(){
-        XCTAssertEncoder(
-            URLQueryItemEncoder(),
-            encodes: 1
-        ) {
-            [
-                URLQueryItem(name: String(), value: $0),
-            ]
-        }
+    func test_singleValue_bool(){
+        XCTAssertURLQueryItemEncoder(encodesSingleValue: Bool.random())
     }
+    
+    func test_singleValue_double(){
+        XCTAssertURLQueryItemEncoder(encodesSingleValue: Double.random(in: 0 ... .greatestFiniteMagnitude))
+    }
+    
+    func test_singleValue_float(){
+        XCTAssertURLQueryItemEncoder(encodesSingleValue: Float.random(in: 0 ... .greatestFiniteMagnitude))
+    }
+    
+    func test_singleValue_int(){
+        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int.random(in: 0 ... .max))
+    }
+    
+    func test_singleValue_int8(){
+        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int8.random(in: 0 ... .max))
+    }
+    
+    func test_singleValue_int16(){
+        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int16.random(in: 0 ... .max))
+    }
+    
+    func test_singleValue_int32(){
+        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int32.random(in: 0 ... .max))
+    }
+    
+    func test_singleValue_int64(){
+        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int64.random(in: 0 ... .max))
+    }
+}
+
+// MARK: - Complex Value Tests
+
+extension URLQueryItemEncoderTests {
+    // MARK: Internal Instance Interface
     
     func test_complexType_oneProperty_notNil() {
         XCTAssertEncoder(
