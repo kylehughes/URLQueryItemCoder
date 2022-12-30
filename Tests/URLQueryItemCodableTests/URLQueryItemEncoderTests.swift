@@ -10,53 +10,101 @@ import XCTest
 
 @testable import URLQueryItemCodable
 
-final class URLQueryItemEncoderTests: XCTestCase {
-    // MARK: XCTestCase Implementation
-    
-    override func setUp() {
-        // NO-OP
-    }
-    
-    override func tearDown() {
-        // NO-OP
-    }
-}
+final class URLQueryItemEncoderTests: TopLevelEncoderTests<URLQueryItemEncoder> {
+    // MARK: TopLevelEncoderTest Implementation
 
-// MARK: - Single Value Tests
-
-extension URLQueryItemEncoderTests {
-    // MARK: Internal Instance Interface
-    
-    func test_singleValue_bool(){
-        XCTAssertURLQueryItemEncoder(encodesSingleValue: Bool.random())
+    override var target: URLQueryItemEncoder {
+        URLQueryItemEncoder()
     }
     
-    func test_singleValue_double(){
-        XCTAssertURLQueryItemEncoder(encodesSingleValue: Double.random(in: 0 ... .greatestFiniteMagnitude))
+    override func expectedOutputForSingleBool(_ value: Bool) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
     }
     
-    func test_singleValue_float(){
-        XCTAssertURLQueryItemEncoder(encodesSingleValue: Float.random(in: 0 ... .greatestFiniteMagnitude))
+    override func expectedOutputForSingleDouble(_ value: Double) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
     }
     
-    func test_singleValue_int(){
-        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int.random(in: 0 ... .max))
+    override func expectedOutputForSingleFloat(_ value: Float) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
     }
     
-    func test_singleValue_int8(){
-        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int8.random(in: 0 ... .max))
+    override func expectedOutputForSingleInt(_ value: Int) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
     }
     
-    func test_singleValue_int16(){
-        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int16.random(in: 0 ... .max))
+    override func expectedOutputForSingleInt8(_ value: Int8) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
     }
     
-    func test_singleValue_int32(){
-        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int32.random(in: 0 ... .max))
+    override func expectedOutputForSingleInt16(_ value: Int16) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
     }
     
-    func test_singleValue_int64(){
-        XCTAssertURLQueryItemEncoder(encodesSingleValue: Int64.random(in: 0 ... .max))
+    override func expectedOutputForSingleInt32(_ value: Int32) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
+    }
+    
+    override func expectedOutputForSingleInt64(_ value: Int64) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
+    }
+    
+    override func expectedOutputForSingleNil(_ value: String?) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
+    }
+    
+    override func expectedOutputForSingleString(_ value: String) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
+    }
+    
+    override func expectedOutputForSingleUInt(_ value: UInt) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
+    }
+    
+    override func expectedOutputForSingleUInt8(_ value: UInt8) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
+    }
+    
+    override func expectedOutputForSingleUInt16(_ value: UInt16) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
+    }
+    
+    override func expectedOutputForSingleUInt32(_ value: UInt32) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
+    }
+    
+    override func expectedOutputForSingleUInt64(_ value: UInt64) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: String(), value: value)
+        ]
     }
 }
 
