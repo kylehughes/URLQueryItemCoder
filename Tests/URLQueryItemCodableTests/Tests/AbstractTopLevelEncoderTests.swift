@@ -77,10 +77,16 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         fatalErrorForUnimplementedAbstractInterface()
     }
     
+    // MARK: Public Static Interface
+    
+    public class var isAbstractTestCase: Bool {
+        self == AbstractTopLevelEncoderTests.self
+    }
+    
     // MARK: XCTestCase Implementation
     
     override class public var defaultTestSuite: XCTestSuite {
-        guard self == AbstractTopLevelEncoderTests.self else {
+        guard isAbstractTestCase else {
             return super.defaultTestSuite
         }
 
@@ -90,7 +96,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     // MARK: Single Value Tests
     
     public func test_singleValue_bool() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -100,7 +106,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_double() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -110,7 +116,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_float() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -120,7 +126,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_int() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -130,7 +136,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_int8() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -140,7 +146,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_int16() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -150,7 +156,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_int32() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -160,7 +166,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_int64() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -170,7 +176,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_nil() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -180,7 +186,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_string() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -190,7 +196,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_uint() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -200,7 +206,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_uint8() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -210,7 +216,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_uint16() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -220,7 +226,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_uint32() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
@@ -230,7 +236,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func test_singleValue_uint64() throws {
-        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
