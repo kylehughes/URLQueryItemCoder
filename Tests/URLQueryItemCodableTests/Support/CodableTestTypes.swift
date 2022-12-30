@@ -9,32 +9,36 @@ public enum CodableTestTypes {
     // NO-OP
 }
 
-// MARK: - CodableTestTypes.KeyedValueProperties Definition
+// MARK: - CodableTestTypes.OmniValueProperties Definition
 
 extension CodableTestTypes {
-    public struct KeyedValueProperties: Codable {
+    public struct OmniValueProperties: Codable {
         public let one: SingleValueProperties?
         public let two: SingleValueProperties?
-        public let three: SingleValueProperties?
+        public let three: UnkeyedValueProperties?
+        public let four: UnkeyedValueProperties?
         
         // MARK: Predefined Constants
         
-        public static let maximumValues = KeyedValueProperties(
+        public static let maximumValues = OmniValueProperties(
             one: .maximumValues,
             two: .maximumValues,
-            three: .maximumValues
+            three: .nonNil,
+            four: .nonNil
         )
         
-        public static let minimumValues = KeyedValueProperties(
+        public static let minimumValues = OmniValueProperties(
             one: .minimumValues,
             two: .minimumValues,
-            three: .minimumValues
+            three: .nonNil,
+            four: .nonNil
         )
         
-        public static let `nil` = KeyedValueProperties(
+        public static let `nil` = OmniValueProperties(
             one: .nil,
             two: .nil,
-            three: .nil
+            three: .nil,
+            four: .nil
         )
     }
 }

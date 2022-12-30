@@ -18,7 +18,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func expectedOutputForKeyedKeyedValueProperties(
-        _ value: CodableTestTypes.KeyedValueProperties
+        _ value: CodableTestTypes.OmniValueProperties
     ) -> Target.Output {
         fatalErrorForUnimplementedAbstractInterface()
     }
@@ -90,7 +90,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     }
     
     public func expectedOutputForUnkeyedSingleValueProperties(
-        _ value: CodableTestTypes.UnkeyedValueProperties
+        _ value: CodableTestTypes.UnkeyedValueProperties?
     ) -> Target.Output {
         fatalErrorForUnimplementedAbstractInterface()
     }
@@ -295,32 +295,32 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         )
     }
     
-    public func test_keyedValue_keyedValueProperties_maximumValues() throws {
+    public func test_keyedValue_omniValueProperties_maximumValues() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
-            encodes: CodableTestTypes.KeyedValueProperties.maximumValues,
+            encodes: CodableTestTypes.OmniValueProperties.maximumValues,
             as: expectedOutputForKeyedKeyedValueProperties
         )
     }
     
-    public func test_keyedValue_keyedValueProperties_minimumValues() throws {
+    public func test_keyedValue_omniValueProperties_minimumValues() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
-            encodes: CodableTestTypes.KeyedValueProperties.minimumValues,
+            encodes: CodableTestTypes.OmniValueProperties.minimumValues,
             as: expectedOutputForKeyedKeyedValueProperties
         )
     }
     
-    public func test_keyedValue_keyedValueProperties_nil() throws {
+    public func test_keyedValue_omniValueProperties_nil() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
         XCTAssertEncoder(
             target,
-            encodes: CodableTestTypes.KeyedValueProperties.nil,
+            encodes: CodableTestTypes.OmniValueProperties.nil,
             as: expectedOutputForKeyedKeyedValueProperties
         )
     }

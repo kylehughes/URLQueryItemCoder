@@ -18,18 +18,21 @@ final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemE
     }
     
     override func expectedOutputForKeyedKeyedValueProperties(
-        _ value: CodableTestTypes.KeyedValueProperties
+        _ value: CodableTestTypes.OmniValueProperties
     ) -> [URLQueryItem] {
         let ones = expectedOutputForKeyedSingleValueProperties(value.one)
             .map { URLQueryItem(name: "one.\($0.name)", value: $0.value) }
         
-        let twos = expectedOutputForKeyedSingleValueProperties(value.one)
+        let twos = expectedOutputForKeyedSingleValueProperties(value.two)
             .map { URLQueryItem(name: "two.\($0.name)", value: $0.value) }
         
-        let threes = expectedOutputForKeyedSingleValueProperties(value.one)
+        let threes = expectedOutputForUnkeyedSingleValueProperties(value.three)
             .map { URLQueryItem(name: "three.\($0.name)", value: $0.value) }
         
-        return (ones + twos + threes).sorted { $0.name < $1.name }
+        let fours = expectedOutputForUnkeyedSingleValueProperties(value.four)
+            .map { URLQueryItem(name: "four.\($0.name)", value: $0.value) }
+        
+        return (ones + twos + threes + fours).sorted { $0.name < $1.name }
     }
     
     override func expectedOutputForKeyedSingleValueProperties(
@@ -150,9 +153,13 @@ final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemE
     }
     
     override func expectedOutputForUnkeyedSingleValueProperties(
-        _ value: CodableTestTypes.UnkeyedValueProperties
+        _ value: CodableTestTypes.UnkeyedValueProperties?
     ) -> [URLQueryItem] {
         var output: [URLQueryItem] = []
+        
+        guard let value else {
+            return output
+        }
         
         for (index, element) in zip(value.indices, value) {
             output.append(URLQueryItem(name: String(index), value: element))
