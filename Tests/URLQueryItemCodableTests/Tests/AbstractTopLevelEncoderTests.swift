@@ -89,6 +89,12 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         fatalErrorForUnimplementedAbstractInterface()
     }
     
+    public func expectedOutputForUnkeyedSingleValueProperties(
+        _ value: CodableTestTypes.UnkeyedValueProperties
+    ) -> Target.Output {
+        fatalErrorForUnimplementedAbstractInterface()
+    }
+    
     // MARK: Public Static Interface
     
     public class var isAbstractTestCase: Bool {
@@ -316,6 +322,28 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
             target,
             encodes: CodableTestTypes.KeyedValueProperties.nil,
             as: expectedOutputForKeyedKeyedValueProperties
+        )
+    }
+    
+    // MARK: Unkeyed Value Tests
+    
+    public func test_unkeyedValue_nil() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertEncoder(
+            target,
+            encodes: CodableTestTypes.UnkeyedValueProperties.nil,
+            as: expectedOutputForUnkeyedSingleValueProperties
+        )
+    }
+    
+    public func test_unkeyedValue_nonNil() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertEncoder(
+            target,
+            encodes: CodableTestTypes.UnkeyedValueProperties.nonNil,
+            as: expectedOutputForUnkeyedSingleValueProperties
         )
     }
 }

@@ -112,3 +112,16 @@ extension CodableTestTypes {
         )
     }
 }
+
+// MARK: - CodableTestTypes.UnkeyedValueProperties Definition
+
+extension CodableTestTypes {
+    public typealias UnkeyedValueProperties = [String?]
+}
+
+extension CodableTestTypes.UnkeyedValueProperties {
+    // MARK: Predefined Constants
+    
+    public static let `nil` = CodableTestTypes.UnkeyedValueProperties(repeating: nil, count: 10)
+    public static let nonNil = CodableTestTypes.UnkeyedValueProperties(repeating: "LOL", count: 10)
+}

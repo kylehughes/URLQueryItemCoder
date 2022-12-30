@@ -148,4 +148,20 @@ final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemE
             URLQueryItem(name: String(), value: value)
         ]
     }
+    
+    override func expectedOutputForUnkeyedSingleValueProperties(
+        _ value: CodableTestTypes.UnkeyedValueProperties
+    ) -> [URLQueryItem] {
+        var output: [URLQueryItem] = []
+        
+        for (index, element) in zip(value.indices, value) {
+            guard let element else {
+                continue
+            }
+            
+            output.append(URLQueryItem(name: String(index), value: element))
+        }
+        
+        return output
+    }
 }
