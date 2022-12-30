@@ -11,7 +11,7 @@ import XCTest
 @testable import URLQueryItemCodable
 
 final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemEncoder> {
-    // MARK: TopLevelEncoderTest Implementation
+    // MARK: AbstractTopLevelEncoderTest Implementation
 
     override var target: URLQueryItemEncoder {
         URLQueryItemEncoder()
@@ -147,120 +147,5 @@ final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemE
         [
             URLQueryItem(name: String(), value: value)
         ]
-    }
-}
-
-// MARK: - Complex Value Tests
-
-extension URLQueryItemEncoderTests {
-    // MARK: Internal Instance Interface
-    
-    func test_complexType_oneProperty_notNil() {
-        XCTAssertEncoder(
-            URLQueryItemEncoder(),
-            encodes: TestTypes.SingleProperty(one: "value")
-        ) {
-            [
-                URLQueryItem(name: "one", value: $0.one),
-            ]
-        }
-    }
-    
-    func test_complexType_oneProperty_nil() {
-        XCTAssertEncoder(
-            URLQueryItemEncoder(),
-            encodes: TestTypes.SingleProperty(one: nil),
-            as: []
-        )
-    }
-    
-    func test_complexType_multipleProperties_withoutNil() {
-        XCTAssertEncoder(
-            URLQueryItemEncoder(),
-            encodes: TestTypes.MultipleProperties(one: "value", two: 123, three: true)
-        ) {
-            [
-                URLQueryItem(name: "one", value: $0.one),
-                URLQueryItem(name: "three", value: $0.three),
-                URLQueryItem(name: "two", value: $0.two),
-            ]
-        }
-    }
-    
-    func test_complexType_multipleProperties_withNil() {
-        XCTAssertEncoder(
-            URLQueryItemEncoder(),
-            encodes: TestTypes.MultipleProperties(one: nil, two: 123, three: true)
-        ) {
-            [
-                URLQueryItem(name: "three", value: $0.three),
-                URLQueryItem(name: "two", value: $0.two),
-            ]
-        }
-    }
-    
-    func test_complexType_nestedProperties_withoutNil() {
-        XCTAssertEncoder(
-            URLQueryItemEncoder(),
-            encodes: TestTypes.NestedProperties(
-                one: TestTypes.SingleProperty(one: "value"),
-                two: TestTypes.MultipleProperties(one: "value", two: 123, three: true)
-            )
-        ) {
-            [
-                URLQueryItem(name: "one.one", value: $0.one.one),
-                URLQueryItem(name: "two.one", value: $0.two.one),
-                URLQueryItem(name: "two.three", value: $0.two.three),
-                URLQueryItem(name: "two.two", value: $0.two.two),
-            ]
-        }
-    }
-    
-    func test_complexType_nestedProperties_withNil() {
-        XCTAssertEncoder(
-            URLQueryItemEncoder(),
-            encodes: TestTypes.NestedProperties(
-                one: TestTypes.SingleProperty(one: nil),
-                two: TestTypes.MultipleProperties(one: nil, two: 123, three: true)
-            )
-        ) {
-            [
-                URLQueryItem(name: "two.three", value: $0.two.three),
-                URLQueryItem(name: "two.two", value: $0.two.two),
-            ]
-        }
-    }
-}
-
-// MARK: - TestTypes Definition
-
-private enum TestTypes {
-    // NO-OP
-}
-
-// MARK: - TestTypes.MultipleProperties
-
-extension TestTypes {
-    struct MultipleProperties: Encodable {
-        let one: String?
-        let two: Int
-        let three: Bool
-    }
-}
-
-// MARK: - TestTypes.NestedProperties
-
-extension TestTypes {
-    struct NestedProperties: Encodable {
-        let one: SingleProperty
-        let two: MultipleProperties
-    }
-}
-
-// MARK: - TestTypes.SingleProperty
-
-extension TestTypes {
-    struct SingleProperty: Encodable {
-        let one: String?
     }
 }
