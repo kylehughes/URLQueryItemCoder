@@ -10,7 +10,7 @@ import XCTest
 
 @testable import URLQueryItemCodable
 
-final class URLQueryItemEncoderTests: TopLevelEncoderTests<URLQueryItemEncoder> {
+final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemEncoder> {
     // MARK: TopLevelEncoderTest Implementation
 
     override var target: URLQueryItemEncoder {

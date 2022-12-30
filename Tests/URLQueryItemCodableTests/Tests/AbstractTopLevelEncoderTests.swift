@@ -1,5 +1,5 @@
 //
-//  TopLevelEncoderTests.swift
+//  AbstractTopLevelEncoderTests.swift
 //  CodableSkeleton
 //
 //  Created by Kyle Hughes on 12/29/22.
@@ -10,7 +10,7 @@ import XCTest
 
 @testable import URLQueryItemCodable
 
-public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEncoder, Target.Output: Equatable {
+public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEncoder, Target.Output: Equatable {
     // MARK: Public Abstract Interface
 
     public var target: Target {
@@ -80,16 +80,18 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     // MARK: XCTestCase Implementation
     
     override class public var defaultTestSuite: XCTestSuite {
-        guard self == TopLevelEncoderTests.self else {
+        guard self == AbstractTopLevelEncoderTests.self else {
             return super.defaultTestSuite
         }
-        
-        return XCTestSuite(name: "Empty Suite for \(TopLevelEncoderTests.self)")
+
+        return XCTestSuite(name: "Empty Suite for \(AbstractTopLevelEncoderTests.self)")
     }
     
     // MARK: Single Value Tests
     
     public func test_singleValue_bool() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(),
@@ -98,6 +100,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_double() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .greatestFiniteMagnitude),
@@ -106,6 +110,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_float() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .greatestFiniteMagnitude),
@@ -114,6 +120,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_int() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
@@ -122,6 +130,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_int8() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
@@ -130,6 +140,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_int16() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
@@ -138,6 +150,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_int32() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
@@ -146,6 +160,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_int64() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
@@ -154,6 +170,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_nil() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: nil,
@@ -162,6 +180,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_string() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: "Test",
@@ -170,6 +190,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_uint() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
@@ -178,6 +200,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_uint8() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
@@ -186,6 +210,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_uint16() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
@@ -194,6 +220,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_uint32() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
@@ -202,6 +230,8 @@ public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEnco
     }
     
     public func test_singleValue_uint64() throws {
+        try XCTSkipIf(type(of: self) == AbstractTopLevelEncoderTests.self)
+        
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
