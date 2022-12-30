@@ -17,8 +17,14 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         fatalErrorForUnimplementedAbstractInterface()
     }
     
+    public func expectedOutputForKeyedKeyedValueProperties(
+        _ value: CodableTestTypes.KeyedValueProperties
+    ) -> Target.Output {
+        fatalErrorForUnimplementedAbstractInterface()
+    }
+    
     public func expectedOutputForKeyedSingleValueProperties(
-        _ value: CodableTestTypes.SingleValueProperties
+        _ value: CodableTestTypes.SingleValueProperties?
     ) -> Target.Output {
         fatalErrorForUnimplementedAbstractInterface()
     }
@@ -280,6 +286,36 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
             target,
             encodes: CodableTestTypes.SingleValueProperties.nil,
             as: expectedOutputForKeyedSingleValueProperties
+        )
+    }
+    
+    public func test_keyedValue_keyedValueProperties_maximumValues() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertEncoder(
+            target,
+            encodes: CodableTestTypes.KeyedValueProperties.maximumValues,
+            as: expectedOutputForKeyedKeyedValueProperties
+        )
+    }
+    
+    public func test_keyedValue_keyedValueProperties_minimumValues() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertEncoder(
+            target,
+            encodes: CodableTestTypes.KeyedValueProperties.minimumValues,
+            as: expectedOutputForKeyedKeyedValueProperties
+        )
+    }
+    
+    public func test_keyedValue_keyedValueProperties_nil() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertEncoder(
+            target,
+            encodes: CodableTestTypes.KeyedValueProperties.nil,
+            as: expectedOutputForKeyedKeyedValueProperties
         )
     }
 }

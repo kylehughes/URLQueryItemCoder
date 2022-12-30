@@ -17,10 +17,29 @@ final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemE
         URLQueryItemEncoder()
     }
     
-    override func expectedOutputForKeyedSingleValueProperties(
-        _ value: CodableTestTypes.SingleValueProperties
+    override func expectedOutputForKeyedKeyedValueProperties(
+        _ value: CodableTestTypes.KeyedValueProperties
     ) -> [URLQueryItem] {
-        [
+        let ones = expectedOutputForKeyedSingleValueProperties(value.one)
+            .map { URLQueryItem(name: "one.\($0.name)", value: $0.value) }
+        
+        let twos = expectedOutputForKeyedSingleValueProperties(value.one)
+            .map { URLQueryItem(name: "two.\($0.name)", value: $0.value) }
+        
+        let threes = expectedOutputForKeyedSingleValueProperties(value.one)
+            .map { URLQueryItem(name: "three.\($0.name)", value: $0.value) }
+        
+        return (ones + twos + threes).sorted { $0.name < $1.name }
+    }
+    
+    override func expectedOutputForKeyedSingleValueProperties(
+        _ value: CodableTestTypes.SingleValueProperties?
+    ) -> [URLQueryItem] {
+        guard let value else {
+            return []
+        }
+        
+        return [
             URLQueryItem.nilIfValueIsNil(name: "bool", value: value.bool),
             URLQueryItem.nilIfValueIsNil(name: "double", value: value.double),
             URLQueryItem.nilIfValueIsNil(name: "float", value: value.float),
