@@ -8,71 +8,73 @@
 import Combine
 import XCTest
 
+@testable import URLQueryItemCodable
+
 public class TopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEncoder, Target.Output: Equatable {
     // MARK: Public Abstract Interface
 
     public var target: Target {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleBool(_ value: Bool) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleDouble(_ value: Double) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleFloat(_ value: Float) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleInt(_ value: Int) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleInt8(_ value: Int8) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleInt16(_ value: Int16) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleInt32(_ value: Int32) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleInt64(_ value: Int64) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleNil(_ value: String?) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleString(_ value: String) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleUInt(_ value: UInt) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleUInt8(_ value: UInt8) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleUInt16(_ value: UInt16) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleUInt32(_ value: UInt32) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     public func expectedOutputForSingleUInt64(_ value: UInt64) -> Target.Output {
-        fatalError("Should be implemented by subclass.")
+        fatalErrorForUnimplementedAbstractInterface()
     }
     
     // MARK: XCTestCase Implementation
