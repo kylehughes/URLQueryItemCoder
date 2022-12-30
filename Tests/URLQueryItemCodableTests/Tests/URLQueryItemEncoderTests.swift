@@ -155,10 +155,6 @@ final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemE
         var output: [URLQueryItem] = []
         
         for (index, element) in zip(value.indices, value) {
-            guard let element else {
-                continue
-            }
-            
             output.append(URLQueryItem(name: String(index), value: element))
         }
         
