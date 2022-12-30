@@ -17,6 +17,12 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         fatalErrorForUnimplementedAbstractInterface()
     }
     
+    public func expectedOutputForKeyedSingleValueProperties(
+        _ value: CodableTestTypes.SingleValueProperties
+    ) -> Target.Output {
+        fatalErrorForUnimplementedAbstractInterface()
+    }
+    
     public func expectedOutputForSingleBool(_ value: Bool) -> Target.Output {
         fatalErrorForUnimplementedAbstractInterface()
     }
@@ -242,6 +248,18 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
             target,
             encodes: .random(in: 0 ... .max),
             as: expectedOutputForSingleUInt64
+        )
+    }
+    
+    // MARK: Keyed Values Tests
+    
+    public func test_keyedValue_singleValueProperties_minimumValues() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertEncoder(
+            target,
+            encodes: CodableTestTypes.SingleValueProperties.minimumValues,
+            as: expectedOutputForKeyedSingleValueProperties
         )
     }
 }

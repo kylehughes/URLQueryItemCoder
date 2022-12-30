@@ -17,6 +17,29 @@ final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemE
         URLQueryItemEncoder()
     }
     
+    override func expectedOutputForKeyedSingleValueProperties(
+        _ value: CodableTestTypes.SingleValueProperties
+    ) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: "bool", value: value.bool),
+            URLQueryItem(name: "double", value: value.double),
+            URLQueryItem(name: "float", value: value.float),
+            URLQueryItem(name: "int", value: value.int),
+            URLQueryItem(name: "int8", value: value.int8),
+            URLQueryItem(name: "int16", value: value.int16),
+            URLQueryItem(name: "int32", value: value.int32),
+            URLQueryItem(name: "int64", value: value.int64),
+            URLQueryItem(name: "string", value: value.string),
+            URLQueryItem(name: "uint", value: value.uint),
+            URLQueryItem(name: "uint8", value: value.uint8),
+            URLQueryItem(name: "uint16", value: value.uint16),
+            URLQueryItem(name: "uint32", value: value.uint32),
+            URLQueryItem(name: "uint64", value: value.uint64),
+        ].sorted {
+            $0.name < $1.name
+        }
+    }
+    
     override func expectedOutputForSingleBool(_ value: Bool) -> [URLQueryItem] {
         [
             URLQueryItem(name: String(), value: value)
