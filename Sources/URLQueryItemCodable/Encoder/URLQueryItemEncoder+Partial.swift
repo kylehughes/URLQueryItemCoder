@@ -17,11 +17,36 @@ extension URLQueryItemEncoder {
             storage = [:]
         }
         
+        internal init(from output: [URLQueryItem]) {
+            storage = {
+                var storage: [String: String?] = Dictionary(minimumCapacity: output.count)
+                
+                for queryItem in output {
+                    storage[queryItem.name] = queryItem.value
+                }
+                
+                return storage
+            }()
+        }
+        
         // MARK: Internal Instance Interface
         
+        internal func decode(_ codingPath: [any CodingKey]) -> String? {
+            storage.removeValue(forKey: Self.storageKey(for: codingPath)) ?? nil
+        }
+        
+        internal func decodeLosslessly<Target>(
+            _ codingPath: [any CodingKey]
+        ) -> Target? where Target: LosslessStringConvertible {
+            guard let stringValue = decode(codingPath) else {
+                return nil
+            }
+            
+            return Target(stringValue)
+        }
+        
         internal func encode(_ codingPath: [any CodingKey], as value: String?) {
-            let key = codingPath.map(\.stringValue).joined(separator: ".")
-            storage[key] = value
+            storage[Self.storageKey(for: codingPath)] = value
         }
         
         internal func encodeLosslessly(_ codingPath: [any CodingKey], as value: (some LosslessStringConvertible)?) {
@@ -40,6 +65,12 @@ extension URLQueryItemEncoder {
                 .map { key in
                     URLQueryItem(name: key, value: storage[key] ?? nil)
                 }
+        }
+        
+        // MARK: Private Static Interface
+        
+        private static func storageKey(for codingPath: [any CodingKey]) -> String {
+            codingPath.map(\.stringValue).joined(separator: ".")
         }
     }
 }
