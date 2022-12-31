@@ -90,6 +90,6 @@ extension URLQueryItemEncoder.SingleValueContainer: SingleValueEncodingContainer
     }
     
     mutating public func encodeNil() throws {
-        partial.encode(codingPath, as: nil)
+        // NO-OP
     }
 }

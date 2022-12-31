@@ -111,9 +111,7 @@ final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemE
     }
     
     override func expectedOutputForSingleNil(_ value: String?) -> [URLQueryItem] {
-        [
-            URLQueryItem(name: String(), value: value)
-        ]
+        []
     }
     
     override func expectedOutputForSingleString(_ value: String) -> [URLQueryItem] {
@@ -162,6 +160,10 @@ final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemE
         }
         
         for (index, element) in zip(value.indices, value) {
+            guard let element else {
+                continue
+            }
+            
             output.append(URLQueryItem(name: String(index), value: element))
         }
         
