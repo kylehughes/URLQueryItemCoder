@@ -13,9 +13,12 @@ extension URLQueryItemDecoder {
         
         internal private(set) var codingPath: [any CodingKey]
         
+        private let intermediate: Intermediate
+        
         // MARK: Internal Initialization
         
-        internal init(codingPath: [any CodingKey]) {
+        internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
+            self.intermediate = intermediate
             self.codingPath = codingPath
             
             userInfo = [:]
@@ -29,7 +32,9 @@ extension URLQueryItemDecoder.LowLevelDecoder: Decoder {
     // MARK: Internal Instance Interface
 
     func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> where Key : CodingKey {
-        <#code#>
+        let container = URLQueryItemDecoder.KeyedContainer<Key>(intermediate: intermediate, codingPath: codingPath)
+        
+        return KeyedDecodingContainer(container)
     }
     
     func unkeyedContainer() throws -> UnkeyedDecodingContainer {

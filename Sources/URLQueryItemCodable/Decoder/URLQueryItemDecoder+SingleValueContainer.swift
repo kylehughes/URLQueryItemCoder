@@ -11,12 +11,12 @@ extension URLQueryItemDecoder {
     internal struct SingleValueContainer {
         internal private(set) var codingPath: [any CodingKey]
         
-        private let source: URLQueryItem
+        private let intermediate: Intermediate
         
         // MARK: Internal Initialization
         
-        internal init(source: URLQueryItem, codingPath: [any CodingKey]) {
-            self.source = source
+        internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
+            self.intermediate = intermediate
             self.codingPath = codingPath
         }
         
@@ -25,7 +25,7 @@ extension URLQueryItemDecoder {
         private func decodeLosslessly<Target>(
             _ type: Target.Type
         ) throws -> Target where Target: LosslessStringConvertible {
-            guard let value = source.value else {
+            guard let value = intermediate.decode(codingPath) else {
                 throw DecodingError.valueNotFound(
                     Target.self,
                     DecodingError.Context(codingPath: codingPath, debugDescription: "Expected non-nil value.")
@@ -106,12 +106,12 @@ extension URLQueryItemDecoder.SingleValueContainer: SingleValueDecodingContainer
     }
     
     func decode<Target>(_ type: Target.Type) throws -> Target where Target: Decodable {
-        let lowLevelDecoder = URLQueryItemDecoder.LowLevelDecoder(codingPath: codingPath)
+        let lowLevelDecoder = URLQueryItemDecoder.LowLevelDecoder(intermediate: intermediate, codingPath: codingPath)
         
         return try Target(from: lowLevelDecoder)
     }
     
     func decodeNil() -> Bool {
-        source.value == nil
+        intermediate.decode(codingPath) == nil
     }
 }

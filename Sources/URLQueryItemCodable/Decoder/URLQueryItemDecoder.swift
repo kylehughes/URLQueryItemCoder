@@ -18,8 +18,9 @@ extension URLQueryItemDecoder: TopLevelDecoder {
     // MARK: Public Instance Interface
     
     public func decode<Value>(_ type: Value.Type, from: [URLQueryItem]) throws -> Value where Value: Decodable {
-        let lowLevelDecoder = 
+        let intermediate = Intermediate(from: from)
+        let lowLevelDecoder = LowLevelDecoder(intermediate: intermediate, codingPath: [])
         
-        return try Value(from: <#T##Decoder#>)
+        return try Value(from: lowLevelDecoder)
     }
 }

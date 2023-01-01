@@ -13,12 +13,12 @@ extension URLQueryItemEncoder {
         
         internal private(set) var codingPath: [any CodingKey]
         
-        private let partial: Partial
+        private let intermediate: Intermediate
         
         // MARK: Internal Initialization
         
-        internal init(partial: Partial, codingPath: [any CodingKey]) {
-            self.partial = partial
+        internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
+            self.intermediate = intermediate
             self.codingPath = codingPath
             
             userInfo = [:]
@@ -32,16 +32,16 @@ extension URLQueryItemEncoder.LowLevelEncoder: Encoder {
     // MARK: Internal Instance Interface
     
     internal func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key: CodingKey {
-        let container = URLQueryItemEncoder.KeyedContainer<Key>(partial: partial, codingPath: codingPath)
+        let container = URLQueryItemEncoder.KeyedContainer<Key>(intermediate: intermediate, codingPath: codingPath)
         
         return KeyedEncodingContainer(container)
     }
     
     internal func singleValueContainer() -> SingleValueEncodingContainer {
-        URLQueryItemEncoder.SingleValueContainer(partial: partial, codingPath: codingPath)
+        URLQueryItemEncoder.SingleValueContainer(intermediate: intermediate, codingPath: codingPath)
     }
     
     internal func unkeyedContainer() -> UnkeyedEncodingContainer {
-        URLQueryItemEncoder.UnkeyedContainer(partial: partial, codingPath: codingPath)
+        URLQueryItemEncoder.UnkeyedContainer(intermediate: intermediate, codingPath: codingPath)
     }
 }

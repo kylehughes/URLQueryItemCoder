@@ -12,12 +12,12 @@ extension URLQueryItemEncoder {
         internal private(set) var codingPath: [any CodingKey]
         internal private(set) var count: Int
         
-        private let partial: Partial
+        private let intermediate: Intermediate
         
         // MARK: Internal Initialization
         
-        internal init(partial: Partial, codingPath: [any CodingKey]) {
-            self.partial = partial
+        internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
+            self.intermediate = intermediate
             self.codingPath = codingPath
             
             count = 0
@@ -44,103 +44,103 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: String) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, as: value)
+        intermediate.encode(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Double) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Float) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int8) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int16) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int32) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: Int64) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt8) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt16) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt32) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode(_ value: UInt64) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
 
-        partial.encodeLosslessly(nextCodingPath, as: value)
+        intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
     mutating internal func encode<T>(_ value: T) throws where T : Encodable {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let lowLevelEncoder = URLQueryItemEncoder.LowLevelEncoder(partial: partial, codingPath: nextCodingPath)
+        let lowLevelEncoder = URLQueryItemEncoder.LowLevelEncoder(intermediate: intermediate, codingPath: nextCodingPath)
         
         try value.encode(to: lowLevelEncoder)
     }
@@ -149,7 +149,7 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        partial.encode(nextCodingPath, as: nil)
+        intermediate.encode(nextCodingPath, as: nil)
     }
     
     mutating internal func nestedContainer<NestedKey>(
@@ -158,7 +158,7 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         let container = URLQueryItemEncoder.KeyedContainer<NestedKey>(
-            partial: partial,
+            intermediate: intermediate,
             codingPath: nextCodingPath
         )
         
@@ -169,14 +169,14 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        return Self(partial: partial, codingPath: nextCodingPath)
+        return Self(intermediate: intermediate, codingPath: nextCodingPath)
     }
     
     mutating internal func superEncoder() -> Encoder {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        return URLQueryItemEncoder.LowLevelEncoder(partial: partial, codingPath: nextCodingPath)
+        return URLQueryItemEncoder.LowLevelEncoder(intermediate: intermediate, codingPath: nextCodingPath)
     }
 }
 
