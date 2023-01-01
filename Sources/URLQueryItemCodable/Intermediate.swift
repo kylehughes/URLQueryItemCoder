@@ -10,7 +10,7 @@ import Foundation
 // TODO: this should be called, like, intermediate representation
 
 internal class Intermediate {
-    private var storage: [String: String?]
+    private var storage: [String: String]
     
     // MARK: Internal Initialization
     
@@ -20,7 +20,7 @@ internal class Intermediate {
     
     internal init(from output: [URLQueryItem]) {
         storage = {
-            var storage: [String: String?] = Dictionary(minimumCapacity: output.count)
+            var storage: [String: String] = Dictionary(minimumCapacity: output.count)
             
             for queryItem in output {
                 storage[queryItem.name] = queryItem.value
@@ -36,18 +36,38 @@ internal class Intermediate {
         storage[key(for: codingPath)] != nil
     }
     
-    internal func decode(_ codingPath: [any CodingKey]) -> String? {
-        storage.removeValue(forKey: key(for: codingPath)) ?? nil
+    internal func decode(_ codingPath: [any CodingKey]) throws -> String {
+        let storageKey = key(for: codingPath)
+        
+        guard let value = storage[storageKey] else {
+            guard let codingKey = codingPath.last else {
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: codingPath, debugDescription: "Expected valid coding path.")
+                )
+            }
+            
+            throw DecodingError.keyNotFound(
+                codingKey,
+                DecodingError.Context(codingPath: codingPath, debugDescription: "Storage key: \(storageKey)")
+            )
+        }
+        
+        return value
     }
     
     internal func decodeLosslessly<Target>(
         _ codingPath: [any CodingKey]
-    ) -> Target? where Target: LosslessStringConvertible {
-        guard let stringValue = decode(codingPath) else {
-            return nil
+    ) throws -> Target where Target: LosslessStringConvertible {
+        let stringValue = try decode(codingPath)
+        
+        guard let value = Target(stringValue) else {
+            throw DecodingError.typeMismatch(
+                Target.self,
+                DecodingError.Context(codingPath: codingPath, debugDescription: "Couldn't decode from string.")
+            )
         }
         
-        return Target(stringValue)
+        return value
     }
     
     internal func encode(_ codingPath: [any CodingKey], as value: String?) {

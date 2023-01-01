@@ -15,6 +15,11 @@ extension URLQueryItemDecoder {
         
         // MARK: Internal Initialization
         
+        // TODO: can I somehow pass in a… scoped down intermediate? not sure how I can pull that off. IDK how to
+        // implement allKeys otherwise,
+        // Yes I believe I am correct. The keyed container should just operate on its scope. So it can be the same
+        // object or shared storage but all the contains shit and allKeys shit needs to be scoped.
+        
         internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
             self.intermediate = intermediate
             self.codingPath = codingPath
@@ -34,80 +39,117 @@ extension URLQueryItemDecoder.KeyedContainer: KeyedDecodingContainerProtocol {
     internal func contains(_ key: Key) -> Bool {
         let nextCodingPath = codingPath.appending(key)
         
-        intermediate.contains(nextCodingPath)
+        return intermediate.contains(nextCodingPath)
     }
     
     internal func decode(_ type: Bool.Type, forKey key: Key) throws -> Bool {
         let nextCodingPath = codingPath.appending(key)
         
-        guard let value: Bool = intermediate.decodeLosslessly(nextCodingPath) else {
-            /// hmmm but id on't know if the key or value was not found here.
-            throw DecodingError.
-        }
-    }
-    
-    internal func decode(_ type: String.Type, forKey key: Key) throws -> String {
-        <#code#>
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: Double.Type, forKey key: Key) throws -> Double {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: Float.Type, forKey key: Key) throws -> Float {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: Int.Type, forKey key: Key) throws -> Int {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: Int8.Type, forKey key: Key) throws -> Int8 {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: Int16.Type, forKey key: Key) throws -> Int16 {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: Int32.Type, forKey key: Key) throws -> Int32 {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: Int64.Type, forKey key: Key) throws -> Int64 {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
+    }
+    
+    internal func decode(_ type: String.Type, forKey key: Key) throws -> String {
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decode(nextCodingPath)
     }
     
     internal func decode(_ type: UInt.Type, forKey key: Key) throws -> UInt {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: UInt8.Type, forKey key: Key) throws -> UInt8 {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: UInt16.Type, forKey key: Key) throws -> UInt16 {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: UInt32.Type, forKey key: Key) throws -> UInt32 {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode(_ type: UInt64.Type, forKey key: Key) throws -> UInt64 {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal func decode<Target>(_ type: Target.Type, forKey key: Key) throws -> Target where Target: Decodable {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        let lowLevelDecoder = URLQueryItemDecoder.LowLevelDecoder(intermediate: intermediate, codingPath: codingPath)
+        
+        return try Target(from: lowLevelDecoder)
     }
     
     internal func decodeNil(forKey key: Key) throws -> Bool {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return !intermediate.contains(nextCodingPath)
     }
     
-    internal func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type, forKey key: Key) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
-        <#code#>
+    internal func nestedContainer<NestedKey>(
+        keyedBy type: NestedKey.Type,
+        forKey key: Key
+    ) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
+        let nextCodingPath = codingPath.appending(key)
+        let container = URLQueryItemDecoder.KeyedContainer<NestedKey>(
+            intermediate: intermediate,
+            codingPath: nextCodingPath
+        )
+        
+        return KeyedDecodingContainer(container)
     }
     
     internal func nestedUnkeyedContainer(forKey key: Key) throws -> UnkeyedDecodingContainer {
@@ -115,10 +157,18 @@ extension URLQueryItemDecoder.KeyedContainer: KeyedDecodingContainerProtocol {
     }
     
     internal func superDecoder() throws -> Decoder {
-        <#code#>
+        guard let superKey = Key(stringValue: "super") else {
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(codingPath: codingPath, debugDescription: "Couldn't create super key.")
+            )
+        }
+        
+        return try superDecoder(forKey: superKey)
     }
     
     internal func superDecoder(forKey key: Key) throws -> Decoder {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return URLQueryItemDecoder.LowLevelDecoder(intermediate: intermediate, codingPath: nextCodingPath)
     }
 }
