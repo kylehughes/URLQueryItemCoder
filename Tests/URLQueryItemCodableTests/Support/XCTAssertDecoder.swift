@@ -20,6 +20,6 @@ func XCTAssertDecoder<Decoder, Output>(
         
         XCTAssertEqual(decodedValue, expectation, file: file, line: line)
     } catch {
-        XCTFail(error.localizedDescription)
+        XCTFail(error.localizedDescription, file: file, line: line)
     }
 }
