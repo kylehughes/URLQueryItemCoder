@@ -20,8 +20,9 @@ extension URLQueryItemDecoder {
         // Yes I believe I am correct. The keyed container should just operate on its scope. So it can be the same
         // object or shared storage but all the contains shit and allKeys shit needs to be scoped.
         
+        /// No need to scope intermediate beforehand
         internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
-            self.intermediate = intermediate
+            self.intermediate = intermediate.scoped(to: codingPath)
             self.codingPath = codingPath
         }
     }
@@ -32,8 +33,10 @@ extension URLQueryItemDecoder {
 extension URLQueryItemDecoder.KeyedContainer: KeyedDecodingContainerProtocol {
     // MARK: Internal Instance Interface
     
+    // It is possible they only means keys in the root of this container but idk not doing that for now
+    
     internal var allKeys: [Key] {
-        <#code#>
+        intermediate.allStringKeys.compactMap { Key(stringValue: $0) }
     }
     
     internal func contains(_ key: Key) -> Bool {
@@ -128,7 +131,10 @@ extension URLQueryItemDecoder.KeyedContainer: KeyedDecodingContainerProtocol {
     
     internal func decode<Target>(_ type: Target.Type, forKey key: Key) throws -> Target where Target: Decodable {
         let nextCodingPath = codingPath.appending(key)
-        let lowLevelDecoder = URLQueryItemDecoder.LowLevelDecoder(intermediate: intermediate, codingPath: codingPath)
+        let lowLevelDecoder = URLQueryItemDecoder.LowLevelDecoder(
+            intermediate: intermediate,
+            codingPath: nextCodingPath
+        )
         
         return try Target(from: lowLevelDecoder)
     }
@@ -153,7 +159,9 @@ extension URLQueryItemDecoder.KeyedContainer: KeyedDecodingContainerProtocol {
     }
     
     internal func nestedUnkeyedContainer(forKey key: Key) throws -> UnkeyedDecodingContainer {
-        <#code#>
+        let nextCodingPath = codingPath.appending(key)
+        
+        return URLQueryItemDecoder.UnkeyedContainer(from: intermediate, scopedTo: nextCodingPath)
     }
     
     internal func superDecoder() throws -> Decoder {

@@ -38,7 +38,7 @@ extension URLQueryItemDecoder.LowLevelDecoder: Decoder {
     }
     
     func unkeyedContainer() throws -> UnkeyedDecodingContainer {
-        <#code#>
+        URLQueryItemDecoder.UnkeyedContainer(from: intermediate, scopedTo: codingPath)
     }
     
     func singleValueContainer() throws -> SingleValueDecodingContainer {
