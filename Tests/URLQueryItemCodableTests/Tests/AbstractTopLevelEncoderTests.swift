@@ -95,7 +95,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         fatalErrorForUnimplementedAbstractInterface()
     }
     
-    // MARK: Public Static Interface
+    // MARK: Public Class Interface
     
     public class var isAbstractTestCase: Bool {
         self == AbstractTopLevelEncoderTests.self
