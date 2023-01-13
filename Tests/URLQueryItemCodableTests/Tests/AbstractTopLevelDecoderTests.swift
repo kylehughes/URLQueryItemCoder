@@ -58,4 +58,18 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
             as: .random(in: 0 ... .greatestFiniteMagnitude)
         )
     }
+    
+    // TODO: Rest of tests
+    
+    // MARK: Keyed Values Tests
+    
+    public func test_keyedValue_singleValueProperties_maximumValues() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertDecoder(
+            target,
+            decodes: expectedValues.keyedSingleValueExpectation,
+            as: CodableTestTypes.SingleValueProperties.maximumValues
+        )
+    }
 }

@@ -12,7 +12,7 @@ public enum CodableTestTypes {
 // MARK: - CodableTestTypes.OmniValueProperties Definition
 
 extension CodableTestTypes {
-    public struct OmniValueProperties: Codable {
+    public struct OmniValueProperties: Codable, Equatable {
         public let one: SingleValueProperties?
         public let two: SingleValueProperties?
         public let three: UnkeyedValueProperties?
@@ -46,7 +46,7 @@ extension CodableTestTypes {
 // MARK: - CodableTestTypes.SingleValueProperties Definition
 
 extension CodableTestTypes {
-    public struct SingleValueProperties: Codable {
+    public struct SingleValueProperties: Codable, Equatable {
         public let bool: Bool?
         public let double: Double?
         public let float: Float?
