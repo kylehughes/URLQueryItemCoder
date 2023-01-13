@@ -179,6 +179,10 @@ internal class Intermediate {
     }
     
     internal func scoped(to codingPath: [any CodingKey]) -> Intermediate {
+        guard !codingPath.isEmpty else {
+            return self
+        }
+        
         let keyPrefix = key(for: codingPath) + Self.keySeparator
         let scopedStorage = storage.filter { $0.key.hasPrefix(keyPrefix) }
         

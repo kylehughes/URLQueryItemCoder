@@ -48,4 +48,14 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
             as: .random()
         )
     }
+    
+    public func test_singleValue_double() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+
+        XCTAssertDecoder(
+            target,
+            decodes: expectedValues.doubleExpectation,
+            as: .random(in: 0 ... .greatestFiniteMagnitude)
+        )
+    }
 }
