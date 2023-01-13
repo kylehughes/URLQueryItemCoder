@@ -72,4 +72,24 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
             as: CodableTestTypes.SingleValueProperties.maximumValues
         )
     }
+    
+    public func test_keyedValue_singleValueProperties_minimumValues() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertDecoder(
+            target,
+            decodes: expectedValues.keyedSingleValueExpectation,
+            as: CodableTestTypes.SingleValueProperties.minimumValues
+        )
+    }
+    
+    public func test_keyedValue_singleValueProperties_nilValues() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertDecoder(
+            target,
+            decodes: expectedValues.keyedSingleValueExpectation,
+            as: CodableTestTypes.SingleValueProperties.nil
+        )
+    }
 }
