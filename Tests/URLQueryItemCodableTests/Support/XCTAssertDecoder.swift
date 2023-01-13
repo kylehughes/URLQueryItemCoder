@@ -16,7 +16,8 @@ func XCTAssertDecoder<Decoder, Output>(
     line: UInt = #line
 ) where Decoder: TopLevelDecoder, Decoder.Input: Equatable, Output: Decodable & Equatable {
     do {
-        let decodedValue = try decoder.decode(Output.self, from: value(expectation))
+        let inputValue = value(expectation)
+        let decodedValue = try decoder.decode(Output.self, from: inputValue)
         
         XCTAssertEqual(decodedValue, expectation, file: file, line: line)
     } catch {

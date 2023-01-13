@@ -43,7 +43,11 @@ internal class Intermediate {
     }
     
     internal static func key(for codingPath: [any CodingKey], at index: Int) -> String {
-        "\(key(for: codingPath))\(keySeparator)\(index)"
+        guard !codingPath.isEmpty else {
+            return String(index)
+        }
+        
+        return "\(key(for: codingPath))\(keySeparator)\(index)"
     }
     
     // MARK: Internal Instance Interface
@@ -67,7 +71,11 @@ internal class Intermediate {
     }
     
     internal func contains(_ codingPath: [any CodingKey]) -> Bool {
-        storage[key(for: codingPath)] != nil
+        guard !codingPath.isEmpty else {
+            return true
+        }
+        
+        return storage[key(for: codingPath)] != nil
     }
     
     internal func contains(_ codingPath: [any CodingKey], at index: Int) -> Bool {
