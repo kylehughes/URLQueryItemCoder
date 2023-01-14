@@ -113,7 +113,10 @@ extension URLQueryItemEncoder.KeyedContainer: KeyedEncodingContainerProtocol {
     
     mutating public func encode<T>(_ value: T, forKey key: Key) throws where T : Encodable {
         let nextCodingPath = codingPath.appending(key)
-        let lowLevelEncoder = URLQueryItemEncoder.LowLevelEncoder(intermediate: intermediate, codingPath: nextCodingPath)
+        let lowLevelEncoder = URLQueryItemEncoder.LowLevelEncoder(
+            intermediate: intermediate,
+            codingPath: nextCodingPath
+        )
         
         try value.encode(to: lowLevelEncoder)
     }
@@ -127,7 +130,10 @@ extension URLQueryItemEncoder.KeyedContainer: KeyedEncodingContainerProtocol {
         forKey key: Key
     ) -> KeyedEncodingContainer<NestedKey> where NestedKey: CodingKey {
         let nextCodingPath = codingPath.appending(key)
-        let container = URLQueryItemEncoder.KeyedContainer<NestedKey>(intermediate: intermediate, codingPath: nextCodingPath)
+        let container = URLQueryItemEncoder.KeyedContainer<NestedKey>(
+            intermediate: intermediate,
+            codingPath: nextCodingPath
+        )
         
         return KeyedEncodingContainer(container)
     }

@@ -140,7 +140,10 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
     mutating internal func encode<T>(_ value: T) throws where T : Encodable {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let lowLevelEncoder = URLQueryItemEncoder.LowLevelEncoder(intermediate: intermediate, codingPath: nextCodingPath)
+        let lowLevelEncoder = URLQueryItemEncoder.LowLevelEncoder(
+            intermediate: intermediate,
+            codingPath: nextCodingPath
+        )
         
         try value.encode(to: lowLevelEncoder)
     }

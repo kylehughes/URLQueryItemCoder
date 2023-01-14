@@ -32,9 +32,9 @@ extension URLQueryItemDecoder.LowLevelDecoder: Decoder {
     // MARK: Internal Instance Interface
 
     func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> where Key : CodingKey {
-        let container = URLQueryItemDecoder.KeyedContainer<Key>(intermediate: intermediate, codingPath: codingPath)
-        
-        return KeyedDecodingContainer(container)
+        KeyedDecodingContainer(
+            URLQueryItemDecoder.KeyedContainer<Key>(from: intermediate, scopedTo: codingPath)
+        )
     }
     
     func unkeyedContainer() throws -> UnkeyedDecodingContainer {
@@ -42,6 +42,6 @@ extension URLQueryItemDecoder.LowLevelDecoder: Decoder {
     }
     
     func singleValueContainer() throws -> SingleValueDecodingContainer {
-        URLQueryItemDecoder.SingleValueContainer(intermediate: intermediate, codingPath: codingPath)
+        URLQueryItemDecoder.SingleValueContainer(from: intermediate, scopedTo: codingPath)
     }
 }

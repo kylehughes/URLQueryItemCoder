@@ -16,7 +16,6 @@ extension URLQueryItemDecoder {
         
         // MARK: Internal Initialization
         
-        /// No need to scope intermediate beforehand
         internal init(from source: Intermediate, scopedTo codingPath: [any CodingKey]) {
             self.codingPath = codingPath
             
@@ -194,7 +193,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
         }
         
         return KeyedDecodingContainer(
-            URLQueryItemDecoder.KeyedContainer(intermediate: intermediate, codingPath: nextCodingPath)
+            URLQueryItemDecoder.KeyedContainer(from: intermediate, scopedTo: nextCodingPath)
         )
     }
     

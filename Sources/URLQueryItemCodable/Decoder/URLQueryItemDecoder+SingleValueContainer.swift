@@ -15,10 +15,10 @@ extension URLQueryItemDecoder {
         
         // MARK: Internal Initialization
         
-        /// No need to scope intermediate beforehand
-        internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
-            self.intermediate = intermediate.scoped(to: codingPath)
+        internal init(from source: Intermediate, scopedTo codingPath: [any CodingKey]) {
             self.codingPath = codingPath
+            
+            intermediate = source.scoped(to: codingPath)
         }
     }
 }

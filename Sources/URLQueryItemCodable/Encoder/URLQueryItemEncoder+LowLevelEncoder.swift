@@ -32,9 +32,9 @@ extension URLQueryItemEncoder.LowLevelEncoder: Encoder {
     // MARK: Internal Instance Interface
     
     internal func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key: CodingKey {
-        let container = URLQueryItemEncoder.KeyedContainer<Key>(intermediate: intermediate, codingPath: codingPath)
-        
-        return KeyedEncodingContainer(container)
+        KeyedEncodingContainer(
+            URLQueryItemEncoder.KeyedContainer<Key>(intermediate: intermediate, codingPath: codingPath)
+        )
     }
     
     internal func singleValueContainer() -> SingleValueEncodingContainer {

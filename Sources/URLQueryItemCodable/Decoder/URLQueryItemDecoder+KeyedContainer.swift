@@ -15,15 +15,10 @@ extension URLQueryItemDecoder {
         
         // MARK: Internal Initialization
         
-        // TODO: can I somehow pass in a… scoped down intermediate? not sure how I can pull that off. IDK how to
-        // implement allKeys otherwise,
-        // Yes I believe I am correct. The keyed container should just operate on its scope. So it can be the same
-        // object or shared storage but all the contains shit and allKeys shit needs to be scoped.
-        
-        /// No need to scope intermediate beforehand
-        internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
-            self.intermediate = intermediate.scoped(to: codingPath)
+        internal init(from source: Intermediate, scopedTo codingPath: [any CodingKey]) {
             self.codingPath = codingPath
+            
+            intermediate = source.scoped(to: codingPath)
         }
     }
 }
@@ -32,8 +27,6 @@ extension URLQueryItemDecoder {
 
 extension URLQueryItemDecoder.KeyedContainer: KeyedDecodingContainerProtocol {
     // MARK: Internal Instance Interface
-    
-    // It is possible they only means keys in the root of this container but idk not doing that for now
     
     internal var allKeys: [Key] {
         intermediate.allStringKeys.compactMap { Key(stringValue: $0) }
@@ -150,10 +143,7 @@ extension URLQueryItemDecoder.KeyedContainer: KeyedDecodingContainerProtocol {
         forKey key: Key
     ) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
         let nextCodingPath = codingPath.appending(key)
-        let container = URLQueryItemDecoder.KeyedContainer<NestedKey>(
-            intermediate: intermediate,
-            codingPath: nextCodingPath
-        )
+        let container = URLQueryItemDecoder.KeyedContainer<NestedKey>(from: intermediate, scopedTo: nextCodingPath)
         
         return KeyedDecodingContainer(container)
     }
