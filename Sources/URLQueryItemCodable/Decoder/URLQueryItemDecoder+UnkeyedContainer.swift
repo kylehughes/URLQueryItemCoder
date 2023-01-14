@@ -30,7 +30,7 @@ extension URLQueryItemDecoder {
         }
         
         private var nextCodingPath: [any CodingKey] {
-            codingPath.appending(Index(intValue: currentIndex))
+            codingPath.appending(IntCodingKey(intValue: currentIndex))
         }
         
         private mutating func incrementCurrentIndex() {
@@ -208,31 +208,5 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
     internal mutating func superDecoder() throws -> Decoder {
         // TODO: really no clue how this should be implemented? This seems like the only thing I can do?
         return URLQueryItemDecoder.LowLevelDecoder(intermediate: intermediate, codingPath: codingPath)
-    }
-}
-
-extension URLQueryItemDecoder.UnkeyedContainer {
-    struct Index {
-        let intValue: Int?
-        let stringValue: String
-    }
-}
-
-extension URLQueryItemDecoder.UnkeyedContainer.Index: CodingKey {
-    // MARK: Internal Initialization
-    
-    init(intValue: Int) {
-        self.intValue = intValue
-        
-        stringValue = String(intValue)
-    }
-    
-    init?(stringValue: String) {
-        guard let intValue = Int(stringValue) else {
-            return nil
-        }
-        
-        self.intValue = intValue
-        self.stringValue = stringValue
     }
 }

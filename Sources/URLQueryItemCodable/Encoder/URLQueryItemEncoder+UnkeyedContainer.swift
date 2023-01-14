@@ -25,12 +25,12 @@ extension URLQueryItemEncoder {
         
         // MARK: Private Instance Interface
         
-        private mutating func nextCodingKey() -> IndexCodingKey {
+        private mutating func nextCodingKey() -> IntCodingKey {
             defer {
                 count += 1
             }
             
-            return IndexCodingKey(intValue: count)
+            return IntCodingKey(intValue: count)
         }
     }
 }
@@ -180,27 +180,5 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         return URLQueryItemEncoder.LowLevelEncoder(intermediate: intermediate, codingPath: nextCodingPath)
-    }
-}
-
-// MARK: - URLQueryItemEncoder.UnkeyedContainer.IndexCodingKey Definition
-
-extension URLQueryItemEncoder.UnkeyedContainer {
-    private struct IndexCodingKey: CodingKey {
-        internal let intValue: Int?
-        internal let stringValue: String
-        
-        // MARK: Internal Initialization
-
-        internal init(intValue: Int) {
-            self.intValue = intValue
-            self.stringValue = String(intValue)
-        }
-
-        internal init?(stringValue: String) {
-            assertionFailure("Should only use integer initializer.")
-            
-            return nil
-        }
     }
 }
