@@ -61,7 +61,7 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
     
     // TODO: Rest of tests
     
-    // MARK: Keyed Values Tests
+    // MARK: Keyed Single Value Tests
     
     public func test_keyedValue_singleValueProperties_maximumValues() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
@@ -93,6 +93,8 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
         )
     }
     
+    // MARK: Keyed Omni-Value Tests
+    
     public func test_keyedValue_omniValueProperties_maximumValues() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
@@ -106,6 +108,22 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
                 )
             },
             as: CodableTestTypes.OmniValueProperties.maximumValues
+        )
+    }
+    
+    public func test_keyedValue_omniValueProperties_minimumValues() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertDecoder(
+            target,
+            decodes: { output in
+                expectedValues.keyedKeyedValueExpectation(
+                    output,
+                    expectedValues.keyedSingleValueExpectation,
+                    expectedValues.unkeyedSingleValueExpectation
+                )
+            },
+            as: CodableTestTypes.OmniValueProperties.minimumValues
         )
     }
     
