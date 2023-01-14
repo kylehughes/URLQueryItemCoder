@@ -30,6 +30,10 @@ extension URLQueryItemDecoder {
             intermediate.childrenCount - 1
         }
         
+        private var nextCodingPath: [any CodingKey] {
+            codingPath.appending(Index(intValue: currentIndex))
+        }
+        
         private mutating func incrementCurrentIndex() {
             currentIndex += 1
         }
@@ -54,7 +58,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: Double.Type) throws -> Double {
@@ -62,7 +66,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: Float.Type) throws -> Float {
@@ -70,7 +74,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: Int.Type) throws -> Int {
@@ -78,7 +82,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: Int8.Type) throws -> Int8 {
@@ -86,7 +90,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: Int16.Type) throws -> Int16 {
@@ -94,7 +98,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: Int32.Type) throws -> Int32 {
@@ -102,7 +106,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: Int64.Type) throws -> Int64 {
@@ -110,7 +114,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: String.Type) throws -> String {
@@ -118,7 +122,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decode(codingPath, at: currentIndex)
+        return try intermediate.decode(nextCodingPath)
     }
     
     internal mutating func decode(_ type: UInt.Type) throws -> UInt {
@@ -126,7 +130,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: UInt8.Type) throws -> UInt8 {
@@ -134,7 +138,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: UInt16.Type) throws -> UInt16 {
@@ -142,7 +146,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: UInt32.Type) throws -> UInt32 {
@@ -150,7 +154,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode(_ type: UInt64.Type) throws -> UInt64 {
@@ -158,20 +162,14 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return try intermediate.decodeLosslessly(codingPath, at: currentIndex)
+        return try intermediate.decodeLosslessly(nextCodingPath)
     }
     
     internal mutating func decode<Target>(_ type: Target.Type) throws -> Target where Target: Decodable {
-        // TODO: does this work? this is the same coding path… I need to be able to somehow… build a coding path with the idnex appended on? idk
-        // can I make my own CodingKey implementation and append that? But then wouldnt that make this KEYED, and not UNKEYED. IDK.
-        
-        // TODO: ok this is my attempt to do that lol
-        
         defer {
             incrementCurrentIndex()
         }
         
-        let nextCodingPath = codingPath.appending(Index(intValue: currentIndex))
         let lowLevelDecoder = URLQueryItemDecoder.LowLevelDecoder(
             intermediate: intermediate,
             codingPath: nextCodingPath
@@ -185,8 +183,6 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        let nextCodingPath = codingPath.appending(Index(intValue: currentIndex))
-        
         return intermediate.isNil(for: nextCodingPath)
     }
     
@@ -197,8 +193,6 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        let nextCodingPath = codingPath.appending(Index(intValue: currentIndex))
-        
         return KeyedDecodingContainer(
             URLQueryItemDecoder.KeyedContainer(intermediate: intermediate, codingPath: nextCodingPath)
         )
@@ -208,8 +202,6 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
         defer {
             incrementCurrentIndex()
         }
-        
-        let nextCodingPath = codingPath.appending(Index(intValue: currentIndex))
         
         return Self(from: intermediate, scopedTo: nextCodingPath)
     }
