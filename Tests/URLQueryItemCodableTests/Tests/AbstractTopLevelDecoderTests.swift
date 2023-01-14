@@ -127,6 +127,22 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
         )
     }
     
+    public func test_keyedValue_omniValueProperties_nilValues() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertDecoder(
+            target,
+            decodes: { output in
+                expectedValues.keyedKeyedValueExpectation(
+                    output,
+                    expectedValues.keyedSingleValueExpectation,
+                    expectedValues.unkeyedSingleValueExpectation
+                )
+            },
+            as: CodableTestTypes.OmniValueProperties.nil
+        )
+    }
+    
     // MARK: Unkeyed Value Tests
 
     public func test_unkeyedValue_nil() throws {

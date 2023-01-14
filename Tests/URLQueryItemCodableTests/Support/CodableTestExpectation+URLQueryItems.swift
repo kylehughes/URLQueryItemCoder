@@ -12,7 +12,7 @@ import Foundation
 extension CodableTestExpectation where Value == [URLQueryItem] {
     // MARK: Internal Static Interface
     
-    static var urlQueryItems: Self {
+    static func urlQueryItems(isEncoding: Bool) -> Self {
         CodableTestExpectation { value in
             [
                 URLQueryItem.init(name: String(), value: value)
@@ -76,22 +76,43 @@ extension CodableTestExpectation where Value == [URLQueryItem] {
                 return []
             }
             
-            return [
-                URLQueryItem.nilIfValueIsNil(name: "bool", value: value.bool),
-                URLQueryItem.nilIfValueIsNil(name: "double", value: value.double),
-                URLQueryItem.nilIfValueIsNil(name: "float", value: value.float),
-                URLQueryItem.nilIfValueIsNil(name: "int", value: value.int),
-                URLQueryItem.nilIfValueIsNil(name: "int8", value: value.int8),
-                URLQueryItem.nilIfValueIsNil(name: "int16", value: value.int16),
-                URLQueryItem.nilIfValueIsNil(name: "int32", value: value.int32),
-                URLQueryItem.nilIfValueIsNil(name: "int64", value: value.int64),
-                URLQueryItem.nilIfValueIsNil(name: "string", value: value.string),
-                URLQueryItem.nilIfValueIsNil(name: "uint", value: value.uint),
-                URLQueryItem.nilIfValueIsNil(name: "uint8", value: value.uint8),
-                URLQueryItem.nilIfValueIsNil(name: "uint16", value: value.uint16),
-                URLQueryItem.nilIfValueIsNil(name: "uint32", value: value.uint32),
-                URLQueryItem.nilIfValueIsNil(name: "uint64", value: value.uint64),
-            ]
+            return { () -> [URLQueryItem?] in
+                guard isEncoding else {
+                    return [
+                        URLQueryItem(name: "bool", value: value.bool),
+                        URLQueryItem(name: "double", value: value.double),
+                        URLQueryItem(name: "float", value: value.float),
+                        URLQueryItem(name: "int", value: value.int),
+                        URLQueryItem(name: "int8", value: value.int8),
+                        URLQueryItem(name: "int16", value: value.int16),
+                        URLQueryItem(name: "int32", value: value.int32),
+                        URLQueryItem(name: "int64", value: value.int64),
+                        URLQueryItem(name: "string", value: value.string),
+                        URLQueryItem(name: "uint", value: value.uint),
+                        URLQueryItem(name: "uint8", value: value.uint8),
+                        URLQueryItem(name: "uint16", value: value.uint16),
+                        URLQueryItem(name: "uint32", value: value.uint32),
+                        URLQueryItem(name: "uint64", value: value.uint64),
+                    ]
+                }
+                
+                return [
+                    URLQueryItem.nilIfValueIsNil(name: "bool", value: value.bool),
+                    URLQueryItem.nilIfValueIsNil(name: "double", value: value.double),
+                    URLQueryItem.nilIfValueIsNil(name: "float", value: value.float),
+                    URLQueryItem.nilIfValueIsNil(name: "int", value: value.int),
+                    URLQueryItem.nilIfValueIsNil(name: "int8", value: value.int8),
+                    URLQueryItem.nilIfValueIsNil(name: "int16", value: value.int16),
+                    URLQueryItem.nilIfValueIsNil(name: "int32", value: value.int32),
+                    URLQueryItem.nilIfValueIsNil(name: "int64", value: value.int64),
+                    URLQueryItem.nilIfValueIsNil(name: "string", value: value.string),
+                    URLQueryItem.nilIfValueIsNil(name: "uint", value: value.uint),
+                    URLQueryItem.nilIfValueIsNil(name: "uint8", value: value.uint8),
+                    URLQueryItem.nilIfValueIsNil(name: "uint16", value: value.uint16),
+                    URLQueryItem.nilIfValueIsNil(name: "uint32", value: value.uint32),
+                    URLQueryItem.nilIfValueIsNil(name: "uint64", value: value.uint64),
+                ]
+            }()
             .compactMap { $0 }
             .sorted { $0.name < $1.name }
         } unkeyedSingleValueExpectation: { value in
@@ -105,7 +126,7 @@ extension CodableTestExpectation where Value == [URLQueryItem] {
 //                guard let element else {
 //                    continue
 //                }
-//                
+//
                 output.append(URLQueryItem(name: String(index), value: element))
             }
             
