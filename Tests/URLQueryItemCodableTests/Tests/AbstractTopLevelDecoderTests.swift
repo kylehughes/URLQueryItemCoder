@@ -92,4 +92,42 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
             as: CodableTestTypes.SingleValueProperties.nil
         )
     }
+    
+//    public func test_keyedValue_omniValueProperties_maximumValues() throws {
+//        try XCTSkipIf(Self.isAbstractTestCase)
+//        
+//        XCTAssertDecoder(
+//            target,
+//            decodes: { output in
+//                expectedValues.keyedKeyedValueExpectation(
+//                    output,
+//                    expectedValues.keyedSingleValueExpectation,
+//                    expectedValues.unkeyedSingleValueExpectation
+//                )
+//            },
+//            as: CodableTestTypes.OmniValueProperties.maximumValues
+//        )
+//    }
+    
+    // MARK: Unkeyed Value Tests
+
+    public func test_unkeyedValue_nil() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertDecoder(
+            target,
+            decodes: expectedValues.unkeyedSingleValueExpectation,
+            as: CodableTestTypes.UnkeyedValueProperties.nil
+        )
+    }
+
+    public func test_unkeyedValue_nonNil() throws {
+        try XCTSkipIf(Self.isAbstractTestCase)
+        
+        XCTAssertDecoder(
+            target,
+            decodes: expectedValues.unkeyedSingleValueExpectation,
+            as: CodableTestTypes.UnkeyedValueProperties.nonNil
+        )
+    }
 }

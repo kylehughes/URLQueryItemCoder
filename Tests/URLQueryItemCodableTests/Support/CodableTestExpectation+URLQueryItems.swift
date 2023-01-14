@@ -102,10 +102,10 @@ extension CodableTestExpectation where Value == [URLQueryItem] {
             }
             
             for (index, element) in zip(value.indices, value) {
-                guard let element else {
-                    continue
-                }
-                
+//                guard let element else {
+//                    continue
+//                }
+//                
                 output.append(URLQueryItem(name: String(index), value: element))
             }
             

@@ -10,7 +10,8 @@ import Foundation
 internal class Intermediate {
     internal static let keySeparator = "."
     
-    private var storage: [String: String]
+    /// - Note: We don't encode `nil` values – we skip them – but we do need to be able to decode them regardless.
+    private var storage: [String: String?]
     
     // MARK: Internal Initialization
     
@@ -20,7 +21,7 @@ internal class Intermediate {
     
     internal init(from output: [URLQueryItem]) {
         storage = {
-            var storage: [String: String] = Dictionary(minimumCapacity: output.count)
+            var storage: [String: String?] = Dictionary(minimumCapacity: output.count)
             
             for queryItem in output {
                 storage[queryItem.name] = queryItem.value
@@ -32,7 +33,7 @@ internal class Intermediate {
     
     // MARK: Private Initialization
     
-    private init(storage: [String: String]) {
+    private init(storage: [String: String?]) {
         self.storage = storage
     }
     
@@ -98,6 +99,13 @@ internal class Intermediate {
             )
         }
         
+        guard let value else {
+            throw DecodingError.valueNotFound(
+                String.self,
+                DecodingError.Context(codingPath: codingPath, debugDescription: "Expected value but found nil.")
+            )
+        }
+        
         return value
     }
     
@@ -124,6 +132,13 @@ internal class Intermediate {
                     codingPath: codingPath,
                     debugDescription: "Storage key: \(storageKey)"
                 )
+            )
+        }
+        
+        guard let value else {
+            throw DecodingError.valueNotFound(
+                String.self,
+                DecodingError.Context(codingPath: codingPath, debugDescription: "Expected value but found nil.")
             )
         }
         

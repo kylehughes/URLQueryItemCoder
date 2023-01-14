@@ -46,7 +46,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
     }
     
     internal var isAtEnd: Bool {
-        endIndex <= currentIndex
+        endIndex < currentIndex
     }
     
     internal mutating func decode(_ type: Bool.Type) throws -> Bool {
@@ -166,6 +166,11 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
         // can I make my own CodingKey implementation and append that? But then wouldnt that make this KEYED, and not UNKEYED. IDK.
         
         // TODO: ok this is my attempt to do that lol
+        
+        defer {
+            incrementCurrentIndex()
+        }
+        
         let nextCodingPath = codingPath.appending(Index(intValue: currentIndex))
         let lowLevelDecoder = URLQueryItemDecoder.LowLevelDecoder(
             intermediate: intermediate,
@@ -176,7 +181,11 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
     }
     
     internal mutating func decodeNil() throws -> Bool {
-        !intermediate.contains(codingPath, at: currentIndex)
+        defer {
+            incrementCurrentIndex()
+        }
+        
+        return !intermediate.contains(codingPath, at: currentIndex)
     }
     
     internal mutating func nestedContainer<NestedKey>(
