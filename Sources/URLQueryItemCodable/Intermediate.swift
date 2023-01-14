@@ -54,6 +54,10 @@ internal class Intermediate {
     }
     
     internal func contains(_ codingPath: [any CodingKey]) -> Bool {
+        guard !storage.isEmpty else {
+            return false
+        }
+        
         guard !codingPath.isEmpty else {
             return true
         }

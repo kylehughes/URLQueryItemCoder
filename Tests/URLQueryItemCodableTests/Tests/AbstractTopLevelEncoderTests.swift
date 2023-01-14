@@ -108,7 +108,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
             return super.defaultTestSuite
         }
 
-        return XCTestSuite(name: "Empty Suite for \(AbstractTopLevelEncoderTests.self)")
+        return XCTestSuite(name: "Empty Suite for \(Self.self)")
     }
     
     // MARK: Single Value Tests
