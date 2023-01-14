@@ -40,104 +40,104 @@ extension URLQueryItemEncoder {
 extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
     // MARK: Internal Instance Interface
     
-    mutating internal func encode(_ value: Bool) throws {
+    internal mutating func encode(_ value: Bool) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: String) throws {
+    internal mutating func encode(_ value: String) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encode(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: Double) throws {
+    internal mutating func encode(_ value: Double) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: Float) throws {
+    internal mutating func encode(_ value: Float) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: Int) throws {
+    internal mutating func encode(_ value: Int) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: Int8) throws {
+    internal mutating func encode(_ value: Int8) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: Int16) throws {
+    internal mutating func encode(_ value: Int16) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: Int32) throws {
+    internal mutating func encode(_ value: Int32) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: Int64) throws {
+    internal mutating func encode(_ value: Int64) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: UInt) throws {
+    internal mutating func encode(_ value: UInt) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: UInt8) throws {
+    internal mutating func encode(_ value: UInt8) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: UInt16) throws {
+    internal mutating func encode(_ value: UInt16) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: UInt32) throws {
+    internal mutating func encode(_ value: UInt32) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode(_ value: UInt64) throws {
+    internal mutating func encode(_ value: UInt64) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
 
         intermediate.encodeLosslessly(nextCodingPath, as: value)
     }
     
-    mutating internal func encode<T>(_ value: T) throws where T : Encodable {
+    internal mutating func encode<T>(_ value: T) throws where T : Encodable {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         let lowLevelEncoder = URLQueryItemEncoder.LowLevelEncoder(
@@ -148,14 +148,14 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
         try value.encode(to: lowLevelEncoder)
     }
     
-    mutating internal func encodeNil() throws {
+    internal mutating func encodeNil() throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         intermediate.encode(nextCodingPath, as: nil)
     }
     
-    mutating internal func nestedContainer<NestedKey>(
+    internal mutating func nestedContainer<NestedKey>(
         keyedBy keyType: NestedKey.Type
     ) -> KeyedEncodingContainer<NestedKey> where NestedKey : CodingKey {
         let nextCodingKey = nextCodingKey()
@@ -168,14 +168,14 @@ extension URLQueryItemEncoder.UnkeyedContainer: UnkeyedEncodingContainer {
         return KeyedEncodingContainer(container)
     }
     
-    mutating internal func nestedUnkeyedContainer() -> UnkeyedEncodingContainer {
+    internal mutating func nestedUnkeyedContainer() -> UnkeyedEncodingContainer {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         
         return Self(intermediate: intermediate, codingPath: nextCodingPath)
     }
     
-    mutating internal func superEncoder() -> Encoder {
+    internal mutating func superEncoder() -> Encoder {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
         

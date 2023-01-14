@@ -31,17 +31,17 @@ extension URLQueryItemDecoder {
 extension URLQueryItemDecoder.LowLevelDecoder: Decoder {
     // MARK: Internal Instance Interface
 
-    func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> where Key : CodingKey {
+    internal func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> where Key : CodingKey {
         KeyedDecodingContainer(
             URLQueryItemDecoder.KeyedContainer<Key>(from: intermediate, scopedTo: codingPath)
         )
     }
     
-    func unkeyedContainer() throws -> UnkeyedDecodingContainer {
-        URLQueryItemDecoder.UnkeyedContainer(from: intermediate, scopedTo: codingPath)
+    internal func singleValueContainer() throws -> SingleValueDecodingContainer {
+        URLQueryItemDecoder.SingleValueContainer(from: intermediate, scopedTo: codingPath)
     }
     
-    func singleValueContainer() throws -> SingleValueDecodingContainer {
-        URLQueryItemDecoder.SingleValueContainer(from: intermediate, scopedTo: codingPath)
+    internal func unkeyedContainer() throws -> UnkeyedDecodingContainer {
+        URLQueryItemDecoder.UnkeyedContainer(from: intermediate, scopedTo: codingPath)
     }
 }

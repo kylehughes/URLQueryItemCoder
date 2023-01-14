@@ -25,71 +25,71 @@ extension URLQueryItemEncoder {
 // MARK: - SingleValueEncodingContainer Extension
 
 extension URLQueryItemEncoder.SingleValueContainer: SingleValueEncodingContainer {
-    // MARK: Public Instance Interface
+    // MARK: Internal Instance Interface
     
-    mutating public func encode(_ value: Bool) throws {
+    internal mutating func encode(_ value: Bool) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: String) throws {
+    internal mutating func encode(_ value: String) throws {
         intermediate.encode(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: Double) throws {
+    internal mutating func encode(_ value: Double) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: Float) throws {
+    internal mutating func encode(_ value: Float) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: Int) throws {
+    internal mutating func encode(_ value: Int) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: Int8) throws {
+    internal mutating func encode(_ value: Int8) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: Int16) throws {
+    internal mutating func encode(_ value: Int16) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: Int32) throws {
+    internal mutating func encode(_ value: Int32) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: Int64) throws {
+    internal mutating func encode(_ value: Int64) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: UInt) throws {
+    internal mutating func encode(_ value: UInt) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: UInt8) throws {
+    internal mutating func encode(_ value: UInt8) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: UInt16) throws {
+    internal mutating func encode(_ value: UInt16) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: UInt32) throws {
+    internal mutating func encode(_ value: UInt32) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode(_ value: UInt64) throws {
+    internal mutating func encode(_ value: UInt64) throws {
         intermediate.encodeLosslessly(codingPath, as: value)
     }
     
-    mutating public func encode<T>(_ value: T) throws where T: Encodable {
+    internal mutating func encode<T>(_ value: T) throws where T: Encodable {
         let lowLevelEncoder = URLQueryItemEncoder.LowLevelEncoder(intermediate: intermediate, codingPath: codingPath)
         
         try value.encode(to: lowLevelEncoder)
     }
     
-    mutating public func encodeNil() throws {
+    internal mutating func encodeNil() throws {
         // NO-OP
     }
 }
