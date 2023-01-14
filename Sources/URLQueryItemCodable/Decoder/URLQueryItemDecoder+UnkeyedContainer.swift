@@ -26,7 +26,7 @@ extension URLQueryItemDecoder {
         // MARK: Private Instance Interface
         
         private var endIndex: Int {
-            intermediate.childrenCount - 1
+            intermediate.count - 1
         }
         
         private var nextCodingPath: [any CodingKey] {
@@ -45,7 +45,7 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
     // MARK: Internal Instance Interface
     
     internal var count: Int? {
-        intermediate.childrenCount
+        intermediate.count
     }
     
     internal var isAtEnd: Bool {

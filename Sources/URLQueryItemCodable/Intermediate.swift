@@ -49,16 +49,6 @@ internal class Intermediate {
         Array(storage.keys)
     }
     
-    internal var childrenCount: Int {
-        var uniqueChildKeys: Set<String.SubSequence> = []
-        
-        for key in storage.keys {
-            uniqueChildKeys.insert(key.prefix { $0 != "." })
-        }
-        
-        return uniqueChildKeys.count
-    }
-    
     internal var count: Int {
         storage.count
     }
