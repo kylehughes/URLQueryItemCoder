@@ -10,7 +10,8 @@ import Foundation
 internal class Intermediate {
     internal static let keySeparator = "."
     
-    /// - Note: We don't encode `nil` values – we skip them – but we do need to be able to decode them regardless.
+    /// - Note: We don't encode `nil` values – we skip them – but we do need to be able to decode them, and thus need to
+    ///   be able to represent them in storage.
     private var storage: [String: String?]
     
     // MARK: Internal Initialization
