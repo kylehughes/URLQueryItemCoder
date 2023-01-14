@@ -91,6 +91,6 @@ extension URLQueryItemDecoder.SingleValueContainer: SingleValueDecodingContainer
     }
     
     func decodeNil() -> Bool {
-        intermediate.isNil(at: codingPath)
+        intermediate.isNil(for: codingPath)
     }
 }

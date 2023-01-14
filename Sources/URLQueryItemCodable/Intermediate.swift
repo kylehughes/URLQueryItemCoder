@@ -201,8 +201,8 @@ internal class Intermediate {
             }
     }
     
-    internal func isNil(at codingPath: [any CodingKey]) -> Bool {
-        !contains(codingPath) || storage[key(for: codingPath)] == Optional(Optional(nil))
+    internal func isNil(for codingPath: [any CodingKey]) -> Bool {
+        !contains(codingPath) || isValueNil(for: codingPath)
     }
     
     internal func scoped(to codingPath: [any CodingKey]) -> Intermediate {
@@ -217,6 +217,10 @@ internal class Intermediate {
     }
     
     // MARK: Private Instsance
+    
+    private func isValueNil(for codingPath: [any CodingKey]) -> Bool {
+        storage[key(for: codingPath)] == Optional(Optional(nil))
+    }
     
     private func key(for codingPath: [any CodingKey]) -> String {
         Self.key(for: codingPath)
