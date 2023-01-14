@@ -142,7 +142,7 @@ extension URLQueryItemDecoder.KeyedContainer: KeyedDecodingContainerProtocol {
     internal func decodeNil(forKey key: Key) throws -> Bool {
         let nextCodingPath = codingPath.appending(key)
         
-        return !intermediate.contains(nextCodingPath)
+        return intermediate.isNil(at: nextCodingPath)
     }
     
     internal func nestedContainer<NestedKey>(

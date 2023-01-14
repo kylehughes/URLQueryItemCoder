@@ -201,13 +201,17 @@ internal class Intermediate {
             }
     }
     
+    internal func isNil(at codingPath: [any CodingKey]) -> Bool {
+        !contains(codingPath) || storage[key(for: codingPath)] == Optional(Optional(nil))
+    }
+    
     internal func scoped(to codingPath: [any CodingKey]) -> Intermediate {
         guard !codingPath.isEmpty else {
             return self
         }
         
-        let keyPrefix = key(for: codingPath) + Self.keySeparator
-        let scopedStorage = storage.filter { $0.key.hasPrefix(keyPrefix) }
+        let prefix = key(for: codingPath)
+        let scopedStorage = storage.filter { $0.key.hasPrefix(prefix) }
         
         return Intermediate(storage: scopedStorage)
     }

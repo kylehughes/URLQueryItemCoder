@@ -185,7 +185,9 @@ extension URLQueryItemDecoder.UnkeyedContainer: UnkeyedDecodingContainer {
             incrementCurrentIndex()
         }
         
-        return !intermediate.contains(codingPath, at: currentIndex)
+        let nextCodingPath = codingPath.appending(Index(intValue: currentIndex))
+        
+        return intermediate.isNil(at: nextCodingPath)
     }
     
     internal mutating func nestedContainer<NestedKey>(
