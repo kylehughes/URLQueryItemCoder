@@ -8,6 +8,7 @@
 import Combine
 import XCTest
 
+@testable import TestSupport
 @testable import URLQueryItemEncodable
 
 final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemEncoder> {

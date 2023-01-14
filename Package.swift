@@ -36,6 +36,10 @@ let package = Package(
             dependencies: []
         ),
         .target(
+            name: "TestSupport",
+            dependencies: []
+        ),
+        .target(
             name: "URLQueryItemDecodable",
             dependencies: [
                 "Common",
@@ -50,6 +54,7 @@ let package = Package(
         .testTarget(
             name: "URLQueryItemCodableTests",
             dependencies: [
+                "TestSupport",
                 "URLQueryItemDecodable",
                 "URLQueryItemEncodable",
             ]

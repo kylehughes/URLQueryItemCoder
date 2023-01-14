@@ -1,6 +1,6 @@
 //
 //  XCTAssertDecoder.swift
-//  CodableSkeletonTests
+//  TestSupport
 //
 //  Created by Kyle Hughes on 12/29/22.
 //
@@ -8,7 +8,7 @@
 import Combine
 import XCTest
 
-func XCTAssertDecoder<Decoder, Output>(
+public func XCTAssertDecoder<Decoder, Output>(
     _ decoder: Decoder,
     decodes value: (Output) -> Decoder.Input,
     as expectation: Output,

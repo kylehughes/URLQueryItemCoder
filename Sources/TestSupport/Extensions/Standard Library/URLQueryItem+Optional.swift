@@ -1,6 +1,6 @@
 //
 //  URLQueryItem+Optional.swift
-//  URLQueryItemCodable
+//  TestSupport
 //
 //  Created by Kyle Hughes on 12/30/22.
 //
@@ -10,9 +10,9 @@ import Foundation
 @testable import Common
 
 extension URLQueryItem {
-    // MARK: Internal Static Interface
+    // MARK: Public Static Interface
     
-    internal static func nilIfValueIsNil(name: String, value: String?) -> URLQueryItem? {
+    public static func nilIfValueIsNil(name: String, value: String?) -> URLQueryItem? {
         guard let value else {
             return nil
         }
@@ -20,7 +20,7 @@ extension URLQueryItem {
         return URLQueryItem(name: name, value: value)
     }
     
-    internal static func nilIfValueIsNil(name: String, value: (some LosslessStringConvertible)?) -> URLQueryItem? {
+    public static func nilIfValueIsNil(name: String, value: (some LosslessStringConvertible)?) -> URLQueryItem? {
         guard let value else {
             return nil
         }

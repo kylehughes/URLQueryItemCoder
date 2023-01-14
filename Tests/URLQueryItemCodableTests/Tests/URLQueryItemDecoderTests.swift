@@ -7,6 +7,7 @@
 
 import XCTest
 
+@testable import TestSupport
 @testable import URLQueryItemDecodable
 
 final class URLQueryItemDecoderTests: AbstractTopLevelDecoderTests<URLQueryItemDecoder> {

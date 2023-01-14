@@ -1,6 +1,6 @@
 //
 //  Global+FatalError.swift
-//  CodableSkeleton
+//  TestSupport
 //
 //  Created by Kyle Hughes on 12/30/22.
 //
@@ -15,6 +15,6 @@ import Foundation
 ///     where `fatalError(_:file:line:)` is called.
 ///   - line: The line number to print along with `message`. The default is the
 ///     line number where `fatalError(_:file:line:)` is called.
-internal func fatalErrorForUnimplementedAbstractInterface(file: StaticString = #file, line: UInt = #line) -> Never {
+public func fatalErrorForUnimplementedAbstractInterface(file: StaticString = #file, line: UInt = #line) -> Never {
     fatalError("Must be implemented by subclass.")
 }

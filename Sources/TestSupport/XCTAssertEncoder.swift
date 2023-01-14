@@ -1,6 +1,6 @@
 //
 //  XCTAssertEncodable.swift
-//  CodableSkeletonTests
+//  TestSupport
 //
 //  Created by Kyle Hughes on 12/29/22.
 //
@@ -8,7 +8,7 @@
 import Combine
 import XCTest
 
-func XCTAssertEncoder<Encoder, Input>(
+public func XCTAssertEncoder<Encoder, Input>(
     _ encoder: Encoder,
     encodes value: Input,
     as expectation: @autoclosure () -> Encoder.Output,
@@ -24,7 +24,7 @@ func XCTAssertEncoder<Encoder, Input>(
     }
 }
 
-func XCTAssertEncoder<Encoder, Input>(
+public func XCTAssertEncoder<Encoder, Input>(
     _ encoder: Encoder,
     encodes value: Input,
     as expectation: (Input) -> Encoder.Output,

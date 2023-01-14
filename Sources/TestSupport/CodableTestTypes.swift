@@ -1,6 +1,6 @@
 //
 //  CodableTestTypes.swift
-//  CodableSkeleton
+//  TestSupport
 //
 //  Created by Kyle Hughes on 12/30/22.
 //
