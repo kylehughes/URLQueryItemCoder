@@ -12,20 +12,20 @@ let package = Package(
         .library(
             name: "URLQueryItemCodable",
             targets: [
-                "URLQueryItemDecodable",
-                "URLQueryItemEncodable",
+                "URLQueryItemDecoder",
+                "URLQueryItemEncoder",
             ]
         ),
         .library(
-            name: "URLQueryItemDecodable",
+            name: "URLQueryItemDecoder",
             targets: [
-                "URLQueryItemDecodable",
+                "URLQueryItemDecoder",
             ]
         ),
         .library(
-            name: "URLQueryItemEncodable",
+            name: "URLQueryItemEncoder",
             targets: [
-                "URLQueryItemEncodable",
+                "URLQueryItemEncoder",
             ]
         ),
     ],
@@ -40,29 +40,29 @@ let package = Package(
             dependencies: []
         ),
         .target(
-            name: "URLQueryItemDecodable",
+            name: "URLQueryItemDecoder",
             dependencies: [
                 "Common",
             ]
         ),
         .target(
-            name: "URLQueryItemEncodable",
+            name: "URLQueryItemEncoder",
             dependencies: [
                 "Common",
             ]
         ),
         .testTarget(
-            name: "URLQueryItemDecodableTests",
+            name: "URLQueryItemDecoderTests",
             dependencies: [
                 "TestSupport",
-                "URLQueryItemDecodable",
+                "URLQueryItemDecoder",
             ]
         ),
         .testTarget(
-            name: "URLQueryItemEncodableTests",
+            name: "URLQueryItemEncoderTests",
             dependencies: [
                 "TestSupport",
-                "URLQueryItemEncodable",
+                "URLQueryItemEncoder",
             ]
         ),
     ]

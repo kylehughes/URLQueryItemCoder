@@ -9,7 +9,7 @@ import Combine
 import XCTest
 
 @testable import TestSupport
-@testable import URLQueryItemEncodable
+@testable import URLQueryItemEncoder
 
 public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEncoder, Target.Output: Equatable {
     // MARK: Public Abstract Interface
