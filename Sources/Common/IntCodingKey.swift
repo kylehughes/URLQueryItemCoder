@@ -1,13 +1,13 @@
 //
 //  IntCodingKey.swift
-//  URLQueryItemCodable
+//  Common
 //
 //  Created by Kyle Hughes on 1/13/23.
 //
 
-internal struct IntCodingKey {
-    internal let intValue: Int?
-    internal let stringValue: String
+public struct IntCodingKey {
+    public let intValue: Int?
+    public let stringValue: String
     
     // MARK: Private Initialization
     
@@ -20,15 +20,15 @@ internal struct IntCodingKey {
 // MARK: - CodingKey Extension
 
 extension IntCodingKey: CodingKey {
-    // MARK: Internal Initialization
+    // MARK: Public Initialization
     
-    internal init(intValue: Int) {
+    public init(intValue: Int) {
         self.intValue = intValue
         
         stringValue = String(intValue)
     }
     
-    internal init?(stringValue: String) {
+    public init?(stringValue: String) {
         guard let intValue = Int(stringValue) else {
             return nil
         }

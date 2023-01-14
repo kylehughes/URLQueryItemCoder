@@ -7,7 +7,7 @@
 
 import Foundation
 
-@testable import URLQueryItemCodable
+@testable import Common
 
 extension URLQueryItem {
     // MARK: Internal Static Interface

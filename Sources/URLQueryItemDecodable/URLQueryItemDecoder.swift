@@ -1,12 +1,14 @@
 //
 //  URLQueryItemDecoder.swift
-//  URLQueryItemCodable
+//  URLQueryItemDecodable
 //
 //  Created by Kyle Hughes on 12/30/22.
 //
 
 import Combine
 import Foundation
+
+@_implementationOnly import Common
 
 public struct URLQueryItemDecoder {
     // NO-OP

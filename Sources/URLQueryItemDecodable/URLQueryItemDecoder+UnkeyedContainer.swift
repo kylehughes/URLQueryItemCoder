@@ -1,11 +1,13 @@
 //
 //  URLQueryItemDecoder+UnkeyedContainer.swift
-//  URLQueryItemCodable
+//  URLQueryItemDecodable
 //
 //  Created by Kyle Hughes on 12/30/22.
 //
 
 import Foundation
+
+@_implementationOnly import Common
 
 extension URLQueryItemDecoder {
     internal struct UnkeyedContainer {

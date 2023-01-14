@@ -8,7 +8,7 @@
 import Combine
 import XCTest
 
-@testable import URLQueryItemCodable
+@testable import URLQueryItemEncodable
 
 final class URLQueryItemEncoderTests: AbstractTopLevelEncoderTests<URLQueryItemEncoder> {
     // MARK: AbstractTopLevelEncoderTest Implementation

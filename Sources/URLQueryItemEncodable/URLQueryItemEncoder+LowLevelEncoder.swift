@@ -1,11 +1,13 @@
 //
 //  URLQueryItemEncoder+LowLevelEncoder.swift
-//  URLQueryItemCodable
+//  URLQueryItemEncodable
 //
 //  Created by Kyle Hughes on 12/27/22.
 //
 
 import Foundation
+
+@_implementationOnly import Common
 
 extension URLQueryItemEncoder {
     internal struct LowLevelEncoder {

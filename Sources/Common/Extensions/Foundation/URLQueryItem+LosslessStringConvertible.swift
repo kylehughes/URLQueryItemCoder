@@ -1,6 +1,6 @@
 //
 //  URLQueryItem+LosslessStringConvertible.swift
-//  URLQueryItemCodable
+//  Common
 //
 //  Created by Kyle Hughes on 12/29/22.
 //
@@ -8,9 +8,9 @@
 import Foundation
 
 extension URLQueryItem {
-    // MARK: Internal Initialization
+    // MARK: Public Initialization
     
-    internal init(name: String, value: (some LosslessStringConvertible)?) {
+    public init(name: String, value: (some LosslessStringConvertible)?) {
         guard let value else {
             self.init(name: name, value: nil)
             return

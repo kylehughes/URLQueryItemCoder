@@ -1,26 +1,26 @@
 //
 //  IntermediateRepresentation.swift
-//  URLQueryItemCodable
+//  Common
 //
 //  Created by Kyle Hughes on 12/30/22.
 //
 
 import Foundation
 
-internal class Intermediate {
-    internal static let keySeparator = "."
+public class Intermediate {
+    public static let keySeparator = "."
     
     /// - Note: We don't encode `nil` values – we skip them – but we do need to be able to decode them, and thus need to
     ///   be able to represent them in storage.
     private var storage: [String: String?]
     
-    // MARK: Internal Initialization
+    // MARK: Public Initialization
     
-    internal init() {
+    public init() {
         storage = [:]
     }
     
-    internal init(from output: [URLQueryItem]) {
+    public init(from output: [URLQueryItem]) {
         storage = {
             var storage: [String: String?] = Dictionary(minimumCapacity: output.count)
             
@@ -37,24 +37,18 @@ internal class Intermediate {
     private init(storage: [String: String?]) {
         self.storage = storage
     }
-    
-    // MARK: Internal Static Interface
-    
-    internal static func key(for codingPath: [any CodingKey]) -> String {
-        codingPath.map(\.stringValue).joined(separator: keySeparator)
-    }
 
     // MARK: Internal Instance Interface
     
-    internal var allStringKeys: [String] {
+    public var allStringKeys: [String] {
         Array(storage.keys)
     }
     
-    internal var count: Int {
+    public var count: Int {
         storage.count
     }
     
-    internal func contains(_ codingPath: [any CodingKey]) -> Bool {
+    public func contains(_ codingPath: [any CodingKey]) -> Bool {
         guard !storage.isEmpty else {
             return false
         }
@@ -80,7 +74,7 @@ internal class Intermediate {
         return false
     }
     
-    internal func decode(_ codingPath: [any CodingKey]) throws -> String {
+    public func decode(_ codingPath: [any CodingKey]) throws -> String {
         let storageKey = key(for: codingPath)
         
         guard let value = storage[storageKey] else {
@@ -106,7 +100,7 @@ internal class Intermediate {
         return value
     }
     
-    internal func decodeLosslessly<Target>(
+    public func decodeLosslessly<Target>(
         _ codingPath: [any CodingKey]
     ) throws -> Target where Target: LosslessStringConvertible {
         let stringValue = try decode(codingPath)
@@ -121,11 +115,11 @@ internal class Intermediate {
         return value
     }
 
-    internal func encode(_ codingPath: [any CodingKey], as value: String?) {
+    public func encode(_ codingPath: [any CodingKey], as value: String?) {
         storage[key(for: codingPath)] = value
     }
     
-    internal func encodeLosslessly(_ codingPath: [any CodingKey], as value: (some LosslessStringConvertible)?) {
+    public func encodeLosslessly(_ codingPath: [any CodingKey], as value: (some LosslessStringConvertible)?) {
         guard let value else {
             encode(codingPath, as: nil)
             return
@@ -134,7 +128,7 @@ internal class Intermediate {
         encode(codingPath, as: String(value))
     }
     
-    internal func finalize() -> [URLQueryItem] {
+    public func finalize() -> [URLQueryItem] {
         storage
             .keys
             .sorted()
@@ -143,11 +137,11 @@ internal class Intermediate {
             }
     }
     
-    internal func isNil(for codingPath: [any CodingKey]) -> Bool {
+    public func isNil(for codingPath: [any CodingKey]) -> Bool {
         !contains(codingPath) || isValueNil(for: codingPath)
     }
     
-    internal func scoped(to codingPath: [any CodingKey]) -> Intermediate {
+    public func scoped(to codingPath: [any CodingKey]) -> Intermediate {
         guard !codingPath.isEmpty else {
             return self
         }
@@ -165,6 +159,6 @@ internal class Intermediate {
     }
     
     private func key(for codingPath: [any CodingKey]) -> String {
-        Self.key(for: codingPath)
+        codingPath.map(\.stringValue).joined(separator: Self.keySeparator)
     }
 }

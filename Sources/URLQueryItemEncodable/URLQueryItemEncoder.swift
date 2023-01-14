@@ -1,12 +1,14 @@
 //
 //  URLQueryItemEncoder.swift
-//  URLQueryItemCodable
+//  URLQueryItemEncodable
 //
 //  Created by Kyle Hughes on 12/27/22.
 //
 
 import Combine
 import Foundation
+
+@_implementationOnly import Common
 
 public struct URLQueryItemEncoder {
     // NO-OP

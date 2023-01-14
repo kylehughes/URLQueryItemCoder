@@ -8,7 +8,7 @@
 import Combine
 import XCTest
 
-@testable import URLQueryItemCodable
+@testable import URLQueryItemDecodable
 
 public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopLevelDecoder, Target.Input: Equatable {
     // MARK: Public Abstract Interface

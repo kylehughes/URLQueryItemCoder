@@ -1,14 +1,14 @@
 //
 //  RangeReplaceableCollection+Appending.swift
-//  APIClient
+//  Common
 //
 //  Created by Kyle Hughes on 12/27/22.
 //
 
 extension RangeReplaceableCollection {
-    // MARK: Internal Instance Interface
+    // MARK: Public Instance Interface
     
-    internal func appending(_ element: Element) -> Self {
+    public func appending(_ element: Element) -> Self {
         var copy = self
         copy.append(element)
         
