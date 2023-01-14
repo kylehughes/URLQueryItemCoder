@@ -68,7 +68,21 @@ internal class Intermediate {
             return true
         }
         
-        return storage[key(for: codingPath)] != nil
+        let storageKey = key(for: codingPath)
+        
+        guard storage[storageKey] == nil else {
+            return true
+        }
+        
+        for key in storage.keys {
+            guard key.hasPrefix(storageKey) else {
+                continue
+            }
+            
+            return true
+        }
+        
+        return false
     }
     
     internal func decode(_ codingPath: [any CodingKey]) throws -> String {
