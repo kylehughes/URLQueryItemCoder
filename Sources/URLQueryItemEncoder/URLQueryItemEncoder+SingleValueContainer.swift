@@ -13,11 +13,11 @@ extension URLQueryItemEncoder {
     internal struct SingleValueContainer {
         internal private(set) var codingPath: [any CodingKey]
         
-        private let intermediate: Intermediate
+        private let intermediate: any ReferenceContainerProtocol
         
         // MARK: Internal Initialization
         
-        internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
+        internal init(intermediate: any ReferenceContainerProtocol, codingPath: [any CodingKey]) {
             self.intermediate = intermediate
             self.codingPath = codingPath
         }

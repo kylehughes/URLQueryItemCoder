@@ -16,11 +16,11 @@ public class Intermediate {
     
     // MARK: Public Initialization
     
-    public init() {
+    public required init() {
         storage = [:]
     }
     
-    public init(from output: [URLQueryItem]) {
+    public required init(from output: [URLQueryItem]) {
         storage = {
             var storage: [String: String?] = Dictionary(minimumCapacity: output.count)
             
@@ -39,6 +39,35 @@ public class Intermediate {
     }
 
     // MARK: Internal Instance Interface
+    
+    public func finalize() -> [URLQueryItem] {
+        storage
+            .keys
+            .sorted()
+            .map { key in
+                URLQueryItem(name: key, value: storage[key] ?? nil)
+            }
+    }
+    
+    public func isNil(for codingPath: [any CodingKey]) -> Bool {
+        !contains(codingPath) || isValueNil(for: codingPath)
+    }
+    
+    // MARK: Private Instsance
+    
+    private func isValueNil(for codingPath: [any CodingKey]) -> Bool {
+        storage[key(for: codingPath)] == Optional(Optional(nil))
+    }
+    
+    private func key(for codingPath: [any CodingKey]) -> String {
+        codingPath.map(\.stringValue).joined(separator: Self.keySeparator)
+    }
+}
+
+// MARK: - ReferenceContainerProtocol Extension
+
+extension Intermediate: ReferenceContainerProtocol {
+    // MARK: Public Instance Interface
     
     public var allStringKeys: [String] {
         Array(storage.keys)
@@ -100,48 +129,11 @@ public class Intermediate {
         return value
     }
     
-    public func decodeLosslessly<Target>(
-        _ codingPath: [any CodingKey]
-    ) throws -> Target where Target: LosslessStringConvertible {
-        let stringValue = try decode(codingPath)
-        
-        guard let value = Target(stringValue) else {
-            throw DecodingError.typeMismatch(
-                Target.self,
-                DecodingError.Context(codingPath: codingPath, debugDescription: "Couldn't decode from string.")
-            )
-        }
-        
-        return value
-    }
-
     public func encode(_ codingPath: [any CodingKey], as value: String?) {
         storage[key(for: codingPath)] = value
     }
     
-    public func encodeLosslessly(_ codingPath: [any CodingKey], as value: (some LosslessStringConvertible)?) {
-        guard let value else {
-            encode(codingPath, as: nil)
-            return
-        }
-        
-        encode(codingPath, as: String(value))
-    }
-    
-    public func finalize() -> [URLQueryItem] {
-        storage
-            .keys
-            .sorted()
-            .map { key in
-                URLQueryItem(name: key, value: storage[key] ?? nil)
-            }
-    }
-    
-    public func isNil(for codingPath: [any CodingKey]) -> Bool {
-        !contains(codingPath) || isValueNil(for: codingPath)
-    }
-    
-    public func scoped(to codingPath: [any CodingKey]) -> Intermediate {
+    public func scoped(to codingPath: [any CodingKey]) -> ReferenceContainerProtocol {
         guard !codingPath.isEmpty else {
             return self
         }
@@ -150,15 +142,5 @@ public class Intermediate {
         let scopedStorage = storage.filter { $0.key.hasPrefix(prefix) }
         
         return Intermediate(storage: scopedStorage)
-    }
-    
-    // MARK: Private Instsance
-    
-    private func isValueNil(for codingPath: [any CodingKey]) -> Bool {
-        storage[key(for: codingPath)] == Optional(Optional(nil))
-    }
-    
-    private func key(for codingPath: [any CodingKey]) -> String {
-        codingPath.map(\.stringValue).joined(separator: Self.keySeparator)
     }
 }

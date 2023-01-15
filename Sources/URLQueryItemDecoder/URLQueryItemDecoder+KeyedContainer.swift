@@ -13,11 +13,11 @@ extension URLQueryItemDecoder {
     internal struct KeyedContainer<Key> where Key: CodingKey {
         internal private(set) var codingPath: [any CodingKey]
         
-        private let intermediate: Intermediate
+        private let intermediate: ReferenceContainerProtocol
         
         // MARK: Internal Initialization
         
-        internal init(from source: Intermediate, scopedTo codingPath: [any CodingKey]) {
+        internal init(from source: ReferenceContainerProtocol, scopedTo codingPath: [any CodingKey]) {
             self.codingPath = codingPath
             
             intermediate = source.scoped(to: codingPath)

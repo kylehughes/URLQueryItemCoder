@@ -14,11 +14,11 @@ extension URLQueryItemEncoder {
         internal private(set) var codingPath: [any CodingKey]
         internal private(set) var count: Int
         
-        private let intermediate: Intermediate
+        private let intermediate: any ReferenceContainerProtocol
         
         // MARK: Internal Initialization
         
-        internal init(intermediate: Intermediate, codingPath: [any CodingKey]) {
+        internal init(intermediate: any ReferenceContainerProtocol, codingPath: [any CodingKey]) {
             self.intermediate = intermediate
             self.codingPath = codingPath
             
