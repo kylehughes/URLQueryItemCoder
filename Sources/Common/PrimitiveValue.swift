@@ -60,3 +60,9 @@ extension PrimitiveValue: CustomStringConvertible {
         }
     }
 }
+
+// MARK: - PrimitiveValueRepresentation Extension
+
+extension PrimitiveValue: PrimitiveValueRepresentation {
+    // NO-OP
+}
