@@ -347,4 +347,30 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
             as: expectedOutputForUnkeyedSingleValueProperties
         )
     }
+    
+    // MARK: Performance Tests
+    
+    public func test_performance_singleValue() {
+        measure {
+            _ = try! target.encode(Double.greatestFiniteMagnitude)
+        }
+    }
+    
+    public func test_performance_keyedValue_singleValueProperties() {
+        measure {
+            _ = try! target.encode(CodableTestTypes.SingleValueProperties.maximumValues)
+        }
+    }
+    
+    public func test_performance_keyedValue_omniValueProperties() {
+        measure {
+            _ = try! target.encode(CodableTestTypes.OmniValueProperties.maximumValues)
+        }
+    }
+    
+    public func test_performance_unkeyedValue() {
+        measure {
+            _ = try! target.encode(CodableTestTypes.UnkeyedValueProperties.nonNil)
+        }
+    }
 }
