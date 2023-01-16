@@ -9,7 +9,7 @@ extension Container {
     public final class SingleValue {
         public let codingPath: [any CodingKey]
         
-        public private(set) var storage: Storage?
+        public private(set) var storage: Storage<Representation>?
                 
         // MARK: public Initialization
         
@@ -23,14 +23,14 @@ extension Container {
 
 // MARK: - SingleValueDecodingContainer Extension
 
-extension Container.SingleValue: SingleValueDecodingContainer {
+extension Container.SingleValue: SingleValueDecodingContainer where Representation == PrimitiveValue.Unknown {
     // MARK: Public Instance Interface
     
     public func decode(_ type: Bool.Type) throws -> Bool {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .bool(value):
+            switch primitive.value {
+            case let value as Bool:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -45,8 +45,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: Double.Type) throws -> Double {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .double(value):
+            switch primitive.value {
+            case let value as Double:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -61,8 +61,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: Float.Type) throws -> Float {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .float(value):
+            switch primitive.value {
+            case let value as Float:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -77,8 +77,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: Int.Type) throws -> Int {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .int(value):
+            switch primitive.value {
+            case let value as Int:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -93,8 +93,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: Int8.Type) throws -> Int8 {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .int8(value):
+            switch primitive.value {
+            case let value as Int8:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -109,8 +109,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: Int16.Type) throws -> Int16 {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .int16(value):
+            switch primitive.value {
+            case let value as Int16:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -125,8 +125,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: Int32.Type) throws -> Int32 {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .int32(value):
+            switch primitive.value {
+            case let value as Int32:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -141,8 +141,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: Int64.Type) throws -> Int64 {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .int64(value):
+            switch primitive.value {
+            case let value as Int64:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -157,8 +157,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: String.Type) throws -> String {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .string(value):
+            switch primitive.value {
+            case let value as String:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -173,8 +173,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: UInt.Type) throws -> UInt {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .uint(value):
+            switch primitive.value {
+            case let value as UInt:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -189,8 +189,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: UInt8.Type) throws -> UInt8 {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .uint8(value):
+            switch primitive.value {
+            case let value as UInt8:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -205,8 +205,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: UInt16.Type) throws -> UInt16 {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .uint16(value):
+            switch primitive.value {
+            case let value as UInt16:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -221,8 +221,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: UInt32.Type) throws -> UInt32 {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .uint32(value):
+            switch primitive.value {
+            case let value as UInt32:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -237,8 +237,8 @@ extension Container.SingleValue: SingleValueDecodingContainer {
     public func decode(_ type: UInt64.Type) throws -> UInt64 {
         switch storage {
         case let .primitive(primitive):
-            switch primitive {
-            case let .uint64(value):
+            switch primitive.value {
+            case let value as UInt64:
                 return value
             default:
                 throw DecodingError.typeMismatch(type, .obvious(codingPath))
@@ -268,7 +268,7 @@ extension Container.SingleValue: SingleValueDecodingContainer {
 
 // MARK: - SingleValueEncodingContainer Extension
 
-extension Container.SingleValue: SingleValueEncodingContainer {
+extension Container.SingleValue: SingleValueEncodingContainer where Representation == PrimitiveValue.Known {
     // MARK: Public Instance Interface
     
     public func encode(_ value: Bool) throws {
@@ -346,9 +346,9 @@ extension Container.SingleValue: SingleValueEncodingContainer {
 // MARK: - Container.SingleValue.Storage Definition
 
 extension Container.SingleValue {
-    public enum Storage {
+    public enum Storage<Representation> where Representation: PrimitiveValueRepresentation {
         case container(Container)
-        case primitive(PrimitiveValue.Known)
+        case primitive(Representation)
     }
 }
 

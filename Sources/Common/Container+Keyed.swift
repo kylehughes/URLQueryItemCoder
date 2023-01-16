@@ -8,7 +8,7 @@
 extension Container {
     public final class Keyed {
         public private(set) var codingPath: [any CodingKey]
-        public private(set) var storage: [String: Container]
+        public private(set) var storage: [String: Container<Representation>]
                 
         // MARK: public Initialization
         
@@ -28,7 +28,7 @@ extension Container {
 
 // MARK: - KeyedEncodingContainerProtocol Extension
 
-extension Container.Keyed: KeyedEncodingContainerProtocol {
+extension Container.Keyed: KeyedEncodingContainerProtocol where Representation == PrimitiveValue.Known {
     // MARK: public Typealiases
     
     public typealias Key = StringCodingKey

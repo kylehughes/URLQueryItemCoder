@@ -9,7 +9,7 @@ extension Container {
     public final class Unkeyed {
         public private(set) var codingPath: [any CodingKey]
         public private(set) var count: Int
-        public private(set) var storage: [Container]
+        public private(set) var storage: [Container<Representation>]
         
         // MARK: public Initialization
         
@@ -34,8 +34,8 @@ extension Container {
 
 // MARK: - UnkeyedEncodingContainer Extension
 
-extension Container.Unkeyed: UnkeyedEncodingContainer {
-    // MARK: public Instance Interface
+extension Container.Unkeyed: UnkeyedEncodingContainer where Representation == PrimitiveValue.Known {
+    // MARK: Public Instance Interface
     
     public func encode(_ value: Bool) throws {
         let nextCodingKey = nextCodingKey()
