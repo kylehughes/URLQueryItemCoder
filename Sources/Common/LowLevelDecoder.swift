@@ -1,11 +1,14 @@
 //
-//  LowLevelEncoder.swift
+//  LowLevelDecoder.swift
 //  URLQueryItemCoder
 //
 //  Created by Kyle Hughes on 1/15/23.
 //
 
-public final class LowLevelEncoder {
+// TODO: I just have no clue what role this should play and what it needs. Theoretically it should be injected with
+// `storage` but HOW?
+
+public final class LowLevelDecoder {
     public let userInfo: [CodingUserInfoKey: Any]
     
     public private(set) var codingPath: [any CodingKey]
@@ -21,12 +24,12 @@ public final class LowLevelEncoder {
     }
 }
 
-// MARK: - Encoder Extension
+// MARK: - Decoder Extension
 
-extension LowLevelEncoder: Encoder {
+extension LowLevelDecoder: Decoder {
     // MARK: Internal Instance Interface
     
-    public func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key: CodingKey {
+    public func container<Key>(keyedBy type: Key.Type) -> KeyedDecodingContainer<Key> where Key: CodingKey {
         precondition(storage == nil)
         
         let container = Container.Keyed(codingPath: codingPath)
@@ -36,7 +39,7 @@ extension LowLevelEncoder: Encoder {
         return KeyedEncodingContainer(container.wrapped())
     }
     
-    public func singleValueContainer() -> SingleValueEncodingContainer {
+    public func singleValueContainer() -> SingleValueDecodingContainer {
         precondition(storage == nil)
         
         let container = Container.SingleValue(codingPath: codingPath)
@@ -46,7 +49,7 @@ extension LowLevelEncoder: Encoder {
         return container
     }
     
-    public func unkeyedContainer() -> UnkeyedEncodingContainer {
+    public func unkeyedContainer() -> UnkeyedDecodingContainer {
         precondition(storage == nil)
         
         let container = Container.Unkeyed(codingPath: codingPath)
