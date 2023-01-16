@@ -21,3 +21,16 @@ extension ContainerStorage {
         case primitive(PrimitiveContainerValue)
     }
 }
+
+public enum Container<Single, Keyed, Unkeyed> {
+    case keyed(Keyed)
+    case single(Single)
+    case unkeyed(Unkeyed)
+}
+
+extension Container {
+    public enum Single {
+        case container(Container)
+        case primitive(PrimitiveContainerValue)
+    }
+}

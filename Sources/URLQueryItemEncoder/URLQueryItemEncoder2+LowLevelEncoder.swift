@@ -12,14 +12,14 @@ extension URLQueryItemEncoder2 {
         internal let userInfo: [CodingUserInfoKey: Any]
         
         internal private(set) var codingPath: [any CodingKey]
-        internal private(set) var storage: () -> ContainerStorage?
+        internal private(set) var storage: Container?
         
         // MARK: Internal Initialization
         
         internal init(codingPath: [any CodingKey]) {
             self.codingPath = codingPath
             
-            storage = { nil }
+            storage = nil
             userInfo = [:]
         }
     }
@@ -31,21 +31,21 @@ extension URLQueryItemEncoder2.LowLevelEncoder: Encoder {
     // MARK: Internal Instance Interface
     
     internal func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key: CodingKey {
-        precondition(storage() == nil)
+        precondition(storage == nil)
         
-        return KeyedEncodingContainer(
-            
-        )
+        let container = URLQueryItemEncoder2.StringlyKeyedContainer(codingPath: codingPath)
+        
+        storage = .keyed(container)
+        
+        return KeyedEncodingContainer(URLQueryItemEncoder2.KeyedContainer(container))
     }
     
     internal func singleValueContainer() -> SingleValueEncodingContainer {
-        precondition(storage() == nil)
+        precondition(storage == nil)
         
         let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: codingPath)
         
-        storage = {
-            .singleValue(container.storage)
-        }
+        storage = .single(container)
         
         return container
     }
@@ -53,7 +53,11 @@ extension URLQueryItemEncoder2.LowLevelEncoder: Encoder {
     internal func unkeyedContainer() -> UnkeyedEncodingContainer {
         precondition(storage == nil)
         
+        let container = URLQueryItemEncoder2.UnkeyedContainer(codingPath: codingPath)
         
+        storage = .unkeyed(container)
+        
+        return container
     }
 }
 

@@ -13,7 +13,7 @@ extension URLQueryItemEncoder2 {
     internal final class SingleValueContainer {
         internal let codingPath: [any CodingKey]
         
-        internal private(set) var storage: ContainerStorage.SingleValue?
+        internal private(set) var storage: Container.Single?
                 
         // MARK: Internal Initialization
         
@@ -90,7 +90,7 @@ extension URLQueryItemEncoder2.SingleValueContainer: SingleValueEncodingContaine
         let lowLevelEncoder = URLQueryItemEncoder2.LowLevelEncoder(codingPath: codingPath)
         try value.encode(to: lowLevelEncoder)
         
-        guard let nestedStorage = lowLevelEncoder.storage() else {
+        guard let nestedStorage = lowLevelEncoder.storage else {
             fatalError("IDK is this possuble?")
         }
         
