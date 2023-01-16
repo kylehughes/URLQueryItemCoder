@@ -9,9 +9,7 @@ import Foundation
 
 @_implementationOnly import Common
 
-extension URLQueryItemEncoder2 {
-    typealias Container = Common.Container<SingleValueContainer, StringlyKeyedContainer, UnkeyedContainer>
-    
+extension URLQueryItemEncoder2 {    
     internal final class StringlyKeyedContainer {
         internal private(set) var codingPath: [any CodingKey]
         internal private(set) var storage: [String: Container]
