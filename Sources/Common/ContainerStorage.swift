@@ -27,10 +27,3 @@ public enum Container<Single, Keyed, Unkeyed> {
     case single(Single)
     case unkeyed(Unkeyed)
 }
-
-extension Container {
-    public enum Single {
-        case container(Container)
-        case primitive(PrimitiveContainerValue)
-    }
-}

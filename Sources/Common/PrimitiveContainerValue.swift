@@ -21,3 +21,42 @@ public enum PrimitiveContainerValue {
     case uint32(UInt32)
     case uint64(UInt64)
 }
+
+// MARK: - CustomStringConvertible Extension
+
+extension PrimitiveContainerValue: CustomStringConvertible {
+    // MARK: Public Instance Interface
+    
+    public var description: String {
+        switch self {
+        case let .bool(value):
+            return String(value)
+        case let .double(value):
+            return String(value)
+        case let .float(value):
+            return String(value)
+        case let .int(value):
+            return String(value)
+        case let .int8(value):
+            return String(value)
+        case let .int16(value):
+            return String(value)
+        case let .int32(value):
+            return String(value)
+        case let .int64(value):
+            return String(value)
+        case let .string(value):
+            return String(value)
+        case let .uint(value):
+            return String(value)
+        case let .uint8(value):
+            return String(value)
+        case let .uint16(value):
+            return String(value)
+        case let .uint32(value):
+            return String(value)
+        case let .uint64(value):
+            return String(value)
+        }
+    }
+}

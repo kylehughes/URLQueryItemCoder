@@ -13,7 +13,7 @@ extension URLQueryItemEncoder2 {
     internal final class SingleValueContainer {
         internal let codingPath: [any CodingKey]
         
-        internal private(set) var storage: Container.Single?
+        internal private(set) var storage: Storage?
                 
         // MARK: Internal Initialization
         
@@ -99,5 +99,12 @@ extension URLQueryItemEncoder2.SingleValueContainer: SingleValueEncodingContaine
     
     internal func encodeNil() throws {
         storage = nil
+    }
+}
+
+extension URLQueryItemEncoder2.SingleValueContainer {
+    internal enum Storage {
+        case container(URLQueryItemEncoder2.Container)
+        case primitive(PrimitiveContainerValue)
     }
 }
