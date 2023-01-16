@@ -28,14 +28,18 @@ extension URLQueryItemEncoder2: TopLevelEncoder {
         
         encode(lowLevelEncoder.storage, at: String(), into: &storage)
         
-        return storage.map(URLQueryItem.init)
+        return storage
+            .map(URLQueryItem.init)
+            .sorted { $0.name < $1.name }
     }
     
     private func encode(_ container: Container?, at key: String, into storage: inout [String: String]) {
+        let separator = key.isEmpty ? "" : "."
+        
         switch container {
         case let .keyed(container):
             for (subKey, container) in container.storage {
-                let nextKey = "\(key).\(subKey)"
+                let nextKey = "\(key)\(separator)\(subKey)"
                 encode(container, at: nextKey, into: &storage)
             }
         case let .single(container):
@@ -49,7 +53,7 @@ extension URLQueryItemEncoder2: TopLevelEncoder {
             }
         case let .unkeyed(container):
             for (index, container) in zip(container.storage.indices, container.storage) {
-                let nextKey = "\(key).\(index)"
+                let nextKey = "\(key)\(separator)\(index)"
                 encode(container, at: nextKey, into: &storage)
             }
         case .none:
