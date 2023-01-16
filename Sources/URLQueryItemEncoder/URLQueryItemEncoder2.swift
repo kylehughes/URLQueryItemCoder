@@ -22,7 +22,7 @@ public struct URLQueryItemEncoder2 {
                 let nextKey = "\(key)\(separator)\(subKey)"
                 encode(container, at: nextKey, into: &storage)
             }
-        case let .single(container):
+        case let .singleValue(container):
             switch container.storage {
             case let .container(container):
                 encode(container, at: key, into: &storage)

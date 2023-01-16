@@ -1,23 +1,19 @@
 //
-//  URLQueryItemEncoder+UnkeyedContainer.swift
-//  URLQueryItemEncoder
+//  Container+Unkeyed.swift
+//  URLQueryItemCoder
 //
 //  Created by Kyle Hughes on 1/15/23.
 //
 
-import Foundation
-
-@_implementationOnly import Common
-
-extension URLQueryItemEncoder2 {
-    internal final class UnkeyedContainer {
-        internal private(set) var codingPath: [any CodingKey]
-        internal private(set) var count: Int
-        internal private(set) var storage: [Container]
+extension Container {
+    public final class Unkeyed {
+        public private(set) var codingPath: [any CodingKey]
+        public private(set) var count: Int
+        public private(set) var storage: [Container]
         
-        // MARK: Internal Initialization
+        // MARK: public Initialization
         
-        internal init(codingPath: [any CodingKey]) {
+        public init(codingPath: [any CodingKey]) {
             self.codingPath = codingPath
             
             count = 0
@@ -38,153 +34,153 @@ extension URLQueryItemEncoder2 {
 
 // MARK: - UnkeyedEncodingContainer Extension
 
-extension URLQueryItemEncoder2.UnkeyedContainer: UnkeyedEncodingContainer {
-    // MARK: Internal Instance Interface
+extension Container.Unkeyed: UnkeyedEncodingContainer {
+    // MARK: public Instance Interface
     
-    internal func encode(_ value: Bool) throws {
+    public func encode(_ value: Bool) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: String) throws {
+    public func encode(_ value: String) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: Double) throws {
+    public func encode(_ value: Double) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: Float) throws {
+    public func encode(_ value: Float) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: Int) throws {
+    public func encode(_ value: Int) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: Int8) throws {
+    public func encode(_ value: Int8) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: Int16) throws {
+    public func encode(_ value: Int16) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: Int32) throws {
+    public func encode(_ value: Int32) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: Int64) throws {
+    public func encode(_ value: Int64) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: UInt) throws {
+    public func encode(_ value: UInt) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: UInt8) throws {
+    public func encode(_ value: UInt8) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: UInt16) throws {
+    public func encode(_ value: UInt16) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: UInt32) throws {
+    public func encode(_ value: UInt32) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode(_ value: UInt64) throws {
+    public func encode(_ value: UInt64) throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func encode<T>(_ value: T) throws where T : Encodable {
+    public func encode<T>(_ value: T) throws where T : Encodable {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let lowLevelEncoder = URLQueryItemEncoder2.LowLevelEncoder(codingPath: nextCodingPath)
+        let lowLevelEncoder = LowLevelEncoder(codingPath: nextCodingPath)
         
         try value.encode(to: lowLevelEncoder)
         
@@ -195,39 +191,41 @@ extension URLQueryItemEncoder2.UnkeyedContainer: UnkeyedEncodingContainer {
         storage.append(nestedStorage)
     }
     
-    internal func encodeNil() throws {
+    public func encodeNil() throws {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.SingleValueContainer(codingPath: nextCodingPath)
+        let container = Container.SingleValue(codingPath: nextCodingPath)
         
         try container.encodeNil()
         
-        storage.append(.single(container))
+        storage.append(.singleValue(container))
     }
     
-    internal func nestedContainer<NestedKey>(
+    public func nestedContainer<NestedKey>(
         keyedBy keyType: NestedKey.Type
     ) -> KeyedEncodingContainer<NestedKey> where NestedKey : CodingKey {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.StringlyKeyedContainer(codingPath: nextCodingPath)
+        let container = Container.Keyed(codingPath: nextCodingPath)
 
         storage.append(.keyed(container))
         
-        return KeyedEncodingContainer(URLQueryItemEncoder2.KeyedContainer(container))
+        return KeyedEncodingContainer(container.wrapped())
     }
     
-    internal func nestedUnkeyedContainer() -> UnkeyedEncodingContainer {
+    public func nestedUnkeyedContainer() -> UnkeyedEncodingContainer {
         let nextCodingKey = nextCodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = URLQueryItemEncoder2.UnkeyedContainer(codingPath: nextCodingPath)
+        let container = Container.Unkeyed(codingPath: nextCodingPath)
         
         storage.append(.unkeyed(container))
         
         return container
     }
     
-    internal func superEncoder() -> Encoder {
+    public func superEncoder() -> Encoder {
         fatalError("No clue how to implement this? Or what it wants?")
     }
 }
+
+
