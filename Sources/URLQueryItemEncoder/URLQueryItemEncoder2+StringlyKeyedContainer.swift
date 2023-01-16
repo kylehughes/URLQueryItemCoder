@@ -177,8 +177,11 @@ extension URLQueryItemEncoder2.StringlyKeyedContainer: KeyedEncodingContainerPro
     
     internal func nestedUnkeyedContainer(forKey key: Key) -> UnkeyedEncodingContainer {
         let nextCodingPath = codingPath.appending(key)
+        let container = URLQueryItemEncoder2.UnkeyedContainer(codingPath: nextCodingPath)
         
-        return URLQueryItemEncoder2.UnkeyedContainer(codingPath: nextCodingPath)
+        storage[key.stringValue] = .unkeyed(container)
+        
+        return container
     }
     
     internal func superEncoder() -> Encoder {
