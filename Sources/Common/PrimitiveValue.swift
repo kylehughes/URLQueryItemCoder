@@ -1,11 +1,11 @@
 //
-//  PrimitiveContainerValue.swift
+//  PrimitiveValue.swift
 //  Common
 //
 //  Created by Kyle Hughes on 1/15/23.
 //
 
-public enum PrimitiveContainerValue {
+public enum PrimitiveValue {
     case bool(Bool)
     case double(Double)
     case float(Float)
@@ -24,7 +24,7 @@ public enum PrimitiveContainerValue {
 
 // MARK: - CustomStringConvertible Extension
 
-extension PrimitiveContainerValue: CustomStringConvertible {
+extension PrimitiveValue: CustomStringConvertible {
     // MARK: Public Instance Interface
     
     public var description: String {

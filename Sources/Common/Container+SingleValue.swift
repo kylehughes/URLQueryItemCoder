@@ -98,9 +98,11 @@ extension Container.SingleValue: SingleValueEncodingContainer {
     }
 }
 
+// MARK: - Container.SingleValue.Storage Definition
+
 extension Container.SingleValue {
     public enum Storage {
         case container(Container)
-        case primitive(PrimitiveContainerValue)
+        case primitive(PrimitiveValue)
     }
 }
