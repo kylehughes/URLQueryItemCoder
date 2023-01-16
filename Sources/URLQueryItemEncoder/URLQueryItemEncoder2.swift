@@ -11,27 +11,7 @@ import Foundation
 @_implementationOnly import Common
 
 public struct URLQueryItemEncoder2 {
-    // NO-OP
-}
-
-// MARK: - TopLevelEncoder Extension
-
-extension URLQueryItemEncoder2: TopLevelEncoder {
-    // MARK: Public Instance Interface
-    
-    public func encode(_ value: some Encodable) throws -> [URLQueryItem] {
-        let lowLevelEncoder = LowLevelEncoder(codingPath: [])
-        
-        try value.encode(to: lowLevelEncoder)
-        
-        var storage: [String: String] = [:]
-        
-        encode(lowLevelEncoder.storage, at: String(), into: &storage)
-        
-        return storage
-            .map(URLQueryItem.init)
-            .sorted { $0.name < $1.name }
-    }
+    // MARK: Private Instance Interface
     
     private func encode(_ container: Container?, at key: String, into storage: inout [String: String]) {
         let separator = key.isEmpty ? "" : "."
@@ -59,5 +39,25 @@ extension URLQueryItemEncoder2: TopLevelEncoder {
         case .none:
             storage.removeValue(forKey: key)
         }
+    }
+}
+
+// MARK: - TopLevelEncoder Extension
+
+extension URLQueryItemEncoder2: TopLevelEncoder {
+    // MARK: Public Instance Interface
+    
+    public func encode(_ value: some Encodable) throws -> [URLQueryItem] {
+        let lowLevelEncoder = LowLevelEncoder(codingPath: [])
+        
+        try value.encode(to: lowLevelEncoder)
+        
+        var storage: [String: String] = [:]
+        
+        encode(lowLevelEncoder.storage, at: String(), into: &storage)
+        
+        return storage
+            .map(URLQueryItem.init)
+            .sorted { $0.name < $1.name }
     }
 }
