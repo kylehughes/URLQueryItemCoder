@@ -348,7 +348,7 @@ extension Container.SingleValue: SingleValueEncodingContainer {
 extension Container.SingleValue {
     public enum Storage {
         case container(Container)
-        case primitive(PrimitiveValue)
+        case primitive(PrimitiveValue.Known)
     }
 }
 
