@@ -318,7 +318,8 @@ extension Container.Keyed: KeyedDecodingContainerProtocol where Representation =
         
         switch container {
         case let .keyed(container):
-            return try KeyedDecodingContainer(container.wrapped())
+            return KeyedDecodingContainer(container.wrapped())
+            // TODO: use message packs corrupted error
         case let .singleValue(container):
             throw DecodingError.typeMismatch(
                 KeyedDecodingContainer<NestedKey>.self,
@@ -337,10 +338,12 @@ extension Container.Keyed: KeyedDecodingContainerProtocol where Representation =
     public func nestedUnkeyedContainer(forKey key: StringCodingKey) throws -> UnkeyedDecodingContainer {
         let nextCodingPath = codingPath.appending(key)
         
-        return URLQueryItemDecoder.UnkeyedContainer(from: intermediate, scopedTo: nextCodingPath)
+        return Container.Unkeyed(codingPath: nextCodingPath)
     }
     
     public func superDecoder() throws -> Decoder {
+        // TODO: does this make sense at all? no clue what im doing here
+        
         let superKey = StringCodingKey(stringValue: "super")
         
         return try superDecoder(forKey: superKey)
@@ -349,7 +352,7 @@ extension Container.Keyed: KeyedDecodingContainerProtocol where Representation =
     public func superDecoder(forKey key: StringCodingKey) throws -> Decoder {
         let nextCodingPath = codingPath.appending(key)
         
-        return URLQueryItemDecoder.LowLevelDecoder(intermediate: intermediate, codingPath: nextCodingPath)
+        return LowLevelDecoder(codingPath: nextCodingPath)
     }
 }
 
