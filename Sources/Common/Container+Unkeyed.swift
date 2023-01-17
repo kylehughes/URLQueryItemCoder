@@ -227,5 +227,3 @@ extension Container.Unkeyed: UnkeyedEncodingContainer where Representation == Pr
         fatalError("No clue how to implement this? Or what it wants?")
     }
 }
-
-
