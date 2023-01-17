@@ -13,7 +13,11 @@ import Foundation
 public struct URLQueryItemEncoder {
     // MARK: Private Instance Interface
     
-    private func encode(_ container: Container?, at key: String, into storage: inout [String: String]) {
+    private func encode(
+        _ container: Container<PrimitiveValue.Known>?,
+        at key: String,
+        into storage: inout [String: String]
+    ) {
         let separator = key.isEmpty ? "" : "."
         
         switch container {

@@ -284,6 +284,10 @@ extension Container.Keyed: KeyedDecodingContainerProtocol where Representation =
         let nextCodingPath = codingPath.appending(key)
         let lowLevelDecoder = LowLevelDecoder(codingPath: nextCodingPath)
         
+        // TODO: I feel like I'm doing something wrong here… not reaching for the container? what storage does this
+        // decoder have? should I be giving it the container that I have at my index? probably. I'll probably have to
+        // modify the initializer
+        
         return try Target(from: lowLevelDecoder)
     }
     
@@ -312,28 +316,27 @@ extension Container.Keyed: KeyedDecodingContainerProtocol where Representation =
             throw DecodingError.valueNotFound(type, .obvious(codingPath.appending(key)))
         }
         
-        // TODO: I don't know if the parts of this switch that aren't singleValue make sense or will ever run
-        
         let nextCodingPath = codingPath.appending(key)
         
         switch container {
         case let .keyed(container):
             return KeyedDecodingContainer(container.wrapped())
-            // TODO: use message packs corrupted error
-        case let .singleValue(container):
-            throw DecodingError.typeMismatch(
-                KeyedDecodingContainer<NestedKey>.self,
-                .obvious(nextCodingPath)
+        case .singleValue:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: nextCodingPath,
+                    debugDescription: "Cannot decode single value container as keyed container."
+                )
             )
-        case let .unkeyed(container):
-            throw DecodingError.typeMismatch(
-                KeyedDecodingContainer<NestedKey>.self,
-                .obvious(nextCodingPath)
+        case .unkeyed:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: nextCodingPath,
+                    debugDescription: "Cannot decode unkeyed container as keyed container."
+                )
             )
         }
     }
-    
-    // TODO: continue from here
     
     public func nestedUnkeyedContainer(forKey key: StringCodingKey) throws -> UnkeyedDecodingContainer {
         let nextCodingPath = codingPath.appending(key)
