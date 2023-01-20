@@ -21,6 +21,12 @@ public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: Decod
         storage = [:]
     }
     
+    // MARK: Public Instance Interface
+    
+    public func wrapped<Key>() -> DecodingContainer.Wrapper<Key> {
+        DecodingContainer.Wrapper(self)
+    }
+    
     // MARK: Private Instance Interface
     
     private var endIndex: Int {
@@ -33,10 +39,6 @@ public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: Decod
         }
         
         return StringCodingKey(intValue: currentIndex)
-    }
-    
-    private func wrapped<Key>() -> DecodingContainer.Wrapper<Key> {
-        DecodingContainer.Wrapper(self)
     }
 }
 
