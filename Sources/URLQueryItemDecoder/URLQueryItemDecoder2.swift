@@ -23,7 +23,7 @@ public struct URLQueryItemDecoder2 {
             }
             
             decode(
-                key: keys.first ?? String(),
+                key: keys.first,
                 precededBy: [],
                 followedBy: Array(keys.dropFirst()),
                 as: value,
@@ -35,13 +35,13 @@ public struct URLQueryItemDecoder2 {
     }
     
     private func decode(
-        key: String,
+        key: String?,
         precededBy codingPath: [String],
         followedBy futureCodingPath: [String],
         as primitiveValue: String,
         in parent: DecodingContainer<String>
     ) {
-        guard let nextKey = futureCodingPath.first else {
+        guard let key = key else {
             parent.store(primitiveValue)
             
             return
@@ -64,7 +64,7 @@ public struct URLQueryItemDecoder2 {
         }()
         
         decode(
-            key: nextKey,
+            key: futureCodingPath.first,
             precededBy: codingPath.appending(key),
             followedBy: Array(futureCodingPath.dropFirst()),
             as: primitiveValue,
