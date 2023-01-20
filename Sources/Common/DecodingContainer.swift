@@ -978,3 +978,9 @@ extension DecodingContainer.Wrapper: KeyedDecodingContainerProtocol {
         try base.superDecoder(forKey: StringCodingKey(stringValue: key.stringValue))
     }
 }
+
+extension DecodingContainer: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        storage.debugDescription
+    }
+}
