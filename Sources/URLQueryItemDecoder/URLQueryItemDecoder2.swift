@@ -28,6 +28,10 @@ public struct URLQueryItemDecoder2 {
         return container
     }
     
+    // I think the problem now is might be that this representation puts the uarray values right in the unkeyed container
+    // whereas my decoder logic might be looking for it in a nested single value container. so here, that's a containre with a storage of [0] = value
+    
+    
     private func decode(
         key: String,
         precededBy codingPath: [String],
