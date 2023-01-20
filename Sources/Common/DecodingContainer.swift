@@ -7,7 +7,6 @@
 
 public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
     public private(set) var codingPath: [any CodingKey]
-    public private(set) var count: Int?
     public private(set) var currentIndex: Int
     public var storage: [String: Storage]
     
@@ -16,7 +15,6 @@ public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: Decod
     public init(codingPath: [any CodingKey]) {
         self.codingPath = codingPath
         
-        count = 0
         currentIndex = 0
         storage = [:]
     }
@@ -34,7 +32,7 @@ public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: Decod
     // MARK: Private Instance Interface
     
     private var endIndex: Int {
-        (count ?? 0) - 1
+        count! - 1
     }
     
     private func nextDecodingKey() -> StringCodingKey {
@@ -458,6 +456,10 @@ extension DecodingContainer: SingleValueDecodingContainer {
 
 extension DecodingContainer: UnkeyedDecodingContainer {
     // MARK: Public Instance Interface
+    
+    public var count: Int? {
+        storage.count
+    }
     
     public var isAtEnd: Bool {
         endIndex < currentIndex
