@@ -9,7 +9,7 @@ public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: Decod
     public private(set) var codingPath: [any CodingKey]
     public private(set) var count: Int?
     public private(set) var currentIndex: Int
-    public private(set) var storage: [String: Storage]
+    public var storage: [String: Storage]
     
     // MARK: Public Initialization
     
@@ -22,6 +22,10 @@ public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: Decod
     }
     
     // MARK: Public Instance Interface
+    
+    public func store(_ value: PrimitiveValue) {
+        storage[String(currentIndex)] = .primitiveValue(value)
+    }
     
     public func wrapped<Key>() -> DecodingContainer.Wrapper<Key> {
         DecodingContainer.Wrapper(self)
