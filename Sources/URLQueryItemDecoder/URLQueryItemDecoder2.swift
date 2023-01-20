@@ -18,19 +18,21 @@ public struct URLQueryItemDecoder2 {
         for queryItem in queryItems {
             let keys = queryItem.name.split(separator: ".").map(String.init)
             
-            guard let value = queryItem.value, let firstKey = keys.first else {
+            guard let value = queryItem.value else {
                 continue
             }
             
-            decode(key: firstKey, precededBy: [], followedBy: Array(keys.dropFirst()), as: value, in: container)
+            decode(
+                key: keys.first ?? String(),
+                precededBy: [],
+                followedBy: Array(keys.dropFirst()),
+                as: value,
+                in: container
+            )
         }
         
         return container
     }
-    
-    // I think the problem now is might be that this representation puts the uarray values right in the unkeyed container
-    // whereas my decoder logic might be looking for it in a nested single value container. so here, that's a containre with a storage of [0] = value
-    
     
     private func decode(
         key: String,
@@ -40,7 +42,7 @@ public struct URLQueryItemDecoder2 {
         in parent: DecodingContainer<String>
     ) {
         guard let nextKey = futureCodingPath.first else {
-            parent.storage[key] = .primitiveValue(primitiveValue)
+            parent.store(primitiveValue)
             
             return
         }
