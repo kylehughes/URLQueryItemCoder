@@ -35,7 +35,25 @@ public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: Decod
         count! - 1
     }
     
-    private func nextDecodingKey() -> StringCodingKey {
+    private func decode(for key: StringCodingKey, orThrowFor desiredType: Any.Type) throws -> PrimitiveValue {
+        guard let valueStorage = storage[key.stringValue] else {
+            throw DecodingError.valueNotFound(desiredType, .obvious(codingPath))
+        }
+        
+        switch valueStorage {
+        case .container:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: codingPath,
+                    debugDescription: "Cannot decode container as primitive value."
+                )
+            )
+        case let .primitiveValue(value):
+            return value
+        }
+    }
+    
+    private func nextUnkeyedDecodingKey() -> StringCodingKey {
         defer {
             currentIndex += 1
         }
@@ -58,311 +76,143 @@ extension DecodingContainer: KeyedDecodingContainerProtocol {
     }
     
     public func decode(_ type: Bool.Type, forKey key: StringCodingKey) throws -> Bool {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: String.Type, forKey key: StringCodingKey) throws -> String {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: Double.Type, forKey key: StringCodingKey) throws -> Double {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: Float.Type, forKey key: StringCodingKey) throws -> Float {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: Int.Type, forKey key: StringCodingKey) throws -> Int {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: Int8.Type, forKey key: StringCodingKey) throws -> Int8 {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: Int16.Type, forKey key: StringCodingKey) throws -> Int16 {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: Int32.Type, forKey key: StringCodingKey) throws -> Int32 {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: Int64.Type, forKey key: StringCodingKey) throws -> Int64 {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: UInt.Type, forKey key: StringCodingKey) throws -> UInt {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: UInt8.Type, forKey key: StringCodingKey) throws -> UInt8 {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: UInt16.Type, forKey key: StringCodingKey) throws -> UInt16 {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: UInt32.Type, forKey key: StringCodingKey) throws -> UInt32 {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode(_ type: UInt64.Type, forKey key: StringCodingKey) throws -> UInt64 {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(type, .obvious(codingPath))
+        let primitiveValue = try decode(for: key, orThrowFor: type)
+        
+        guard let value = primitiveValue.decode(type) else {
+            throw DecodingError.typeMismatch(type, .obvious(codingPath))
         }
         
-        switch valueStorage {
-        case .container:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .primitiveValue(value):
-            guard let value = value.decode(type) else {
-                throw DecodingError.typeMismatch(type, .obvious(codingPath))
-            }
-            
-            return value
-        }
+        return value
     }
     
     public func decode<T>(_ type: T.Type, forKey key: StringCodingKey) throws -> T where T : Decodable {
@@ -395,15 +245,10 @@ extension DecodingContainer: KeyedDecodingContainerProtocol {
         guard let valueStorage = storage[key.stringValue] else {
             throw DecodingError.valueNotFound(type, .obvious(codingPath.appending(key)))
         }
-        
-        // TODO: I feel like there's other stuff to do here… do i need to check what type of container? no ig uess not
-        // if it's wrong it will fail
 
         switch valueStorage {
         case let .container(container):
-            return KeyedDecodingContainer(
-                container.wrapped()
-            )
+            return KeyedDecodingContainer(container.wrapped())
         case .primitiveValue:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -418,9 +263,6 @@ extension DecodingContainer: KeyedDecodingContainerProtocol {
         guard let valueStorage = storage[key.stringValue] else {
             throw DecodingError.keyNotFound(key, .obvious(codingPath))
         }
-        
-        // TODO: I feel like there's other stuff to do here… do i need to check what type of container? no ig uess not
-        // if it's wrong it will fail
 
         switch valueStorage {
         case let .container(container):
@@ -466,97 +308,97 @@ extension DecodingContainer: UnkeyedDecodingContainer {
     }
     
     public func decode(_ type: Bool.Type) throws -> Bool {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Double.Type) throws -> Double {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Float.Type) throws -> Float {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int.Type) throws -> Int {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int8.Type) throws -> Int8 {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int16.Type) throws -> Int16 {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int32.Type) throws -> Int32 {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int64.Type) throws -> Int64 {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: String.Type) throws -> String {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt.Type) throws -> UInt {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt8.Type) throws -> UInt8 {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt16.Type) throws -> UInt16 {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt32.Type) throws -> UInt32 {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt64.Type) throws -> UInt64 {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode<Target>(_ type: Target.Type) throws -> Target where Target: Decodable {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decodeNil() -> Bool {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return (try? decodeNil(forKey: nextCodingKey)) ?? false
     }
@@ -564,13 +406,13 @@ extension DecodingContainer: UnkeyedDecodingContainer {
     public func nestedContainer<NestedKey>(
         keyedBy type: NestedKey.Type
     ) throws -> KeyedDecodingContainer<NestedKey> where NestedKey: CodingKey {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try nestedContainer(keyedBy: type, forKey: nextCodingKey)
     }
     
     public func nestedUnkeyedContainer() throws -> UnkeyedDecodingContainer {
-        let nextCodingKey = nextDecodingKey()
+        let nextCodingKey = nextUnkeyedDecodingKey()
         
         return try nestedUnkeyedContainer(forKey: nextCodingKey)
     }
