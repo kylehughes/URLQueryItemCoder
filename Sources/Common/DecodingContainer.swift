@@ -368,14 +368,22 @@ extension DecodingContainer: KeyedDecodingContainerProtocol {
     }
     
     public func decode<T>(_ type: T.Type, forKey key: StringCodingKey) throws -> T where T : Decodable {
-        let nextCodingPath = codingPath.appending(key)
-        let lowLevelDecoder = LowLevelDecoder(codingPath: nextCodingPath)
+        guard let valueStorage = storage[key.stringValue] else {
+            throw DecodingError.valueNotFound(type, .obvious(codingPath.appending(key)))
+        }
         
-        // TODO: I feel like I'm doing something wrong here… not reaching for the container? what storage does this
-        // decoder have? should I be giving it the container that I have at my index? probably. I'll probably have to
-        // modify the initializer
-        
-        return try T(from: lowLevelDecoder)
+        switch valueStorage {
+        case let .container(container):
+            let lowLevelDecoder = LowLevelDecoder2(container: container)
+            return try T(from: lowLevelDecoder)
+        case .primitiveValue:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: codingPath,
+                    debugDescription: "Cannot decode primitive as container."
+                )
+            )
+        }
     }
     
     public func decodeNil(forKey key: StringCodingKey) throws -> Bool {
@@ -793,15 +801,8 @@ extension DecodingContainer: UnkeyedDecodingContainer {
     
     public func decode<Target>(_ type: Target.Type) throws -> Target where Target: Decodable {
         let nextCodingKey = nextDecodingKey()
-        let nextCodingPath = codingPath.appending(nextCodingKey)
         
-        // TODO: I feel like I'm doing something wrong here… not reaching for the container? what storage does this
-        // decoder have? should I be giving it the container that I have at my index? probably. I'll probably have to
-        // modify the initializer
-        
-        let lowLevelDecoder = LowLevelDecoder(codingPath: nextCodingPath)
-        
-        return try Target(from: lowLevelDecoder)
+        return try decode(type, forKey: nextCodingKey)
     }
     
     public func decodeNil() -> Bool {
