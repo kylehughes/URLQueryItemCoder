@@ -53,7 +53,7 @@ public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: Decod
         }
     }
     
-    private func nextUnkeyedDecodingKey() -> StringCodingKey {
+    private func nextDecodingKey() -> StringCodingKey {
         defer {
             currentIndex += 1
         }
@@ -308,97 +308,99 @@ extension DecodingContainer: UnkeyedDecodingContainer {
     }
     
     public func decode(_ type: Bool.Type) throws -> Bool {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Double.Type) throws -> Double {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Float.Type) throws -> Float {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int.Type) throws -> Int {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int8.Type) throws -> Int8 {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int16.Type) throws -> Int16 {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int32.Type) throws -> Int32 {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: Int64.Type) throws -> Int64 {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: String.Type) throws -> String {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt.Type) throws -> UInt {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt8.Type) throws -> UInt8 {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt16.Type) throws -> UInt16 {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt32.Type) throws -> UInt32 {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode(_ type: UInt64.Type) throws -> UInt64 {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
     public func decode<Target>(_ type: Target.Type) throws -> Target where Target: Decodable {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try decode(type, forKey: nextCodingKey)
     }
     
+    // TODO: fix this from returning true when this is used as a single value container;;;;;;;;;
+    
     public func decodeNil() -> Bool {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return (try? decodeNil(forKey: nextCodingKey)) ?? false
     }
@@ -406,13 +408,13 @@ extension DecodingContainer: UnkeyedDecodingContainer {
     public func nestedContainer<NestedKey>(
         keyedBy type: NestedKey.Type
     ) throws -> KeyedDecodingContainer<NestedKey> where NestedKey: CodingKey {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try nestedContainer(keyedBy: type, forKey: nextCodingKey)
     }
     
     public func nestedUnkeyedContainer() throws -> UnkeyedDecodingContainer {
-        let nextCodingKey = nextUnkeyedDecodingKey()
+        let nextCodingKey = nextDecodingKey()
         
         return try nestedUnkeyedContainer(forKey: nextCodingKey)
     }

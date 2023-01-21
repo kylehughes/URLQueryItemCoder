@@ -12,6 +12,8 @@ public final class LowLevelDecoder2<PrimitiveValue> where PrimitiveValue: Decodi
     
     // MARK: Internal Initialization
     
+    // TODO: do i need to scope this or something?
+    
     public init(container: DecodingContainer<PrimitiveValue>) {
         self.container = container
         
