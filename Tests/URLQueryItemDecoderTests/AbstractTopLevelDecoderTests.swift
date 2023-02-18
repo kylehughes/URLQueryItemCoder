@@ -120,14 +120,15 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
         )
     }
     
+    // TODO: just need to fix this one!
+    
     public func test_singleValue_nil() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
-
-        XCTAssertDecoder(
-            target,
-            decodes: expectedValues.nilExpectation,
-            as: nil
-        )
+        
+        let inputValue = expectedValues.nilExpectation(nil)
+        let decodedValue = try target.decode(String?.self, from: inputValue)
+        
+        XCTAssertEqual(decodedValue, nil as String?)
     }
     
     public func test_singleValue_string() throws {
@@ -194,34 +195,33 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
     
     // MARK: Keyed Single Value Tests
     
+    // todo: the issue is the optional type
+    
     public func test_keyedValue_singleValueProperties_maximumValues() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
-        XCTAssertDecoder(
-            target,
-            decodes: expectedValues.keyedSingleValueExpectation,
-            as: CodableTestTypes.SingleValueProperties.maximumValues
-        )
+        let inputValue = expectedValues.keyedSingleValueExpectation(CodableTestTypes.SingleValueProperties.maximumValues)
+        let decodedValue = try target.decode(CodableTestTypes.SingleValueProperties.self, from: inputValue)
+        
+        XCTAssertEqual(decodedValue, CodableTestTypes.SingleValueProperties.maximumValues)
     }
     
     public func test_keyedValue_singleValueProperties_minimumValues() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
-        XCTAssertDecoder(
-            target,
-            decodes: expectedValues.keyedSingleValueExpectation,
-            as: CodableTestTypes.SingleValueProperties.minimumValues
-        )
+        let inputValue = expectedValues.keyedSingleValueExpectation(CodableTestTypes.SingleValueProperties.minimumValues)
+        let decodedValue = try target.decode(CodableTestTypes.SingleValueProperties.self, from: inputValue)
+        
+        XCTAssertEqual(decodedValue, CodableTestTypes.SingleValueProperties.minimumValues)
     }
     
     public func test_keyedValue_singleValueProperties_nilValues() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
-        XCTAssertDecoder(
-            target,
-            decodes: expectedValues.keyedSingleValueExpectation,
-            as: CodableTestTypes.SingleValueProperties.nil
-        )
+        let inputValue = expectedValues.keyedSingleValueExpectation(CodableTestTypes.SingleValueProperties.nil)
+        let decodedValue = try target.decode(CodableTestTypes.SingleValueProperties.self, from: inputValue)
+        
+        XCTAssertEqual(decodedValue, CodableTestTypes.SingleValueProperties.nil)
     }
     
     // MARK: Keyed Omni-Value Tests
@@ -279,20 +279,18 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
     public func test_unkeyedValue_nil() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
-        XCTAssertDecoder(
-            target,
-            decodes: expectedValues.unkeyedSingleValueExpectation,
-            as: CodableTestTypes.UnkeyedValueProperties.nil
-        )
+        let inputValue = expectedValues.unkeyedSingleValueExpectation(CodableTestTypes.UnkeyedValueProperties.nil)
+        let decodedValue = try target.decode(CodableTestTypes.UnkeyedValueProperties.self, from: inputValue)
+        
+        XCTAssertEqual(decodedValue, CodableTestTypes.UnkeyedValueProperties.nil)
     }
 
     public func test_unkeyedValue_nonNil() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
-        XCTAssertDecoder(
-            target,
-            decodes: expectedValues.unkeyedSingleValueExpectation,
-            as: CodableTestTypes.UnkeyedValueProperties.nonNil
-        )
+        let inputValue = expectedValues.unkeyedSingleValueExpectation(CodableTestTypes.UnkeyedValueProperties.nonNil)
+        let decodedValue = try target.decode(CodableTestTypes.UnkeyedValueProperties.self, from: inputValue)
+        
+        XCTAssertEqual(decodedValue, CodableTestTypes.UnkeyedValueProperties.nonNil)
     }
 }

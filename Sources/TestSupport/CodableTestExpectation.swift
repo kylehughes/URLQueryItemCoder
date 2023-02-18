@@ -6,7 +6,7 @@
 //
 
 public struct CodableTestExpectation<Value> {
-    public typealias Expectation<Other> = (Other) -> Value
+    public typealias Expectation<Other> = (Other?) -> Value
     
     public let boolExpectation: Expectation<Bool>
     public let doubleExpectation: Expectation<Double>
@@ -24,12 +24,12 @@ public struct CodableTestExpectation<Value> {
     public let uint32Expectation: Expectation<UInt32>
     public let uint64Expectation: Expectation<UInt64>
     
-    public let keyedSingleValueExpectation: Expectation<CodableTestTypes.SingleValueProperties?>
-    public let unkeyedSingleValueExpectation: Expectation<CodableTestTypes.UnkeyedValueProperties?>
+    public let keyedSingleValueExpectation: Expectation<CodableTestTypes.SingleValueProperties>
+    public let unkeyedSingleValueExpectation: Expectation<CodableTestTypes.UnkeyedValueProperties>
     public let keyedKeyedValueExpectation: (
         CodableTestTypes.OmniValueProperties,
-        Expectation<CodableTestTypes.SingleValueProperties?>,
-        Expectation<CodableTestTypes.UnkeyedValueProperties?>
+        Expectation<CodableTestTypes.SingleValueProperties>,
+        Expectation<CodableTestTypes.UnkeyedValueProperties>
     ) -> Value
     
     // MARK: Public Initialization
@@ -50,12 +50,12 @@ public struct CodableTestExpectation<Value> {
         uint16Expectation: @escaping Expectation<UInt16>,
         uint32Expectation: @escaping Expectation<UInt32>,
         uint64Expectation: @escaping Expectation<UInt64>,
-        keyedSingleValueExpectation: @escaping Expectation<CodableTestTypes.SingleValueProperties?>,
-        unkeyedSingleValueExpectation: @escaping Expectation<CodableTestTypes.UnkeyedValueProperties?>,
+        keyedSingleValueExpectation: @escaping Expectation<CodableTestTypes.SingleValueProperties>,
+        unkeyedSingleValueExpectation: @escaping Expectation<CodableTestTypes.UnkeyedValueProperties>,
         keyedKeyedValueExpectation: @escaping (
             CodableTestTypes.OmniValueProperties,
-            Expectation<CodableTestTypes.SingleValueProperties?>,
-            Expectation<CodableTestTypes.UnkeyedValueProperties?>
+            Expectation<CodableTestTypes.SingleValueProperties>,
+            Expectation<CodableTestTypes.UnkeyedValueProperties>
         ) -> Value
     ) {
         self.boolExpectation = boolExpectation

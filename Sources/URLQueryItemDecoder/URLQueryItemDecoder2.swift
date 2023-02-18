@@ -13,6 +13,12 @@ import Foundation
 public struct URLQueryItemDecoder2 {
     // TODO: map [URLQueryItem] to the `DecodingContainer<String>` tree structure
     private func decode(from queryItems: [URLQueryItem]) -> DecodingContainerType<String> {
+        guard !queryItems.isEmpty else {
+            let singleValue = DecodingContainer<String>.SingleValue(codingPath: [])
+            
+            return .singleValue(singleValue)
+        }
+        
         let multiValueContainer = DecodingContainer<String>(codingPath: [])
         
         for queryItem in queryItems {
