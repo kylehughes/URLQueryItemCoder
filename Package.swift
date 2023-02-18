@@ -37,7 +37,9 @@ let package = Package(
         ),
         .target(
             name: "TestSupport",
-            dependencies: []
+            dependencies: [
+                "Common",
+            ]
         ),
         .target(
             name: "URLQueryItemDecoder",
