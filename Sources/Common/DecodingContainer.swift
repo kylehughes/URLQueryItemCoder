@@ -8,6 +8,16 @@
 public enum DecodingContainerType<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
     case multiValue(DecodingContainer<PrimitiveValue>)
     case singleValue(DecodingContainer<PrimitiveValue>.SingleValue)
+    
+    // MARK: Public Static Interface
+    
+    public static var singleValue: Self {
+        .singleValue(at: [])
+    }
+    
+    public static func singleValue(at codingPath: [any CodingKey]) -> Self {
+        .singleValue(DecodingContainer<PrimitiveValue>.SingleValue(codingPath: codingPath))
+    }
 }
 
 public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
@@ -560,7 +570,7 @@ extension DecodingContainer {
         
         // MARK: Public Instance Interface
         
-        public func store(_ value: PrimitiveValue) {
+        public func store(_ value: PrimitiveValue?) {
             precondition(storage == nil)
             
             storage = value
