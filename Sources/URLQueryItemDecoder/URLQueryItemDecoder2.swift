@@ -39,11 +39,13 @@ public struct URLQueryItemDecoder2 {
                 codingPath.append(key)
                 
                 if index == keys.index(before: keys.endIndex) {
+                    let singleValue = DecodingContainer<String>.SingleValue(codingPath: codingPath.map(StringCodingKey.init))
+                    
                     if let value = queryItem.value?.removingPercentEncoding {
-                        let singleValue = DecodingContainer<String>.SingleValue(codingPath: codingPath.map(StringCodingKey.init))
                         singleValue.store(value)
-                        currentMultiValueContainer.storage[key] = .singleValue(singleValue)
                     }
+                    
+                    currentMultiValueContainer.storage[key] = .singleValue(singleValue)
                 } else if let nestedContainer = currentMultiValueContainer.storage[key] {
                     switch nestedContainer {
                     case let .multiValue(existingMultiValueContainer):

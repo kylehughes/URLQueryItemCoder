@@ -231,7 +231,14 @@ extension DecodingContainer: KeyedDecodingContainerProtocol {
     }
     
     public func decodeNil(forKey key: StringCodingKey) throws -> Bool {
-        storage[key.stringValue] == nil
+        switch storage[key.stringValue] {
+        case .multiValue:
+            return false
+        case let .singleValue(container):
+            return container.decodeNil()
+        case .none:
+            return true
+        }
     }
     
     public func nestedContainer<NestedKey>(
