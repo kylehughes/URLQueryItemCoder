@@ -61,7 +61,7 @@ extension String: DecodingPrimitiveValue {
     }
     
     public func decode(_ type: String.Type) -> String? {
-        type.init(self)
+        self
     }
     
     public func decode(_ type: UInt.Type) -> UInt? {
