@@ -9,7 +9,7 @@ extension Container {
     public final class Unkeyed {
         public private(set) var codingPath: [any CodingKey]
         public private(set) var currentIndex: Int
-        public private(set) var storage: [Container<Representation>]
+        public private(set) var storage: [Container]
         
         private var _count: Int
         
@@ -49,7 +49,7 @@ extension Container {
 
 // MARK: - UnkeyedEncodingContainer Extension
 
-extension Container.Unkeyed: UnkeyedEncodingContainer where Representation == PrimitiveValue.Known {
+extension Container.Unkeyed: UnkeyedEncodingContainer {
     // MARK: Public Instance Interface
     
     public var count: Int {

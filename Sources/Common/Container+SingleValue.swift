@@ -9,7 +9,7 @@ extension Container {
     public final class SingleValue {
         public let codingPath: [any CodingKey]
         
-        public private(set) var storage: Storage<Representation>?
+        public private(set) var storage: Storage?
                 
         // MARK: public Initialization
         
@@ -23,7 +23,7 @@ extension Container {
 
 // MARK: - SingleValueEncodingContainer Extension
 
-extension Container.SingleValue: SingleValueEncodingContainer where Representation == PrimitiveValue.Known {
+extension Container.SingleValue: SingleValueEncodingContainer {
     // MARK: Public Instance Interface
     
     public func encode(_ value: Bool) throws {
@@ -101,9 +101,9 @@ extension Container.SingleValue: SingleValueEncodingContainer where Representati
 // MARK: - Container.SingleValue.Storage Definition
 
 extension Container.SingleValue {
-    public enum Storage<Representation> where Representation: PrimitiveValueRepresentation {
+    public enum Storage {
         case container(Container)
-        case primitive(Representation)
+        case primitive(PrimitiveValue)
     }
 }
 

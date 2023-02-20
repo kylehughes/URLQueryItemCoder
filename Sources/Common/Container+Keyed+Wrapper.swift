@@ -19,8 +19,8 @@ extension Container.Keyed {
 
 // MARK: - KeyedEncodingContainerProtocol Extension
 
-extension Container.Keyed.Wrapper: KeyedEncodingContainerProtocol where Representation == PrimitiveValue.Known {
-    // MARK: public Instance Interface
+extension Container.Keyed.Wrapper: KeyedEncodingContainerProtocol {
+    // MARK: Public Instance Interface
     
     public var codingPath: [CodingKey] {
         base.codingPath

@@ -14,7 +14,7 @@ public struct URLQueryItemEncoder {
     // MARK: Private Instance Interface
     
     private func encode(
-        _ container: Container<PrimitiveValue.Known>?,
+        _ container: Container?,
         at key: String,
         into storage: inout [String: String]
     ) {

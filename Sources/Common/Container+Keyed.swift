@@ -8,7 +8,7 @@
 extension Container {
     public final class Keyed {
         public private(set) var codingPath: [any CodingKey]
-        public private(set) var storage: [String: Container<Representation>]
+        public private(set) var storage: [String: Container]
                 
         // MARK: public Initialization
         
@@ -28,7 +28,7 @@ extension Container {
 
 // MARK: - KeyedEncodingContainerProtocol Extension
 
-extension Container.Keyed: KeyedEncodingContainerProtocol where Representation == PrimitiveValue.Known {
+extension Container.Keyed: KeyedEncodingContainerProtocol {
     // MARK: public Instance Interface
     
     public func encode(_ value: Bool, forKey key: StringCodingKey) throws {
