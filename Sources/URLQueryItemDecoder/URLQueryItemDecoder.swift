@@ -46,7 +46,7 @@ public struct URLQueryItemDecoder {
                 currentCodingPath.append(key)
                 
                 if index == keyComponents.index(before: keyComponents.endIndex) {
-                    let singleValue = DecodingContainer<String>.SingleValue(codingPath: currentCodingPath.map(StringCodingKey.init))
+                    let singleValue = DecodingContainer<String>.SingleValue(codingPath: currentCodingPath.map(StringCodingKey.init(stringValue:)))
                     singleValue.store(queryItem.value?.removingPercentEncoding)
                     
                     currentMultiValueContainer.storage[key] = .singleValue(singleValue)
@@ -58,7 +58,7 @@ public struct URLQueryItemDecoder {
                         fatalError("bad I think")
                     }
                 } else {
-                    let newMultiValueContainer = DecodingContainer<String>(codingPath: currentCodingPath.map(StringCodingKey.init))
+                    let newMultiValueContainer = DecodingContainer<String>(codingPath: currentCodingPath.map(StringCodingKey.init(stringValue:)))
                     currentMultiValueContainer.storage[key] = .multiValue(newMultiValueContainer)
                     currentMultiValueContainer = newMultiValueContainer
                 }

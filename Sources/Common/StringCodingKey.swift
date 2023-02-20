@@ -41,7 +41,7 @@ extension StringCodingKey: ExpressibleByStringLiteral {
     // MARK: Public Initialization
     
     @inlinable
-    public init(stringLiteral value: StringLiteralType) {
+    public init(stringLiteral value: String) {
         self.init(stringValue: value)
     }
 }

@@ -37,3 +37,14 @@ extension IntCodingKey: CodingKey {
         self.stringValue = stringValue
     }
 }
+
+// MARK: - ExpressibleByIntegerLiteral Extension
+
+extension IntCodingKey: ExpressibleByIntegerLiteral {
+    // MARK: Public Initialization
+    
+    @inlinable
+    public init(integerLiteral value: Int) {
+        self.init(intValue: value)
+    }
+}

@@ -83,7 +83,7 @@ extension DecodingContainer: KeyedDecodingContainerProtocol {
     // MARK: Public Instance Interface
     
     public var allKeys: [StringCodingKey] {
-        storage.keys.map(StringCodingKey.init)
+        storage.keys.map(StringCodingKey.init(stringValue:))
     }
     
     public func contains(_ key: StringCodingKey) -> Bool {
