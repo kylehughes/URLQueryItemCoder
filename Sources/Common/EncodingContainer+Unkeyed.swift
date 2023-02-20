@@ -1,15 +1,15 @@
 //
-//  Container+Unkeyed.swift
+//  EncodingContainer+Unkeyed.swift
 //  URLQueryItemCoder
 //
 //  Created by Kyle Hughes on 1/15/23.
 //
 
-extension Container {
+extension EncodingContainer {
     public final class Unkeyed {
         public private(set) var codingPath: [any CodingKey]
         public private(set) var currentIndex: Int
-        public private(set) var storage: [Container]
+        public private(set) var storage: [EncodingContainer]
         
         private var _count: Int
         
@@ -49,7 +49,7 @@ extension Container {
 
 // MARK: - UnkeyedEncodingContainer Extension
 
-extension Container.Unkeyed: UnkeyedEncodingContainer {
+extension EncodingContainer.Unkeyed: UnkeyedEncodingContainer {
     // MARK: Public Instance Interface
     
     public var count: Int {
@@ -59,7 +59,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: Bool) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -69,7 +69,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: String) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -79,7 +79,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: Double) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -89,7 +89,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: Float) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -99,7 +99,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: Int) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -109,7 +109,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: Int8) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -119,7 +119,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: Int16) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -129,7 +129,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: Int32) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -139,7 +139,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: Int64) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -149,7 +149,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: UInt) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -159,7 +159,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: UInt8) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -169,7 +169,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: UInt16) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -179,7 +179,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: UInt32) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -189,7 +189,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encode(_ value: UInt64) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encode(value)
         
@@ -213,7 +213,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func encodeNil() throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.SingleValue(codingPath: nextCodingPath)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
         try container.encodeNil()
         
@@ -225,7 +225,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     ) -> KeyedEncodingContainer<NestedKey> where NestedKey : CodingKey {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.Keyed(codingPath: nextCodingPath)
+        let container = EncodingContainer.Keyed(codingPath: nextCodingPath)
 
         storage.append(.keyed(container))
         
@@ -235,7 +235,7 @@ extension Container.Unkeyed: UnkeyedEncodingContainer {
     public func nestedUnkeyedContainer() -> UnkeyedEncodingContainer {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
-        let container = Container.Unkeyed(codingPath: nextCodingPath)
+        let container = EncodingContainer.Unkeyed(codingPath: nextCodingPath)
         
         storage.append(.unkeyed(container))
         

@@ -1,11 +1,11 @@
 //
-//  Container+SingleValue.swift
+//  EncodingContainer+SingleValue.swift
 //  Common
 //
 //  Created by Kyle Hughes on 1/15/23.
 //
 
-extension Container {
+extension EncodingContainer {
     public final class SingleValue {
         public let codingPath: [any CodingKey]
         
@@ -23,7 +23,7 @@ extension Container {
 
 // MARK: - SingleValueEncodingContainer Extension
 
-extension Container.SingleValue: SingleValueEncodingContainer {
+extension EncodingContainer.SingleValue: SingleValueEncodingContainer {
     // MARK: Public Instance Interface
     
     public func encode(_ value: Bool) throws {
@@ -100,9 +100,9 @@ extension Container.SingleValue: SingleValueEncodingContainer {
 
 // MARK: - Container.SingleValue.Storage Definition
 
-extension Container.SingleValue {
+extension EncodingContainer.SingleValue {
     public enum Storage {
-        case container(Container)
+        case container(EncodingContainer)
         case primitive(PrimitiveValue)
     }
 }

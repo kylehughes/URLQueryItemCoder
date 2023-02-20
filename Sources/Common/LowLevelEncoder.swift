@@ -9,7 +9,7 @@ public final class LowLevelEncoder {
     public let userInfo: [CodingUserInfoKey: Any]
     
     public private(set) var codingPath: [any CodingKey]
-    public private(set) var storage: Container?
+    public private(set) var storage: EncodingContainer?
     
     // MARK: Internal Initialization
     
@@ -29,7 +29,7 @@ extension LowLevelEncoder: Encoder {
     public func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key: CodingKey {
         precondition(storage == nil)
         
-        let container = Container.Keyed(codingPath: codingPath)
+        let container = EncodingContainer.Keyed(codingPath: codingPath)
         
         storage = .keyed(container)
         
@@ -39,7 +39,7 @@ extension LowLevelEncoder: Encoder {
     public func singleValueContainer() -> SingleValueEncodingContainer {
         precondition(storage == nil)
         
-        let container = Container.SingleValue(codingPath: codingPath)
+        let container = EncodingContainer.SingleValue(codingPath: codingPath)
         
         storage = .singleValue(container)
         
@@ -49,7 +49,7 @@ extension LowLevelEncoder: Encoder {
     public func unkeyedContainer() -> UnkeyedEncodingContainer {
         precondition(storage == nil)
         
-        let container = Container.Unkeyed(codingPath: codingPath)
+        let container = EncodingContainer.Unkeyed(codingPath: codingPath)
         
         storage = .unkeyed(container)
         

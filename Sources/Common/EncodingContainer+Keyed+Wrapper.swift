@@ -1,17 +1,17 @@
 //
-//  Container+Keyed+Wrapper.swift
+//  EncodingContainer+Keyed+Wrapper.swift
 //  URLQueryItemCoder
 //
 //  Created by Kyle Hughes on 1/15/23.
 //
 
-extension Container.Keyed {
+extension EncodingContainer.Keyed {
     public struct Wrapper<Key> where Key: CodingKey {
-        private let base: Container.Keyed
+        private let base: EncodingContainer.Keyed
                 
         // MARK: public Initialization
         
-        public init(_ base: Container.Keyed) {
+        public init(_ base: EncodingContainer.Keyed) {
             self.base = base
         }
     }
@@ -19,7 +19,7 @@ extension Container.Keyed {
 
 // MARK: - KeyedEncodingContainerProtocol Extension
 
-extension Container.Keyed.Wrapper: KeyedEncodingContainerProtocol {
+extension EncodingContainer.Keyed.Wrapper: KeyedEncodingContainerProtocol {
     // MARK: Public Instance Interface
     
     public var codingPath: [CodingKey] {
