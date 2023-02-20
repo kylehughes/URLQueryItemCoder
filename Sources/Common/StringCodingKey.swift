@@ -23,10 +23,25 @@ extension StringCodingKey: CodingKey {
     // MARK: Public Initialization
     
     public init(intValue: Int) {
-        self.init(intValue: intValue, stringValue: String(intValue))
+        self.intValue = intValue
+        
+        stringValue = String(intValue)
     }
     
     public init(stringValue: String) {
-        self.init(intValue: nil, stringValue: stringValue)
+        self.stringValue = stringValue
+        
+        intValue = nil
+    }
+}
+
+// MARK: - ExpressibleByStringLiteral Extension
+
+extension StringCodingKey: ExpressibleByStringLiteral {
+    // MARK: Public Initialization
+    
+    @inlinable
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(stringValue: value)
     }
 }
