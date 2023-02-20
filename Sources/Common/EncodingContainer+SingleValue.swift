@@ -103,7 +103,7 @@ extension EncodingContainer.SingleValue: SingleValueEncodingContainer {
 extension EncodingContainer.SingleValue {
     public enum Storage {
         case container(EncodingContainer)
-        case primitive(PrimitiveValue)
+        case primitive(EncodingPrimitiveValue)
     }
 }
 
