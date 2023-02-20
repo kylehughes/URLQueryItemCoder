@@ -235,7 +235,7 @@ extension DecodingContainer: KeyedDecodingContainerProtocol {
             throw DecodingError.valueNotFound(type, .obvious(codingPath.appending(key)))
         }
         
-        let lowLevelDecoder = LowLevelDecoder2(container: valueStorage)
+        let lowLevelDecoder = LowLevelDecoder(container: valueStorage)
         
         return try T(from: lowLevelDecoder)
     }
@@ -752,7 +752,7 @@ extension DecodingContainer.SingleValue: SingleValueDecodingContainer {
     }
     
     public func decode<T>(_ type: T.Type) throws -> T where T : Decodable {
-        let lowLevelDecoder = LowLevelDecoder2(container: .singleValue(self))
+        let lowLevelDecoder = LowLevelDecoder(container: .singleValue(self))
         
         return try T(from: lowLevelDecoder)
     }

@@ -5,7 +5,7 @@
 //  Created by Kyle Hughes on 1/19/23.
 //
 
-public final class LowLevelDecoder2<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
+public final class LowLevelDecoder<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
     public let userInfo: [CodingUserInfoKey: Any]
     
     private var container: DecodingContainerType<PrimitiveValue>
@@ -23,7 +23,7 @@ public final class LowLevelDecoder2<PrimitiveValue> where PrimitiveValue: Decodi
 
 // MARK: - Decoder Extension
 
-extension LowLevelDecoder2: Decoder {
+extension LowLevelDecoder: Decoder {
     // MARK: Internal Instance Interface
     
     public var codingPath: [any CodingKey] {

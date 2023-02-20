@@ -10,7 +10,7 @@ import Foundation
 
 @_implementationOnly import Common
 
-public struct URLQueryItemDecoder2 {
+public struct URLQueryItemDecoder {
     // MARK: Private Instance Interface
     
     private func decode(from queryItems: [URLQueryItem]) -> DecodingContainerType<String> {
@@ -71,11 +71,11 @@ public struct URLQueryItemDecoder2 {
 
 // MARK: - TopLevelDecoder Extension
 
-extension URLQueryItemDecoder2: TopLevelDecoder {
+extension URLQueryItemDecoder: TopLevelDecoder {
     // MARK: Public Instance Interface
     
     public func decode<Value>(_ type: Value.Type, from: [URLQueryItem]) throws -> Value where Value: Decodable {
-        let lowLevelDecoder = LowLevelDecoder2(container: decode(from: from))
+        let lowLevelDecoder = LowLevelDecoder(container: decode(from: from))
         
         return try Value(from: lowLevelDecoder)
     }
