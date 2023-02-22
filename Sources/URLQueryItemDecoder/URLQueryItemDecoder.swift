@@ -13,14 +13,14 @@ import Foundation
 public struct URLQueryItemDecoder {
     // MARK: Private Instance Interface
     
-    private func decode(from queryItems: [URLQueryItem]) -> DecodingContainerType<String> {
+    private func decode(from queryItems: [URLQueryItem]) -> DecodingContainer<String> {
         let codingPath: [StringCodingKey] = []
         
         guard !queryItems.isEmpty else {
             return .singleValue(at: codingPath)
         }
         
-        let multiValueContainer = DecodingContainer<String>(codingPath: codingPath)
+        let multiValueContainer = DecodingContainer<String>.MultiValue(codingPath: codingPath)
         
         for queryItem in queryItems {
             guard
@@ -60,7 +60,7 @@ public struct URLQueryItemDecoder {
                         fatalError("bad I think")
                     }
                 } else {
-                    let newMultiValueContainer = DecodingContainer<String>(codingPath: currentCodingPath)
+                    let newMultiValueContainer = DecodingContainer<String>.MultiValue(codingPath: currentCodingPath)
                     currentMultiValueContainer.storage[keyComponent] = .multiValue(newMultiValueContainer)
                     currentMultiValueContainer = newMultiValueContainer
                 }

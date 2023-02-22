@@ -5,66 +5,69 @@
 //  Created by Kyle Hughes on 2/21/23.
 //
 
-public final class DecodingContainer<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
-    public private(set) var codingPath: [any CodingKey]
-    public private(set) var currentIndex: Int
-    public var storage: [String: DecodingContainerType<PrimitiveValue>]
-    
-    // MARK: Public Initialization
-    
-    public init(codingPath: [any CodingKey]) {
-        self.codingPath = codingPath
+extension DecodingContainer {
+    public final class MultiValue {
+        public private(set) var codingPath: [any CodingKey]
+        public private(set) var currentIndex: Int
         
-        currentIndex = 0
-        storage = [:]
-    }
-    
-    // MARK: Public Instance Interface
-
-    public func wrapped<Key>() -> DecodingContainer.Wrapper<Key> {
-        DecodingContainer.Wrapper(self)
-    }
-    
-    // MARK: Private Instance Interface
-    
-    private var endIndex: Int {
-        count! - 1
-    }
-    
-    private func decode(for key: StringCodingKey, orThrowFor desiredType: Any.Type) throws -> PrimitiveValue {
-        guard let valueStorage = storage[key.stringValue] else {
-            throw DecodingError.valueNotFound(desiredType, .obvious(codingPath))
+        public var storage: [String: DecodingContainer<PrimitiveValue>]
+        
+        // MARK: Public Initialization
+        
+        public init(codingPath: [any CodingKey]) {
+            self.codingPath = codingPath
+            
+            currentIndex = 0
+            storage = [:]
         }
         
-        switch valueStorage {
-        case .multiValue:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: codingPath,
-                    debugDescription: "Cannot decode container as primitive value."
-                )
-            )
-        case let .singleValue(container):
-            guard let storage = container.storage else {
+        // MARK: Public Instance Interface
+
+        public func wrapped<Key>() -> Wrapper<Key> {
+            Wrapper(self)
+        }
+        
+        // MARK: Private Instance Interface
+        
+        private var endIndex: Int {
+            count! - 1
+        }
+        
+        private func decode(for key: StringCodingKey, orThrowFor desiredType: Any.Type) throws -> PrimitiveValue {
+            guard let valueStorage = storage[key.stringValue] else {
                 throw DecodingError.valueNotFound(desiredType, .obvious(codingPath))
             }
             
-            return storage
-        }
-    }
-    
-    private func nextDecodingKey() -> StringCodingKey {
-        defer {
-            currentIndex += 1
+            switch valueStorage {
+            case .multiValue:
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(
+                        codingPath: codingPath,
+                        debugDescription: "Cannot decode container as primitive value."
+                    )
+                )
+            case let .singleValue(container):
+                guard let storage = container.storage else {
+                    throw DecodingError.valueNotFound(desiredType, .obvious(codingPath))
+                }
+                
+                return storage
+            }
         }
         
-        return StringCodingKey(intValue: currentIndex)
+        private func nextDecodingKey() -> StringCodingKey {
+            defer {
+                currentIndex += 1
+            }
+            
+            return StringCodingKey(intValue: currentIndex)
+        }
     }
 }
 
 // MARK: - KeyedDecodingContainerProtocol Extension
 
-extension DecodingContainer: KeyedDecodingContainerProtocol {
+extension DecodingContainer.MultiValue: KeyedDecodingContainerProtocol {
     // MARK: Public Instance Interface
     
     public var allKeys: [StringCodingKey] {
@@ -288,7 +291,7 @@ extension DecodingContainer: KeyedDecodingContainerProtocol {
 
 // MARK: - UnkeyedDecodingContainer Extension
 
-extension DecodingContainer: UnkeyedDecodingContainer {
+extension DecodingContainer.MultiValue: UnkeyedDecodingContainer {
     // MARK: Public Instance Interface
     
     public var count: Int? {

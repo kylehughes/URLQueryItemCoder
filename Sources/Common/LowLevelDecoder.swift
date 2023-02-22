@@ -8,13 +8,11 @@
 public final class LowLevelDecoder<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
     public let userInfo: [CodingUserInfoKey: Any]
     
-    private var container: DecodingContainerType<PrimitiveValue>
+    private let container: DecodingContainer<PrimitiveValue>
     
-    // MARK: Internal Initialization
+    // MARK: Public Initialization
     
-    // TODO: do i need to scope this or something?
-    
-    public init(container: DecodingContainerType<PrimitiveValue>) {
+    public init(container: DecodingContainer<PrimitiveValue>) {
         self.container = container
         
         userInfo = [:]

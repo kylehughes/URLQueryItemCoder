@@ -5,9 +5,9 @@
 //  Created by Kyle Hughes on 1/19/23.
 //
 
-public enum DecodingContainerType<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
-    case multiValue(DecodingContainer<PrimitiveValue>)
-    case singleValue(DecodingContainer<PrimitiveValue>.SingleValue)
+public enum DecodingContainer<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
+    case multiValue(MultiValue)
+    case singleValue(SingleValue)
     
     // MARK: Public Static Interface
     
@@ -18,6 +18,6 @@ public enum DecodingContainerType<PrimitiveValue> where PrimitiveValue: Decoding
     
     @inlinable
     public static func singleValue(at codingPath: [any CodingKey]) -> Self {
-        .singleValue(DecodingContainer<PrimitiveValue>.SingleValue(codingPath: codingPath))
+        .singleValue(SingleValue(codingPath: codingPath))
     }
 }
