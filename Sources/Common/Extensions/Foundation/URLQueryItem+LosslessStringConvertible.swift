@@ -1,6 +1,6 @@
 //
 //  URLQueryItem+LosslessStringConvertible.swift
-//  Common
+//  URLQueryItemCoder
 //
 //  Created by Kyle Hughes on 12/29/22.
 //

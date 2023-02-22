@@ -15,3 +15,9 @@ extension RangeReplaceableCollection {
         return copy
     }
 }
+
+extension DecodingError.Context {
+    public static func obvious(_ codingPath: [any CodingKey]) -> Self {
+        Self(codingPath: codingPath, debugDescription: String())
+    }
+}

@@ -106,9 +106,3 @@ extension EncodingContainer.SingleValue {
         case primitive(EncodingPrimitiveValue)
     }
 }
-
-extension DecodingError.Context {
-    internal static func obvious(_ codingPath: [any CodingKey]) -> Self {
-        Self(codingPath: codingPath, debugDescription: String())
-    }
-}

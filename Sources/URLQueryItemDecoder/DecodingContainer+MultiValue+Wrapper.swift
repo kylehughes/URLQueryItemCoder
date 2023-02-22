@@ -5,6 +5,8 @@
 //  Created by Kyle Hughes on 2/21/23.
 //
 
+import Common
+
 extension DecodingContainer.MultiValue {
     public struct Wrapper<Key> where Key: CodingKey {
         public let base: DecodingContainer.MultiValue

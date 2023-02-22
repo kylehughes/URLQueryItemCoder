@@ -6,9 +6,8 @@
 //
 
 import Combine
+import Common
 import Foundation
-
-@_implementationOnly import Common
 
 public struct URLQueryItemEncoder {
     // MARK: Private Instance Interface

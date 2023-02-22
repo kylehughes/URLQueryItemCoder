@@ -5,6 +5,8 @@
 //  Created by Kyle Hughes on 1/15/23.
 //
 
+import Common
+
 extension EncodingContainer.Keyed {
     public struct Wrapper<Key> where Key: CodingKey {
         private let base: EncodingContainer.Keyed
