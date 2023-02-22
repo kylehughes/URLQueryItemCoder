@@ -11,10 +11,12 @@ public enum DecodingContainerType<PrimitiveValue> where PrimitiveValue: Decoding
     
     // MARK: Public Static Interface
     
+    @inlinable
     public static var singleValue: Self {
         .singleValue(at: [])
     }
     
+    @inlinable
     public static func singleValue(at codingPath: [any CodingKey]) -> Self {
         .singleValue(DecodingContainer<PrimitiveValue>.SingleValue(codingPath: codingPath))
     }

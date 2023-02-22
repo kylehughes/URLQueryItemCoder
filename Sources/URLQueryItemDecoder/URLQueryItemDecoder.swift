@@ -14,7 +14,7 @@ public struct URLQueryItemDecoder {
     // MARK: Private Instance Interface
     
     private func decode(from queryItems: [URLQueryItem]) -> DecodingContainerType<String> {
-        let codingPath: [any CodingKey] = []
+        let codingPath: [StringCodingKey] = []
         
         guard !queryItems.isEmpty else {
             return .singleValue(at: codingPath)
@@ -32,25 +32,27 @@ public struct URLQueryItemDecoder {
                 let singleValue = DecodingContainer<String>.SingleValue(codingPath: codingPath)
                 singleValue.store(queryItem.value?.removingPercentEncoding)
                 
-                // Must be single value because this means there is no key, and to have any other keys would be invalid
-                
                 return .singleValue(singleValue)
             }
             
             // Once we're here we know that we, at the root, have a multiValue container
             
-            var currentCodingPath: [String] = []
+            let lastKeyComponentIndex = keyComponents.index(before: keyComponents.endIndex)
+            
+            var currentCodingPath = codingPath
             var currentMultiValueContainer = multiValueContainer
             
-            for (index, key) in zip(keyComponents.indices, keyComponents) {
-                currentCodingPath.append(key)
+            for index in keyComponents.indices {
+                let keyComponent = keyComponents[index]
                 
-                if index == keyComponents.index(before: keyComponents.endIndex) {
-                    let singleValue = DecodingContainer<String>.SingleValue(codingPath: currentCodingPath.map(StringCodingKey.init(stringValue:)))
-                    singleValue.store(queryItem.value?.removingPercentEncoding)
-                    
-                    currentMultiValueContainer.storage[key] = .singleValue(singleValue)
-                } else if let nestedContainer = currentMultiValueContainer.storage[key] {
+                let codingKey = StringCodingKey(stringValue: keyComponent)
+                currentCodingPath.append(codingKey)
+                
+                if index == lastKeyComponentIndex {
+                    let singleValueContainer = DecodingContainer<String>.SingleValue(codingPath: currentCodingPath)
+                    singleValueContainer.store(queryItem.value?.removingPercentEncoding)
+                    currentMultiValueContainer.storage[keyComponent] = .singleValue(singleValueContainer)
+                } else if let nestedContainer = currentMultiValueContainer.storage[keyComponent] {
                     switch nestedContainer {
                     case let .multiValue(existingMultiValueContainer):
                         currentMultiValueContainer = existingMultiValueContainer
@@ -58,8 +60,8 @@ public struct URLQueryItemDecoder {
                         fatalError("bad I think")
                     }
                 } else {
-                    let newMultiValueContainer = DecodingContainer<String>(codingPath: currentCodingPath.map(StringCodingKey.init(stringValue:)))
-                    currentMultiValueContainer.storage[key] = .multiValue(newMultiValueContainer)
+                    let newMultiValueContainer = DecodingContainer<String>(codingPath: currentCodingPath)
+                    currentMultiValueContainer.storage[keyComponent] = .multiValue(newMultiValueContainer)
                     currentMultiValueContainer = newMultiValueContainer
                 }
             }
@@ -75,8 +77,17 @@ extension URLQueryItemDecoder: TopLevelDecoder {
     // MARK: Public Instance Interface
     
     public func decode<Value>(_ type: Value.Type, from: [URLQueryItem]) throws -> Value where Value: Decodable {
-        let lowLevelDecoder = LowLevelDecoder(container: decode(from: from))
+        let container = decode(from: from)
+        let lowLevelDecoder = LowLevelDecoder(container: container)
         
         return try Value(from: lowLevelDecoder)
+    }
+}
+
+// MARK: - URLQueryItemDecoder.Error Definition
+
+extension URLQueryItemDecoder {
+    public enum Error: Swift.Error {
+        
     }
 }
