@@ -82,11 +82,3 @@ extension URLQueryItemDecoder: TopLevelDecoder {
         return try Value(from: lowLevelDecoder)
     }
 }
-
-// MARK: - URLQueryItemDecoder.Error Definition
-
-extension URLQueryItemDecoder {
-    public enum Error: Swift.Error {
-        
-    }
-}
