@@ -28,62 +28,77 @@ public protocol DecodingPrimitiveValue {
 extension String: DecodingPrimitiveValue {
     // MARK: Public Instance Interface
     
+    @inlinable
     public func decode(_ type: Bool.Type) -> Bool? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: Double.Type) -> Double? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: Float.Type) -> Float? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: Int.Type) -> Int? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: Int8.Type) -> Int8? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: Int16.Type) -> Int16? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: Int32.Type) -> Int32? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: Int64.Type) -> Int64? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: String.Type) -> String? {
         self
     }
     
+    @inlinable
     public func decode(_ type: UInt.Type) -> UInt? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: UInt8.Type) -> UInt8? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: UInt16.Type) -> UInt16? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: UInt32.Type) -> UInt32? {
         type.init(self)
     }
     
+    @inlinable
     public func decode(_ type: UInt64.Type) -> UInt64? {
         type.init(self)
     }
     
+    @inlinable
     public func decodeNil() -> Bool {
         false
     }
