@@ -32,7 +32,7 @@ extension DecodingContainer {
         // MARK: Private Instance Interface
         
         private var endIndex: Int {
-            count! - 1
+            storage.count - 1
         }
         
         private func decode(for key: StringCodingKey, orThrowFor desiredType: Any.Type) throws -> PrimitiveValue {
