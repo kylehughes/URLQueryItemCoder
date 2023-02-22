@@ -11,88 +11,17 @@ import XCTest
 @testable import TestSupport
 @testable import URLQueryItemEncoder
 
-public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopLevelEncoder, Target.Output: Equatable {
+public class AbstractTopLevelEncoderTests<Target>: XCTestCase where
+    Target: TopLevelEncoder,
+    Target.Output: Equatable
+{
     // MARK: Public Abstract Interface
+    
+    public var expectedValues: CodableTestExpectation<Target.Output> {
+        fatalErrorForUnimplementedAbstractInterface()
+    }
 
     public var target: Target {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForKeyedKeyedValueProperties(
-        _ value: CodableTestTypes.OmniValueProperties
-    ) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForKeyedSingleValueProperties(
-        _ value: CodableTestTypes.SingleValueProperties?
-    ) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleBool(_ value: Bool) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleDouble(_ value: Double) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleFloat(_ value: Float) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleInt(_ value: Int) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleInt8(_ value: Int8) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleInt16(_ value: Int16) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleInt32(_ value: Int32) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleInt64(_ value: Int64) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleNil(_ value: String?) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleString(_ value: String) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleUInt(_ value: UInt) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleUInt8(_ value: UInt8) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleUInt16(_ value: UInt16) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleUInt32(_ value: UInt32) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForSingleUInt64(_ value: UInt64) -> Target.Output {
-        fatalErrorForUnimplementedAbstractInterface()
-    }
-    
-    public func expectedOutputForUnkeyedSingleValueProperties(
-        _ value: CodableTestTypes.UnkeyedValueProperties?
-    ) -> Target.Output {
         fatalErrorForUnimplementedAbstractInterface()
     }
     
@@ -120,7 +49,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(),
-            as: expectedOutputForSingleBool
+            as: expectedValues.boolExpectation
         )
     }
     
@@ -130,7 +59,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .greatestFiniteMagnitude),
-            as: expectedOutputForSingleDouble
+            as: expectedValues.doubleExpectation
         )
     }
     
@@ -140,7 +69,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .greatestFiniteMagnitude),
-            as: expectedOutputForSingleFloat
+            as: expectedValues.floatExpectation
         )
     }
     
@@ -150,7 +79,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleInt
+            as: expectedValues.intExpectation
         )
     }
     
@@ -160,7 +89,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleInt8
+            as: expectedValues.int8Expectation
         )
     }
     
@@ -170,7 +99,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleInt16
+            as: expectedValues.int16Expectation
         )
     }
     
@@ -180,7 +109,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleInt32
+            as: expectedValues.int32Expectation
         )
     }
     
@@ -190,7 +119,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleInt64
+            as: expectedValues.int64Expectation
         )
     }
     
@@ -200,7 +129,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: nil,
-            as: expectedOutputForSingleNil
+            as: expectedValues.nilExpectation
         )
     }
     
@@ -210,7 +139,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: "Test",
-            as: expectedOutputForSingleString
+            as: expectedValues.stringExpectation
         )
     }
     
@@ -220,7 +149,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleUInt
+            as: expectedValues.uintExpectation
         )
     }
     
@@ -230,7 +159,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleUInt8
+            as: expectedValues.uint8Expectation
         )
     }
     
@@ -240,7 +169,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleUInt16
+            as: expectedValues.uint16Expectation
         )
     }
     
@@ -250,7 +179,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleUInt32
+            as: expectedValues.uint32Expectation
         )
     }
     
@@ -260,7 +189,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: .random(in: 0 ... .max),
-            as: expectedOutputForSingleUInt64
+            as: expectedValues.uint64Expectation
         )
     }
     
@@ -272,7 +201,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: CodableTestTypes.SingleValueProperties.maximumValues,
-            as: expectedOutputForKeyedSingleValueProperties
+            as: expectedValues.keyedSingleValueExpectation
         )
     }
     
@@ -282,7 +211,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: CodableTestTypes.SingleValueProperties.minimumValues,
-            as: expectedOutputForKeyedSingleValueProperties
+            as: expectedValues.keyedSingleValueExpectation
         )
     }
     
@@ -292,7 +221,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: CodableTestTypes.SingleValueProperties.nil,
-            as: expectedOutputForKeyedSingleValueProperties
+            as: expectedValues.keyedSingleValueExpectation
         )
     }
     
@@ -302,7 +231,13 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: CodableTestTypes.OmniValueProperties.maximumValues,
-            as: expectedOutputForKeyedKeyedValueProperties
+            as: { input in
+                expectedValues.keyedKeyedValueExpectation(
+                    input,
+                    expectedValues.keyedSingleValueExpectation,
+                    expectedValues.unkeyedSingleValueExpectation
+                )
+            }
         )
     }
     
@@ -312,7 +247,13 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: CodableTestTypes.OmniValueProperties.minimumValues,
-            as: expectedOutputForKeyedKeyedValueProperties
+            as: { input in
+                expectedValues.keyedKeyedValueExpectation(
+                    input,
+                    expectedValues.keyedSingleValueExpectation,
+                    expectedValues.unkeyedSingleValueExpectation
+                )
+            }
         )
     }
     
@@ -322,7 +263,13 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
         XCTAssertEncoder(
             target,
             encodes: CodableTestTypes.OmniValueProperties.nil,
-            as: expectedOutputForKeyedKeyedValueProperties
+            as: { input in
+                expectedValues.keyedKeyedValueExpectation(
+                    input,
+                    expectedValues.keyedSingleValueExpectation,
+                    expectedValues.unkeyedSingleValueExpectation
+                )
+            }
         )
     }
     
@@ -331,21 +278,19 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where Target: TopL
     public func test_unkeyedValue_nil() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
-        XCTAssertEncoder(
-            target,
-            encodes: CodableTestTypes.UnkeyedValueProperties.nil,
-            as: expectedOutputForUnkeyedSingleValueProperties
-        )
+        let inputValue = CodableTestTypes.UnkeyedValueProperties.nil
+        let encodedValue = try target.encode(inputValue)
+        
+        XCTAssertEqual(encodedValue, expectedValues.unkeyedSingleValueExpectation(inputValue))
     }
     
     public func test_unkeyedValue_nonNil() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
-        XCTAssertEncoder(
-            target,
-            encodes: CodableTestTypes.UnkeyedValueProperties.nonNil,
-            as: expectedOutputForUnkeyedSingleValueProperties
-        )
+        let inputValue = CodableTestTypes.UnkeyedValueProperties.nonNil
+        let encodedValue = try target.encode(inputValue)
+        
+        XCTAssertEqual(encodedValue, expectedValues.unkeyedSingleValueExpectation(inputValue))
     }
     
     // MARK: Performance Tests
