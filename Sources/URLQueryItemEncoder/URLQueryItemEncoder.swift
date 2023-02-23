@@ -51,7 +51,7 @@ public struct URLQueryItemEncoder {
                 }
                 storage[key] = String(describing: value)
             case .none:
-                storage.removeValue(forKey: key)
+                fatalError("should throw error i think?")
             }
         case let .unkeyed(container):
             for (index, container) in zip(container.storage.indices, container.storage) {
