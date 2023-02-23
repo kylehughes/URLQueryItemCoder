@@ -12,15 +12,22 @@ import Foundation
 public struct URLQueryItemEncoder {
     // MARK: Private Instance Interface
     
+    // TODO: clean this up, it's super messy. technically mostly works but gotta be a better way.
     private func encode(
         _ container: EncodingContainer?,
         at key: String,
-        into storage: inout [String: String]
+        into storage: inout [String: String?]
     ) {
         let separator = key.isEmpty ? "" : "."
         
         switch container {
         case let .keyed(container):
+            guard !container.storage.isEmpty else {
+                if !key.isEmpty {
+                    storage[key] = String()
+                }
+                break
+            }
             for (subKey, container) in container.storage {
                 let nextKey = "\(key)\(separator)\(subKey)"
                 encode(container, at: nextKey, into: &storage)
@@ -30,6 +37,12 @@ public struct URLQueryItemEncoder {
             case let .container(container):
                 encode(container, at: key, into: &storage)
             case let .primitive(value):
+                guard let value else {
+                    if !key.isEmpty {
+                        storage.updateValue(nil, forKey: key)
+                    }
+                    break
+                }
                 storage[key] = String(describing: value)
             case .none:
                 storage.removeValue(forKey: key)
@@ -55,7 +68,7 @@ extension URLQueryItemEncoder: TopLevelEncoder {
         
         try value.encode(to: lowLevelEncoder)
         
-        var storage: [String: String] = [:]
+        var storage: [String: String?] = [:]
         
         encode(lowLevelEncoder.storage, at: String(), into: &storage)
         

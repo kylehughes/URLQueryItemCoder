@@ -158,7 +158,11 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
     }
     
     public func encodeNil(forKey key: StringCodingKey) throws {
-        storage[key.stringValue] = nil
+        let nextCodingPath = codingPath.appending(key)
+        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
+        try container.encodeNil()
+        
+        storage[key.stringValue] = .singleValue(container)
     }
     
     public func nestedContainer<NestedKey>(

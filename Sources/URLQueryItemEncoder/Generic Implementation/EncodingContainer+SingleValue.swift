@@ -9,7 +9,7 @@ extension EncodingContainer {
     public final class SingleValue {
         public let codingPath: [any CodingKey]
         
-        public private(set) var storage: Storage?
+        public var storage: Storage?
                 
         // MARK: public Initialization
         
@@ -94,7 +94,7 @@ extension EncodingContainer.SingleValue: SingleValueEncodingContainer {
     }
     
     public func encodeNil() throws {
-        storage = nil
+        storage = .primitive(nil)
     }
 }
 
@@ -103,6 +103,6 @@ extension EncodingContainer.SingleValue: SingleValueEncodingContainer {
 extension EncodingContainer.SingleValue {
     public enum Storage {
         case container(EncodingContainer)
-        case primitive(EncodingPrimitiveValue)
+        case primitive(EncodingPrimitiveValue?)
     }
 }

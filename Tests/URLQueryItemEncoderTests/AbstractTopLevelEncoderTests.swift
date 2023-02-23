@@ -126,11 +126,10 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where
     public func test_singleValue_nil() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
-        XCTAssertEncoder(
-            target,
-            encodes: nil,
-            as: expectedValues.nilExpectation
-        )
+        let inputValue: String? = nil
+        let encodedValue = try target.encode(inputValue)
+        
+        XCTAssertEqual(encodedValue, expectedValues.nilExpectation(inputValue))
     }
     
     public func test_singleValue_string() throws {
@@ -259,9 +258,7 @@ public class AbstractTopLevelEncoderTests<Target>: XCTestCase where
     
     public func test_keyedValue_omniValueProperties_nil() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
-        
-        // TODO: Fix, this is encoded improperly. Not quite sure what it should encode to…
-        
+                
         XCTAssertEncoder(
             target,
             encodes: CodableTestTypes.OmniValueProperties.nil,
