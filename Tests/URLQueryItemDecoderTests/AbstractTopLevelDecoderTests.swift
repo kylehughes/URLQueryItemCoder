@@ -282,7 +282,7 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
         let inputValue = expectedValues.unkeyedSingleValueExpectation(CodableTestTypes.UnkeyedValueProperties.nil)
         let decodedValue = try target.decode(CodableTestTypes.UnkeyedValueProperties.self, from: inputValue)
         
-        XCTAssertEqual(decodedValue, CodableTestTypes.UnkeyedValueProperties())
+        XCTAssertEqual(decodedValue, CodableTestTypes.UnkeyedValueProperties.nil)
     }
 
     public func test_unkeyedValue_nonNil() throws {

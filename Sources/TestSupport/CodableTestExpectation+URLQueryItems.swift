@@ -138,17 +138,57 @@ extension CodableTestExpectation where Value == [URLQueryItem] {
             
             return output
         } keyedKeyedValueExpectation: { value, singleValueExpectation, unkeyedValueExpectation in
-            let ones = singleValueExpectation(value.one)
-                .map { URLQueryItem(name: "one.\($0.name)", value: $0.value) }
+            let ones: [URLQueryItem] = {
+                let naive = singleValueExpectation(value.one)
+                    .map { URLQueryItem(name: "one.\($0.name)", value: $0.value) }
+                
+                guard value.one == nil || !naive.isEmpty else {
+                    return [
+                        URLQueryItem(name: "one", value: String())
+                    ]
+                }
+                
+                return naive
+            }()
             
-            let twos = singleValueExpectation(value.two)
-                .map { URLQueryItem(name: "two.\($0.name)", value: $0.value) }
+            let twos: [URLQueryItem] = {
+                let naive = singleValueExpectation(value.two)
+                    .map { URLQueryItem(name: "two.\($0.name)", value: $0.value) }
+                
+                guard value.two == nil || !naive.isEmpty else {
+                    return [
+                        URLQueryItem(name: "two", value: String())
+                    ]
+                }
+                
+                return naive
+            }()
             
-            let threes = unkeyedValueExpectation(value.three)
-                .map { URLQueryItem(name: "three.\($0.name)", value: $0.value) }
+            let threes: [URLQueryItem] = {
+                let naive = unkeyedValueExpectation(value.three)
+                    .map { URLQueryItem(name: "three.\($0.name)", value: $0.value) }
+                
+                guard value.three == nil || !naive.isEmpty else {
+                    return [
+                        URLQueryItem(name: "three", value: String())
+                    ]
+                }
+                
+                return naive
+            }()
             
-            let fours = unkeyedValueExpectation(value.four)
-                .map { URLQueryItem(name: "four.\($0.name)", value: $0.value) }
+            let fours: [URLQueryItem] = {
+                let naive = unkeyedValueExpectation(value.four)
+                    .map { URLQueryItem(name: "four.\($0.name)", value: $0.value) }
+                
+                guard value.four == nil || !naive.isEmpty else {
+                    return [
+                        URLQueryItem(name: "four", value: String())
+                    ]
+                }
+                
+                return naive
+            }()
             
             return (ones + twos + threes + fours).sorted { $0.name < $1.name }
         }
