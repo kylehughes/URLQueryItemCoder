@@ -26,6 +26,8 @@ extension LowLevelDecoder: Decoder {
     
     public var codingPath: [any CodingKey] {
         switch container {
+        case let .empty(container):
+            return container.codingPath
         case let .multiValue(container):
             return container.codingPath
         case let .singleValue(container):
@@ -35,6 +37,8 @@ extension LowLevelDecoder: Decoder {
     
     public func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> where Key: CodingKey {
         switch container {
+        case let .empty(container):
+            return KeyedDecodingContainer(container.wrapped())
         case let .multiValue(container):
             return KeyedDecodingContainer(container.wrapped())
         case .singleValue:
@@ -44,6 +48,8 @@ extension LowLevelDecoder: Decoder {
     
     public func singleValueContainer() throws -> SingleValueDecodingContainer {
         switch container {
+        case let .empty(container):
+            return container
         case .multiValue:
             throw DecodingError.typeMismatch(SingleValueDecodingContainer.self, .obvious(codingPath))
         case let .singleValue(container):
@@ -53,6 +59,8 @@ extension LowLevelDecoder: Decoder {
     
     public func unkeyedContainer() throws -> UnkeyedDecodingContainer {
         switch container {
+        case let .empty(container):
+            return container
         case let .multiValue(container):
             return container
         case .singleValue:

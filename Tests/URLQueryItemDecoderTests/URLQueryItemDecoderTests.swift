@@ -14,7 +14,7 @@ final class URLQueryItemDecoderTests: AbstractTopLevelDecoderTests<URLQueryItemD
     // MARK: AbstractTopLevelDecoderTest Implementation
     
     override var expectedValues: CodableTestExpectation<[URLQueryItem]> {
-        .urlQueryItems(isEncoding: false)
+        .urlQueryItems(isEncoding: true)
     }
 
     override var target: URLQueryItemDecoder {

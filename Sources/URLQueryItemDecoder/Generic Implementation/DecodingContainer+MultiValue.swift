@@ -41,6 +41,13 @@ extension DecodingContainer {
             }
             
             switch valueStorage {
+            case .empty:
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(
+                        codingPath: codingPath,
+                        debugDescription: "Cannot decode empty as primitive value."
+                    )
+                )
             case .multiValue:
                 throw DecodingError.dataCorrupted(
                     DecodingError.Context(
@@ -232,6 +239,8 @@ extension DecodingContainer.MultiValue: KeyedDecodingContainerProtocol {
     
     public func decodeNil(forKey key: StringCodingKey) throws -> Bool {
         switch storage[key.stringValue] {
+        case let .empty(container):
+            return container.decodeNil()
         case .multiValue:
             return false
         case let .singleValue(container):
@@ -250,6 +259,8 @@ extension DecodingContainer.MultiValue: KeyedDecodingContainerProtocol {
         }
         
         switch valueStorage {
+        case let .empty(container):
+            return KeyedDecodingContainer(container.wrapped())
         case let .multiValue(container):
             return KeyedDecodingContainer(container.wrapped())
         case .singleValue:
@@ -268,6 +279,8 @@ extension DecodingContainer.MultiValue: KeyedDecodingContainerProtocol {
         }
 
         switch valueStorage {
+        case let .empty(container):
+            return container
         case let .multiValue(container):
             return container
         case .singleValue:

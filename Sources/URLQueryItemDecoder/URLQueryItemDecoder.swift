@@ -16,7 +16,7 @@ public struct URLQueryItemDecoder {
         let codingPath: [StringCodingKey] = []
         
         guard !queryItems.isEmpty else {
-            return .singleValue(at: codingPath)
+            return .empty(.init(codingPath: codingPath))
         }
         
         let multiValueContainer = DecodingContainer<String>.MultiValue(codingPath: codingPath)
@@ -53,6 +53,8 @@ public struct URLQueryItemDecoder {
                     currentMultiValueContainer.storage[keyComponent] = .singleValue(singleValueContainer)
                 } else if let nestedContainer = currentMultiValueContainer.storage[keyComponent] {
                     switch nestedContainer {
+                    case let .empty(existingContainer):
+                        fatalError("bad I think")
                     case let .multiValue(existingMultiValueContainer):
                         currentMultiValueContainer = existingMultiValueContainer
                     case .singleValue:
