@@ -18,6 +18,10 @@ public struct URLQueryItemEncoder {
         at key: String,
         into storage: inout [String: String?]
     ) {
+        guard let container else {
+            return
+        }
+        
         let separator = key.isEmpty ? "" : "."
         
         switch container {
@@ -54,8 +58,6 @@ public struct URLQueryItemEncoder {
                 let nextKey = "\(key)\(separator)\(index)"
                 encode(container, at: nextKey, into: &storage)
             }
-        case .none:
-            storage.removeValue(forKey: key)
         }
     }
 }
