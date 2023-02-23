@@ -12,6 +12,8 @@ import Foundation
 extension CodableTestExpectation where Value == [URLQueryItem] {
     // MARK: Public Static Interface
     
+    // TODO: remove needing to specify isEncoding and make it so both pieces work identically
+    
     static func urlQueryItems(isEncoding: Bool) -> Self {
         CodableTestExpectation { value in
             [
@@ -123,11 +125,15 @@ extension CodableTestExpectation where Value == [URLQueryItem] {
             }
             
             for (index, element) in zip(value.indices, value) {
-//                guard let element else {
-//                    continue
-//                }
-//
-                output.append(URLQueryItem(name: String(index), value: element))
+                if isEncoding {
+                    guard let element else {
+                        continue
+                    }
+                    
+                    output.append(URLQueryItem(name: String(index), value: element))
+                } else {
+                    output.append(URLQueryItem(name: String(index), value: element))
+                }
             }
             
             return output
