@@ -23,6 +23,7 @@ public struct URLQueryItemEncoder {
         switch container {
         case let .keyed(container):
             guard !container.storage.isEmpty else {
+                // TODO: find a better way to capture this behavior… this doesn't actually represent the logic we want, it just happens to work
                 if !key.isEmpty {
                     storage[key] = String()
                 }
@@ -38,6 +39,7 @@ public struct URLQueryItemEncoder {
                 encode(container, at: key, into: &storage)
             case let .primitive(value):
                 guard let value else {
+                    // TODO: find a better way to capture this behavior…
                     if !key.isEmpty {
                         storage.updateValue(nil, forKey: key)
                     }
