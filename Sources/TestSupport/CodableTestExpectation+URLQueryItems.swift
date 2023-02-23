@@ -14,7 +14,7 @@ extension CodableTestExpectation where Value == [URLQueryItem] {
     
     // TODO: remove needing to specify isEncoding and make it so both pieces work identically
     
-    static func urlQueryItems(isEncoding: Bool) -> Self {
+    static var urlQueryItems: Self {
         CodableTestExpectation { value in
             [
                 URLQueryItem.init(name: String(), value: value)
@@ -79,26 +79,7 @@ extension CodableTestExpectation where Value == [URLQueryItem] {
             }
             
             return { () -> [URLQueryItem?] in
-                guard isEncoding else {
-                    return [
-                        URLQueryItem(name: "bool", value: value.bool),
-                        URLQueryItem(name: "double", value: value.double),
-                        URLQueryItem(name: "float", value: value.float),
-                        URLQueryItem(name: "int", value: value.int),
-                        URLQueryItem(name: "int8", value: value.int8),
-                        URLQueryItem(name: "int16", value: value.int16),
-                        URLQueryItem(name: "int32", value: value.int32),
-                        URLQueryItem(name: "int64", value: value.int64),
-                        URLQueryItem(name: "string", value: value.string),
-                        URLQueryItem(name: "uint", value: value.uint),
-                        URLQueryItem(name: "uint8", value: value.uint8),
-                        URLQueryItem(name: "uint16", value: value.uint16),
-                        URLQueryItem(name: "uint32", value: value.uint32),
-                        URLQueryItem(name: "uint64", value: value.uint64),
-                    ]
-                }
-                
-                return [
+                [
                     URLQueryItem.nilIfValueIsNil(name: "bool", value: value.bool),
                     URLQueryItem.nilIfValueIsNil(name: "double", value: value.double),
                     URLQueryItem.nilIfValueIsNil(name: "float", value: value.float),
