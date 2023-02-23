@@ -125,15 +125,7 @@ extension CodableTestExpectation where Value == [URLQueryItem] {
             }
             
             for (index, element) in zip(value.indices, value) {
-                if isEncoding {
-                    guard let element else {
-                        continue
-                    }
-                    
-                    output.append(URLQueryItem(name: String(index), value: element))
-                } else {
-                    output.append(URLQueryItem(name: String(index), value: element))
-                }
+                output.append(URLQueryItem(name: String(index), value: element))
             }
             
             return output
