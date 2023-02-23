@@ -393,9 +393,7 @@ extension DecodingContainer.MultiValue: UnkeyedDecodingContainer {
         
         return try decode(type, forKey: nextCodingKey)
     }
-    
-    // TODO: fix this from returning true when this is used as a single value container;;;;;;;;;
-    
+        
     public func decodeNil() -> Bool {
         let nextCodingKey = nextDecodingKey()
         
