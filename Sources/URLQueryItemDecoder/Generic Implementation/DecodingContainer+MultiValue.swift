@@ -23,12 +23,6 @@ extension DecodingContainer {
             storage = [:]
         }
         
-        // MARK: Public Instance Interface
-
-        public func wrapped<Key>() -> Wrapper<Key> {
-            Wrapper(self)
-        }
-        
         // MARK: Private Instance Interface
         
         private var endIndex: Int {

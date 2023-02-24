@@ -1,25 +1,29 @@
 //
-//  DecodingContainer+MultiValue+Wrapper.swift
+//  StringlyKeyedDecodingContainerWrapper.swift
 //  URLQueryItemCoder
 //
-//  Created by Kyle Hughes on 2/21/23.
+//  Created by Kyle Hughes on 2/23/23.
 //
 
 import Common
 
-extension DecodingContainer.MultiValue {
-    public struct Wrapper<Key> where Key: CodingKey {
-        public let base: DecodingContainer.MultiValue
-                
-        // MARK: Public Initialization
-        
-        public init(_ base: DecodingContainer.MultiValue) {
-            self.base = base
-        }
+public struct StringlyKeyedDecodingContainerWrapper<Key, Base> where
+    Key: CodingKey,
+    Base: KeyedDecodingContainerProtocol,
+    Base.Key == StringCodingKey
+{
+    public let base: Base
+            
+    // MARK: Public Initialization
+    
+    public init(_ base: Base) {
+        self.base = base
     }
 }
 
-extension DecodingContainer.MultiValue.Wrapper: KeyedDecodingContainerProtocol {
+// MARK: - KeyedDecodingContainerProtocol Extension
+
+extension StringlyKeyedDecodingContainerWrapper: KeyedDecodingContainerProtocol {
     // MARK: Public Instance Interface
     
     @inlinable
@@ -142,5 +146,15 @@ extension DecodingContainer.MultiValue.Wrapper: KeyedDecodingContainerProtocol {
     @inlinable
     public func superDecoder(forKey key: Key) throws -> Decoder {
         try base.superDecoder(forKey: StringCodingKey(stringValue: key.stringValue))
+    }
+}
+
+// MARK: - Extension for Stringly-Keyed Decoding Containers
+
+extension KeyedDecodingContainerProtocol where Key == StringCodingKey {
+    // MARK: Public Instance Interface
+
+    public func wrapped<Key>() -> StringlyKeyedDecodingContainerWrapper<Key, Self> {
+        StringlyKeyedDecodingContainerWrapper(self)
     }
 }
