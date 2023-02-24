@@ -24,3 +24,26 @@ public func XCTAssertDecoder<Decoder, Output>(
         XCTFail(error.localizedDescription, file: file, line: line)
     }
 }
+
+
+public func XCTAssertEndToEndCoding<Encoder, Decoder>(
+    encoder: Encoder,
+    decoder: Decoder,
+    value: some Codable & Equatable,
+    file: StaticString = #filePath,
+    line: UInt = #line
+) where
+    Encoder: TopLevelEncoder,
+    Encoder.Output: Equatable,
+    Decoder: TopLevelDecoder,
+    Decoder.Input == Encoder.Output
+{
+    do {
+        let encodedRepresentation = try encoder.encode(value)
+        let decodedRepresentation = try decoder.decode(type(of: value), from: encodedRepresentation)
+        
+        XCTAssertEqual(value, decodedRepresentation, file: file, line: line)
+    } catch {
+        XCTFail(error.localizedDescription, file: file, line: line)
+    }
+}

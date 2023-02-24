@@ -119,9 +119,7 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
             as: .random(in: .min ... .max)
         )
     }
-    
-    // TODO: just need to fix this one!
-    
+        
     public func test_singleValue_nil() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         
@@ -190,13 +188,9 @@ public class AbstractTopLevelDecoderTests<Target>: XCTestCase where Target: TopL
             as: .random(in: .min ... .max)
         )
     }
-    
-    // TODO: Rest of sing value tests
-    
+        
     // MARK: Keyed Single Value Tests
-    
-    // todo: the issue is the optional type
-    
+        
     public func test_keyedValue_singleValueProperties_maximumValues() throws {
         try XCTSkipIf(Self.isAbstractTestCase)
         

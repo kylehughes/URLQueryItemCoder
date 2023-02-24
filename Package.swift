@@ -54,6 +54,14 @@ let package = Package(
             ]
         ),
         .testTarget(
+            name: "EndToEndTests",
+            dependencies: [
+                "TestSupport",
+                "URLQueryItemDecoder",
+                "URLQueryItemEncoder",
+            ]
+        ),
+        .testTarget(
             name: "URLQueryItemDecoderTests",
             dependencies: [
                 "TestSupport",
