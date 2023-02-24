@@ -6,7 +6,6 @@
 //
 
 public enum DecodingContainer<PrimitiveValue> where PrimitiveValue: DecodingPrimitiveValue {
-    case empty(None)
     case multiValue(MultiValue)
     case singleValue(SingleValue)
     
