@@ -16,7 +16,7 @@ public struct URLQueryItemDecoder {
         let codingPath: [StringCodingKey] = []
         
         guard !queryItems.isEmpty else {
-            return .multiValue(.init(codingPath: codingPath))
+            return .empty(at: codingPath)
         }
         
         let multiValueContainer = DecodingContainer<String>.MultiValue(codingPath: codingPath)

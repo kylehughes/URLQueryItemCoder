@@ -12,6 +12,16 @@ public enum DecodingContainer<PrimitiveValue> where PrimitiveValue: DecodingPrim
     // MARK: Public Static Interface
     
     @inlinable
+    public static func empty(at codingPath: [any CodingKey]) -> Self {
+        .multiValue(at: codingPath)
+    }
+    
+    @inlinable
+    public static func multiValue(at codingPath: [any CodingKey]) -> Self {
+        .multiValue(MultiValue(codingPath: codingPath))
+    }
+    
+    @inlinable
     public static var singleValue: Self {
         .singleValue(at: [])
     }
