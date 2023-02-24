@@ -53,7 +53,7 @@ public struct URLQueryItemDecoder {
                     currentMultiValueContainer.storage[keyComponent] = .singleValue(singleValueContainer)
                 } else if let nestedContainer = currentMultiValueContainer.storage[keyComponent] {
                     switch nestedContainer {
-                    case let .empty(existingContainer):
+                    case .empty:
                         fatalError("bad I think")
                     case let .multiValue(existingMultiValueContainer):
                         currentMultiValueContainer = existingMultiValueContainer
