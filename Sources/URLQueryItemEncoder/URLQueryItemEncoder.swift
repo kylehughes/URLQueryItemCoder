@@ -30,9 +30,9 @@ public struct URLQueryItemEncoder {
                     storage[key] = String()
                 }
             } else {
-                for (subKey, container) in keyedContainer.storage {
+                for (subKey, childContainer) in keyedContainer.storage {
                     let nextKey = "\(key)\(separator)\(subKey)"
-                    encode(container, at: nextKey, into: &storage)
+                    encode(childContainer, at: nextKey, into: &storage)
                 }
             }
         case let .singleValue(singleValueContainer):
