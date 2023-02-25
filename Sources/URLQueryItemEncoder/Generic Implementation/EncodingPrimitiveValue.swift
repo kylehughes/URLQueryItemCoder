@@ -27,6 +27,7 @@ public enum EncodingPrimitiveValue {
 extension EncodingPrimitiveValue: CustomStringConvertible {
     // MARK: Public Instance Interface
     
+    @inlinable
     public var description: String {
         switch self {
         case let .bool(value):
