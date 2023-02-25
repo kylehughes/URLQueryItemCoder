@@ -46,7 +46,7 @@ extension EncodingPrimitiveValue: CustomStringConvertible {
         case let .int64(value):
             return String(value)
         case let .string(value):
-            return String(value)
+            return value
         case let .uint(value):
             return String(value)
         case let .uint8(value):
