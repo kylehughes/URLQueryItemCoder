@@ -11,11 +11,10 @@ import Foundation
 
 public struct URLQueryItemEncoder {
     // MARK: Private Instance Interface
-    
-    // TODO: clean this up, it's super messy. technically mostly works but gotta be a better way.
+
     private func encode(
         _ container: EncodingContainer?,
-        at key: String,
+        at key: String = String(),
         into storage: inout [String: String?]
     ) {
         guard let container else {
@@ -25,38 +24,35 @@ public struct URLQueryItemEncoder {
         let separator = key.isEmpty ? "" : "."
         
         switch container {
-        case let .keyed(container):
-            guard !container.storage.isEmpty else {
-                // TODO: find a better way to capture this behavior… this doesn't actually represent the logic we want, it just happens to work
+        case let .keyed(keyedContainer):
+            if keyedContainer.storage.isEmpty {
                 if !key.isEmpty {
                     storage[key] = String()
                 }
-                break
-            }
-            for (subKey, container) in container.storage {
-                let nextKey = "\(key)\(separator)\(subKey)"
-                encode(container, at: nextKey, into: &storage)
-            }
-        case let .singleValue(container):
-            switch container.storage {
-            case let .container(container):
-                encode(container, at: key, into: &storage)
-            case let .primitive(value):
-                guard let value else {
-                    // TODO: find a better way to capture this behavior…
-                    if !key.isEmpty {
-                        storage.updateValue(nil, forKey: key)
-                    }
-                    break
+            } else {
+                for (subKey, container) in keyedContainer.storage {
+                    let nextKey = "\(key)\(separator)\(subKey)"
+                    encode(container, at: nextKey, into: &storage)
                 }
-                storage[key] = String(describing: value)
+            }
+        case let .singleValue(singleValueContainer):
+            switch singleValueContainer.storage {
+            case let .container(childContainer):
+                encode(childContainer, at: key, into: &storage)
+            case let .primitive(value):
+                if let value {
+                    storage[key] = String(describing: value)
+                } else if !key.isEmpty {
+                    storage.updateValue(nil, forKey: key)
+                }
             case .none:
                 fatalError("should throw error i think?")
             }
-        case let .unkeyed(container):
-            for (index, container) in zip(container.storage.indices, container.storage) {
+        case let .unkeyed(unkeyedContainer):
+            for index in unkeyedContainer.storage.indices {
+                let childContainer = unkeyedContainer.storage[index]
                 let nextKey = "\(key)\(separator)\(index)"
-                encode(container, at: nextKey, into: &storage)
+                encode(childContainer, at: nextKey, into: &storage)
             }
         }
     }
@@ -74,7 +70,7 @@ extension URLQueryItemEncoder: TopLevelEncoder {
         
         var storage: [String: String?] = [:]
         
-        encode(lowLevelEncoder.storage, at: String(), into: &storage)
+        encode(lowLevelEncoder.storage, into: &storage)
         
         return storage
             .map(URLQueryItem.init)
