@@ -31,7 +31,7 @@ extension EncodingContainer {
 // MARK: - KeyedEncodingContainerProtocol Extension
 
 extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
-    // MARK: public Instance Interface
+    // MARK: Public Instance Interface
     
     public mutating func encode(_ value: Bool, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)

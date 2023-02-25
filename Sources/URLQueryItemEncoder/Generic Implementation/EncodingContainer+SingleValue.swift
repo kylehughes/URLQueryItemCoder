@@ -9,9 +9,9 @@ extension EncodingContainer {
     public final class SingleValue {
         public let codingPath: [any CodingKey]
         
-        public var storage: Storage?
+        public private(set) var storage: Storage?
                 
-        // MARK: public Initialization
+        // MARK: Public Initialization
         
         public init(codingPath: [any CodingKey]) {
             self.codingPath = codingPath
@@ -84,6 +84,7 @@ extension EncodingContainer.SingleValue: SingleValueEncodingContainer {
     
     public func encode<T>(_ value: T) throws where T: Encodable {
         let lowLevelEncoder = LowLevelEncoder(codingPath: codingPath)
+        
         try value.encode(to: lowLevelEncoder)
         
         guard let nestedStorage = lowLevelEncoder.storage else {

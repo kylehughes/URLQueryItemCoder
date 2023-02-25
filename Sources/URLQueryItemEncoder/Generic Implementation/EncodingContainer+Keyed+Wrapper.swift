@@ -11,7 +11,7 @@ extension EncodingContainer.Keyed {
     public struct Wrapper<Key> where Key: CodingKey {
         private var base: EncodingContainer.Keyed
                 
-        // MARK: public Initialization
+        // MARK: Public Initialization
         
         public init(_ base: EncodingContainer.Keyed) {
             self.base = base

@@ -13,23 +13,19 @@ extension EncodingContainer {
         public private(set) var currentIndex: Int
         public private(set) var storage: [EncodingContainer]
         
-        private var _count: Int
+        public private(set) var count: Int
         
-        // MARK: public Initialization
+        // MARK: Public Initialization
         
         public init(codingPath: [any CodingKey]) {
             self.codingPath = codingPath
             
-            _count = 0
+            count = 0
             storage = []
             currentIndex = storage.startIndex
         }
         
         // MARK: Private Instance Interface
-        
-        private var endIndex: Int {
-            storage.endIndex
-        }
         
         private func nextDecodingKey() -> IntCodingKey {
             defer {
@@ -41,10 +37,10 @@ extension EncodingContainer {
         
         private func nextEncodingKey() -> IntCodingKey {
             defer {
-                _count += 1
+                count += 1
             }
             
-            return IntCodingKey(intValue: _count)
+            return IntCodingKey(intValue: count)
         }
     }
 }
@@ -53,11 +49,7 @@ extension EncodingContainer {
 
 extension EncodingContainer.Unkeyed: UnkeyedEncodingContainer {
     // MARK: Public Instance Interface
-    
-    public var count: Int {
-        _count
-    }
-    
+
     public func encode(_ value: Bool) throws {
         let nextCodingKey = nextEncodingKey()
         let nextCodingPath = codingPath.appending(nextCodingKey)
