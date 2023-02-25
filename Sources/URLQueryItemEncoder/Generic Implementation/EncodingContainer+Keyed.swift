@@ -1,5 +1,5 @@
 //
-//  EncodingContainer+Keyed.swift
+//  EncodingsingleValueContainer+Keyed.swift
 //  URLQueryItemCoder
 //
 //  Created by Kyle Hughes on 1/15/23.
@@ -28,141 +28,151 @@ extension EncodingContainer {
     }
 }
 
-// MARK: - KeyedEncodingContainerProtocol Extension
+// MARK: - KeyedEncodingsingleValueContainerProtocol Extension
 
 extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
     // MARK: Public Instance Interface
     
     public func encode(_ value: Bool, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Double, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Float, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int8, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int16, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int32, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int64, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
+        try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(container)
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: String, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
+        try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(container)
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt8, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt16, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt32, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt64, forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encode(value)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encode(value)
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode<T>(_ value: T, forKey key: StringCodingKey) throws where T : Encodable {
         let nextCodingPath = codingPath.appending(key)
         let lowLevelEncoder = LowLevelEncoder(codingPath: nextCodingPath)
+        
         try value.encode(to: lowLevelEncoder)
         
-        guard let nestedStorage = lowLevelEncoder.storage else {
-            fatalError("IDK is this possuble?")
-        }
-        
-        storage[key.stringValue] = nestedStorage
+        storage[key.stringValue] = lowLevelEncoder.storage
     }
     
     public func encodeNil(forKey key: StringCodingKey) throws {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.SingleValue(codingPath: nextCodingPath)
-        try container.encodeNil()
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .singleValue(container)
+        try singleValueContainer.encodeNil()
+        
+        storage[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func nestedContainer<NestedKey>(
@@ -170,20 +180,20 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         forKey key: StringCodingKey
     ) -> KeyedEncodingContainer<NestedKey> where NestedKey: CodingKey {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.Keyed(codingPath: nextCodingPath)
+        let keyedContainer = EncodingContainer.Keyed(codingPath: nextCodingPath)
 
-        storage[key.stringValue] = .keyed(container)
+        storage[key.stringValue] = .keyed(keyedContainer)
         
-        return KeyedEncodingContainer(container.wrapped())
+        return KeyedEncodingContainer(keyedContainer.wrapped())
     }
     
     public func nestedUnkeyedContainer(forKey key: StringCodingKey) -> UnkeyedEncodingContainer {
         let nextCodingPath = codingPath.appending(key)
-        let container = EncodingContainer.Unkeyed(codingPath: nextCodingPath)
+        let unkeyedContainer = EncodingContainer.Unkeyed(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .unkeyed(container)
+        storage[key.stringValue] = .unkeyed(unkeyedContainer)
         
-        return container
+        return unkeyedContainer
     }
     
     public func superEncoder() -> Encoder {
