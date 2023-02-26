@@ -46,7 +46,7 @@ public struct URLQueryItemEncoder {
                     storage.updateValue(nil, forKey: key)
                 }
             case .none:
-                fatalError("should throw error i think?")
+                preconditionFailure("Value was never encoded to single value container.")
             }
         case let .unkeyed(unkeyedContainer):
             for index in unkeyedContainer.storage.indices {
