@@ -5,11 +5,26 @@
 //  Created by Kyle Hughes on 1/15/23.
 //
 
-import Combine
 import Common
 import Foundation
 
 public struct URLQueryItemEncoder {
+    // MARK: Public Instance Interface
+    
+    public func encode(_ value: some Encodable) throws -> [URLQueryItem] {
+        let lowLevelEncoder = LowLevelEncoder(codingPath: [])
+        
+        try value.encode(to: lowLevelEncoder)
+        
+        var dictionaryRepresentation: [String: String?] = [:]
+        
+        encode(lowLevelEncoder.container, into: &dictionaryRepresentation)
+        
+        return dictionaryRepresentation
+            .map(URLQueryItem.init)
+            .sorted { $0.name < $1.name }
+    }
+    
     // MARK: Private Instance Interface
 
     private func encode(
@@ -58,22 +73,14 @@ public struct URLQueryItemEncoder {
     }
 }
 
+#if canImport(Combine)
+
+import Combine
+
 // MARK: - TopLevelEncoder Extension
 
 extension URLQueryItemEncoder: TopLevelEncoder {
-    // MARK: Public Instance Interface
-    
-    public func encode(_ value: some Encodable) throws -> [URLQueryItem] {
-        let lowLevelEncoder = LowLevelEncoder(codingPath: [])
-        
-        try value.encode(to: lowLevelEncoder)
-        
-        var dictionaryRepresentation: [String: String?] = [:]
-        
-        encode(lowLevelEncoder.container, into: &dictionaryRepresentation)
-        
-        return dictionaryRepresentation
-            .map(URLQueryItem.init)
-            .sorted { $0.name < $1.name }
-    }
+    // NO-OP
 }
+
+#endif
