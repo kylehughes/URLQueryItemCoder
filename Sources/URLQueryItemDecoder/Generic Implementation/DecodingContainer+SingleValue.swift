@@ -24,7 +24,10 @@ extension DecodingContainer {
         // MARK: Public Instance Interface
         
         public func store(_ value: PrimitiveValue?) {
-            precondition(storage == nil)
+            precondition(
+                storage == nil,
+                "A value was already stored in the single value container."
+            )
             
             storage = value
         }
