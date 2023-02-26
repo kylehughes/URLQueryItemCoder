@@ -3,14 +3,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "URLQueryItemCodable",
+    name: "URLQueryItemCoder",
     platforms: [
         .iOS(.v16),
         .macOS(.v13),
     ],
     products: [
         .library(
-            name: "URLQueryItemCodable",
+            name: "URLQueryItemCoder",
             targets: [
                 "URLQueryItemDecoder",
                 "URLQueryItemEncoder",
