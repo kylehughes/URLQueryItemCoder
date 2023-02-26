@@ -15,7 +15,7 @@ public struct URLQueryItemEncoder {
     private func encode(
         _ container: EncodingContainer?,
         at key: String = String(),
-        into storage: inout [String: String?]
+        into dictionaryRepresentation: inout [String: String?]
     ) {
         guard let container else {
             return
@@ -25,34 +25,34 @@ public struct URLQueryItemEncoder {
         
         switch container {
         case let .keyed(keyedContainer):
-            if keyedContainer.storage.isEmpty {
+            if keyedContainer.children.isEmpty {
                 if !key.isEmpty {
-                    storage[key] = String()
+                    dictionaryRepresentation[key] = String()
                 }
             } else {
-                for (subKey, childContainer) in keyedContainer.storage {
+                for (subKey, childContainer) in keyedContainer.children {
                     let nextKey = "\(key)\(separator)\(subKey)"
-                    encode(childContainer, at: nextKey, into: &storage)
+                    encode(childContainer, at: nextKey, into: &dictionaryRepresentation)
                 }
             }
         case let .singleValue(singleValueContainer):
             switch singleValueContainer.storage {
             case let .container(childContainer):
-                encode(childContainer, at: key, into: &storage)
+                encode(childContainer, at: key, into: &dictionaryRepresentation)
             case let .primitive(value):
                 if let value {
-                    storage[key] = String(describing: value)
+                    dictionaryRepresentation[key] = String(describing: value)
                 } else if !key.isEmpty {
-                    storage.updateValue(nil, forKey: key)
+                    dictionaryRepresentation.updateValue(nil, forKey: key)
                 }
             case .none:
                 preconditionFailure("Value was never encoded to single value container.")
             }
         case let .unkeyed(unkeyedContainer):
-            for index in unkeyedContainer.storage.indices {
-                let childContainer = unkeyedContainer.storage[index]
+            for index in unkeyedContainer.children.indices {
+                let childContainer = unkeyedContainer.children[index]
                 let nextKey = "\(key)\(separator)\(index)"
-                encode(childContainer, at: nextKey, into: &storage)
+                encode(childContainer, at: nextKey, into: &dictionaryRepresentation)
             }
         }
     }
@@ -68,11 +68,11 @@ extension URLQueryItemEncoder: TopLevelEncoder {
         
         try value.encode(to: lowLevelEncoder)
         
-        var storage: [String: String?] = [:]
+        var dictionaryRepresentation: [String: String?] = [:]
         
-        encode(lowLevelEncoder.storage, into: &storage)
+        encode(lowLevelEncoder.container, into: &dictionaryRepresentation)
         
-        return storage
+        return dictionaryRepresentation
             .map(URLQueryItem.init)
             .sorted { $0.name < $1.name }
     }

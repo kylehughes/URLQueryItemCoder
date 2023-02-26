@@ -9,14 +9,14 @@ public final class LowLevelEncoder {
     public let userInfo: [CodingUserInfoKey: Any]
     
     public private(set) var codingPath: [any CodingKey]
-    public private(set) var storage: EncodingContainer?
+    public private(set) var container: EncodingContainer?
     
     // MARK: Public Initialization
     
     public init(codingPath: [any CodingKey]) {
         self.codingPath = codingPath
         
-        storage = nil
+        container = nil
         userInfo = [:]
     }
     
@@ -24,8 +24,8 @@ public final class LowLevelEncoder {
     
     private func preconditionCanEncodeNewContainer() {
         precondition(
-            storage == nil,
-            "A container was already created for the low-level encoder."
+            container == nil,
+            "A container was already created for the low level encoder."
         )
     }
 }
@@ -38,30 +38,30 @@ extension LowLevelEncoder: Encoder {
     public func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key: CodingKey {
         preconditionCanEncodeNewContainer()
         
-        let container = EncodingContainer.Keyed(codingPath: codingPath)
+        let keyedContainer = EncodingContainer.Keyed(codingPath: codingPath)
         
-        storage = .keyed(container)
+        container = .keyed(keyedContainer)
         
-        return KeyedEncodingContainer(container.wrapped())
+        return KeyedEncodingContainer(keyedContainer.wrapped())
     }
     
     public func singleValueContainer() -> SingleValueEncodingContainer {
         preconditionCanEncodeNewContainer()
         
-        let container = EncodingContainer.SingleValue(codingPath: codingPath)
+        let singleValueContainer = EncodingContainer.SingleValue(codingPath: codingPath)
         
-        storage = .singleValue(container)
+        container = .singleValue(singleValueContainer)
         
-        return container
+        return singleValueContainer
     }
     
     public func unkeyedContainer() -> UnkeyedEncodingContainer {
         preconditionCanEncodeNewContainer()
         
-        let container = EncodingContainer.Unkeyed(codingPath: codingPath)
+        let unkeyedContainer = EncodingContainer.Unkeyed(codingPath: codingPath)
         
-        storage = .unkeyed(container)
+        container = .unkeyed(unkeyedContainer)
         
-        return container
+        return unkeyedContainer
     }
 }

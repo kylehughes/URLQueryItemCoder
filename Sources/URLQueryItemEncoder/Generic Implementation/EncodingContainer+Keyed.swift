@@ -9,15 +9,15 @@ import Common
 
 extension EncodingContainer {
     public final class Keyed {
+        public private(set) var children: [String: EncodingContainer]
         public private(set) var codingPath: [any CodingKey]
-        public private(set) var storage: [String: EncodingContainer]
                 
-        // MARK: public Initialization
+        // MARK: Public Initialization
         
         public init(codingPath: [any CodingKey]) {
             self.codingPath = codingPath
             
-            storage = [:]
+            children = [:]
         }
         
         // MARK: Public Instance Interface
@@ -39,7 +39,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Double, forKey key: StringCodingKey) throws {
@@ -48,7 +48,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Float, forKey key: StringCodingKey) throws {
@@ -57,7 +57,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int, forKey key: StringCodingKey) throws {
@@ -66,7 +66,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int8, forKey key: StringCodingKey) throws {
@@ -75,7 +75,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int16, forKey key: StringCodingKey) throws {
@@ -84,7 +84,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int32, forKey key: StringCodingKey) throws {
@@ -93,7 +93,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: Int64, forKey key: StringCodingKey) throws {
@@ -101,7 +101,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: String, forKey key: StringCodingKey) throws {
@@ -109,7 +109,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         let singleValueContainer = EncodingContainer.SingleValue(codingPath: nextCodingPath)
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt, forKey key: StringCodingKey) throws {
@@ -118,7 +118,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt8, forKey key: StringCodingKey) throws {
@@ -127,7 +127,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt16, forKey key: StringCodingKey) throws {
@@ -136,7 +136,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt32, forKey key: StringCodingKey) throws {
@@ -145,7 +145,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode(_ value: UInt64, forKey key: StringCodingKey) throws {
@@ -154,7 +154,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encode(value)
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func encode<T>(_ value: T, forKey key: StringCodingKey) throws where T : Encodable {
@@ -163,7 +163,11 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try value.encode(to: lowLevelEncoder)
         
-        storage[key.stringValue] = lowLevelEncoder.storage
+        guard let container = lowLevelEncoder.container else {
+            preconditionFailure("Encodable type \(T.self) was not encoded by low level encoder.")
+        }
+        
+        children[key.stringValue] = container
     }
     
     public func encodeNil(forKey key: StringCodingKey) throws {
@@ -172,7 +176,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         
         try singleValueContainer.encodeNil()
         
-        storage[key.stringValue] = .singleValue(singleValueContainer)
+        children[key.stringValue] = .singleValue(singleValueContainer)
     }
     
     public func nestedContainer<NestedKey>(
@@ -182,7 +186,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         let nextCodingPath = codingPath.appending(key)
         let keyedContainer = EncodingContainer.Keyed(codingPath: nextCodingPath)
 
-        storage[key.stringValue] = .keyed(keyedContainer)
+        children[key.stringValue] = .keyed(keyedContainer)
         
         return KeyedEncodingContainer(keyedContainer.wrapped())
     }
@@ -191,7 +195,7 @@ extension EncodingContainer.Keyed: KeyedEncodingContainerProtocol {
         let nextCodingPath = codingPath.appending(key)
         let unkeyedContainer = EncodingContainer.Unkeyed(codingPath: nextCodingPath)
         
-        storage[key.stringValue] = .unkeyed(unkeyedContainer)
+        children[key.stringValue] = .unkeyed(unkeyedContainer)
         
         return unkeyedContainer
     }

@@ -126,12 +126,11 @@ extension EncodingContainer.SingleValue: SingleValueEncodingContainer {
         
         try value.encode(to: lowLevelEncoder)
         
-        precondition(
-            lowLevelEncoder.storage != nil,
-            "Encodable type \(T.self) was not properly encoded by low level encoder."
-        )
-
-        storage = .container(lowLevelEncoder.storage!)
+        guard let container = lowLevelEncoder.container else {
+            preconditionFailure("Encodable type \(T.self) was not encoded by low level encoder.")
+        }
+        
+        storage = .container(container)
     }
     
     public func encodeNil() throws {
