@@ -217,6 +217,10 @@ extension DecodingContainer.SingleValue: SingleValueDecodingContainer {
 
 // MARK: - KeyedDecodingContainerProtocol Extension
 
+/// Only used for leaf node keyed containers that have no children (e.g. all nil properties). We can't detect that they
+/// are actually keyed containers when building our decoding representation because we don't have type information. The
+/// internal decoder system will know to ask for an keyed container and we will return this.
+
 extension DecodingContainer.SingleValue: KeyedDecodingContainerProtocol {
     // MARK: Public Instance Interface
     
@@ -326,7 +330,13 @@ extension DecodingContainer.SingleValue: KeyedDecodingContainerProtocol {
 
 // MARK: - UnkeyedDecodingContainer Extension
 
+/// Only used for leaf node unkeyed containers that have no children. We can't detect that they are actually unkeyed
+/// containers when building our decoding representation because we don't have type information. The internal decoder
+/// system will know to ask for an unkeyed container and we will return this.
+
 extension DecodingContainer.SingleValue: UnkeyedDecodingContainer {
+    // MARK: Public Instance Interface
+    
     public var count: Int? {
         storage == nil ? 0 : 1
     }
@@ -339,7 +349,9 @@ extension DecodingContainer.SingleValue: UnkeyedDecodingContainer {
         0
     }
     
-    public func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
+    public func nestedContainer<NestedKey>(
+        keyedBy type: NestedKey.Type
+    ) throws -> KeyedDecodingContainer<NestedKey> where NestedKey: CodingKey {
         throw DecodingError.dataCorrupted(
             DecodingError.Context(
                 codingPath: codingPath.appending(IntCodingKey(intValue: 0)),

@@ -154,6 +154,7 @@ extension StringlyKeyedDecodingContainerWrapper: KeyedDecodingContainerProtocol 
 extension KeyedDecodingContainerProtocol where Key == StringCodingKey {
     // MARK: Public Instance Interface
 
+    @inlinable
     public func wrapped<Key>() -> StringlyKeyedDecodingContainerWrapper<Key, Self> {
         StringlyKeyedDecodingContainerWrapper(self)
     }
