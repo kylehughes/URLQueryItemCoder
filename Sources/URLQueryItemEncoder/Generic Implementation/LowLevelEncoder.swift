@@ -11,13 +11,22 @@ public final class LowLevelEncoder {
     public private(set) var codingPath: [any CodingKey]
     public private(set) var storage: EncodingContainer?
     
-    // MARK: Internal Initialization
+    // MARK: Public Initialization
     
     public init(codingPath: [any CodingKey]) {
         self.codingPath = codingPath
         
         storage = nil
         userInfo = [:]
+    }
+    
+    // MARK: Private Instance Interface
+    
+    private func preconditionCanEncodeNewContainer() {
+        precondition(
+            storage == nil,
+            "A container was already created for the low-level encoder."
+        )
     }
 }
 
@@ -27,7 +36,7 @@ extension LowLevelEncoder: Encoder {
     // MARK: Internal Instance Interface
     
     public func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key: CodingKey {
-        precondition(storage == nil)
+        preconditionCanEncodeNewContainer()
         
         let container = EncodingContainer.Keyed(codingPath: codingPath)
         
@@ -37,7 +46,7 @@ extension LowLevelEncoder: Encoder {
     }
     
     public func singleValueContainer() -> SingleValueEncodingContainer {
-        precondition(storage == nil)
+        preconditionCanEncodeNewContainer()
         
         let container = EncodingContainer.SingleValue(codingPath: codingPath)
         
@@ -47,7 +56,7 @@ extension LowLevelEncoder: Encoder {
     }
     
     public func unkeyedContainer() -> UnkeyedEncodingContainer {
-        precondition(storage == nil)
+        preconditionCanEncodeNewContainer()
         
         let container = EncodingContainer.Unkeyed(codingPath: codingPath)
         
