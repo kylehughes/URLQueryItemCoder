@@ -1,6 +1,6 @@
 //
 //  CodableTestExpectation+URLQueryItems.swift
-//  TestSupport
+//  URLQueryItemCoder
 //
 //  Created by Kyle Hughes on 1/12/23.
 //
@@ -11,8 +11,6 @@ import Foundation
 
 extension CodableTestExpectation where Value == [URLQueryItem] {
     // MARK: Public Static Interface
-    
-    // TODO: remove needing to specify isEncoding and make it so both pieces work identically
     
     static var urlQueryItems: Self {
         CodableTestExpectation { value in

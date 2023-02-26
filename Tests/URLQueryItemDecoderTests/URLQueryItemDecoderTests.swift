@@ -1,6 +1,6 @@
 //
 //  URLQueryItemDecoderTests.swift
-//  URLQueryItemCodable
+//  URLQueryItemCoder
 //
 //  Created by Kyle Hughes on 1/12/23.
 //
