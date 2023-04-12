@@ -1,0 +1,50 @@
+name: Deploy Documentation
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+
+# Set permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages.
+permissions:
+  contents: read
+  id-token: write
+  pages: write
+
+# Allow one concurrent deployment. Do not cancel in-flight deployments because we don't want assets to be in a
+# a semi-deployed state.
+concurrency: 
+  group: "deploy-documentation"
+  cancel-in-progress: false
+
+jobs:
+  deploy-documentation:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: macos-12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set Up GitHub Pages
+        uses: actions/configure-pages@v3
+      - name: Build Documentation
+        run: |
+          xcodebuild docbuild \
+            -scheme URLQueryItemCoder \
+            -derivedDataPath /tmp/DerivedData \
+            -destination 'generic/platform=iOS';
+          mkdir _site;
+          $(xcrun --find docc) process-archive \
+            transform-for-static-hosting /tmp/DerivedData/Build/Products/Debug-iphoneos/URLQueryItemCoder.doccarchive \
+            --hosting-base-path URLQueryItemCoder \
+            --output-path _site;
+      - name: Create index.html
+        run: |
+          echo "<script>window.location.href += \"/documentation/urlqueryitemcoder\"</script>" > _site/index.html;
+      - name: Upload Documentation Artifact to GitHub Pages
+        uses: actions/upload-pages-artifact@v1
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

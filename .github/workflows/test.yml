@@ -1,0 +1,73 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency: 
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  get-environment-details:
+    name: Get Environment Details
+    runs-on: macOS-12
+    steps:
+      - name: Print OS SDKs
+        run: xcodebuild -version -sdk
+
+      - name: Print simulators
+        run: |
+          xcrun simctl delete unavailable
+          xcrun simctl list
+  
+  test-iOS:
+      name: Test on Latest iOS
+      runs-on: macOS-12
+      steps:
+        - name: Checkout project
+          uses: actions/checkout@master
+
+        - name: Run tests
+          run: |
+            set -o pipefail
+            xcodebuild clean test -scheme URLQueryItemCoder -sdk iphonesimulator -destination "name=iPhone 14 Pro" -configuration Debug -enableCodeCoverage YES | xcpretty -c
+
+  test-macOS:
+    name: Test on Latest macOS
+    runs-on: macOS-12
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@master
+
+      - name: Run Tests
+        run: swift test
+
+  test-tvOS:
+    name: Test on Latest tvOS
+    runs-on: macOS-12
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@master
+
+      - name: Run tests
+        run: |
+          set -o pipefail
+          xcodebuild clean test -scheme URLQueryItemCoder -sdk appletvsimulator -destination "name=Apple TV 4K (3rd generation)" -configuration Debug -enableCodeCoverage YES | xcpretty -c
+      
+  test-watchOS:
+    name: Test on Latest watchOS
+    runs-on: macOS-12
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@master
+
+      - name: Run tests
+        run: |
+          set -o pipefail
+          xcodebuild clean test -scheme URLQueryItemCoder -sdk watchsimulator -destination "name=Apple Watch Ultra (49mm)" -configuration Debug -enableCodeCoverage YES | xcpretty -c
