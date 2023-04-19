@@ -1,5 +1,7 @@
 # URLQueryItemCoder
 
+[![Platform Versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fkylehughes%2FURLQueryItemCoder%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/kylehughes/URLQueryItemCoder)
+[![Swift Versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fkylehughes%2FURLQueryItemCoder%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/kylehughes/URLQueryItemCoder)
 [![Test](https://github.com/kylehughes/URLQueryItemCoder/actions/workflows/test.yml/badge.svg)](https://github.com/kylehughes/URLQueryItemCoder/actions/workflows/test.yml)
 
 *Encoder & decoder for working with `Codable` types as `URLQueryItem`s.*
@@ -133,7 +135,7 @@ dependencies: [
 
 ## Documentation
 
-[Documentation is available on GitHub Pages.](https://kylehughes.github.io/URLQueryItemCoder).
+[Documentation is available on GitHub Pages](https://kylehughes.github.io/URLQueryItemCoder).
 
 ## Contributions
 
